@@ -1,2 +1,2 @@
-"# Nasme Project -- Django" 
+# Nasme Project -- Django
 
