@@ -1,14 +1,52 @@
 from django.db import models
-from django.contrib.auth import AbstractUser
-
-
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 # # Create your models here.
 class User(AbstractUser):
-    pass
+    dob = models.DateField(auto_now=False, auto_now_add=False, null=True)
+    has_filled_profile = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(auto_now=True)
+
+# class Profile(models.Model):
+#     profile_owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
 
-class Profile():
-    pass
+class Business(models.Model):
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    email = models.EmailField(verbose_name='business email', max_length=254)
+    address  = models.CharField(max_length=100)
+    phone_no = models.CharField(max_length=20)
+    about = models.TextField()
+    services = models.CharField(max_length=500, help_text='Add services seperated by comma "," ')
+    logo = models.ImageField(upload_to='logos', height_field=None, width_field=None, max_length=None)
+
+    class Meta:
+        verbose_name = ('Business')
+        verbose_name_plural = ('Businesses')
+
+   
+class BusinessImages(models.Model):
+    owner = models.ForeignKey(Business, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images', height_field=None, width_field=None, max_length=None)
+
+    class Meta:
+        verbose_name = ('Business Image')
+        verbose_name_plural = ('Business Images')
+
+
+class Socials(models.Model):
+    owner = models.OneToOneField(Business, on_delete=models.CASCADE)
+    facebook = models.URLField(max_length=200, blank=True, null=True)
+    website = models.URLField(max_length=200, blank=True, null=True)
+    twitter = models.URLField(max_length=200, blank=True, null=True)
+    linkedin = models.URLField(max_length=200, blank=True, null=True)
+    whatsapp = models.URLField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = ('Social')
+        verbose_name_plural = ('Socials')
+
 
 
 #   USER_UPDATE_APPROVED = 'True'
