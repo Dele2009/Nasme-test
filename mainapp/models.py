@@ -13,6 +13,7 @@ class User(AbstractUser):
 
 class Business(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    units = models.ManyToManyField('Unit', related_name='units')
     name = models.CharField(max_length=200)
     email = models.EmailField(verbose_name='business email', max_length=254)
     address  = models.CharField(max_length=100)
@@ -46,6 +47,10 @@ class Socials(models.Model):
     class Meta:
         verbose_name = ('Social')
         verbose_name_plural = ('Socials')
+
+class Unit(models.Model):
+    unit_name = models.CharField(max_length=100)
+
 
 
 
