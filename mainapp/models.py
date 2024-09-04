@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
+
+
 # # Create your models here.
 class User(AbstractUser):
     dob = models.DateField(auto_now=False, auto_now_add=False, null=True)
@@ -10,8 +12,11 @@ class User(AbstractUser):
 # class Profile(models.Model):
 #     profile_owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
+class Unit(models.Model):
+    unit_name = models.CharField(max_length=100)
 
 class Business(models.Model):
+    models.ManyToManyField(Unit)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     units = models.ManyToManyField('Unit', related_name='units')
     name = models.CharField(max_length=200)
@@ -47,10 +52,6 @@ class Socials(models.Model):
     class Meta:
         verbose_name = ('Social')
         verbose_name_plural = ('Socials')
-
-class Unit(models.Model):
-    unit_name = models.CharField(max_length=100)
-
 
 
 
