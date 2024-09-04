@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 
 class User(AbstractUser):
     phone_num = models.PhoneNumberField()
-    profile_pic = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=None)
+    profile_pic = models.ImageField(upload_to='admin-pic', height_field=None, width_field=None, max_length=None)
 
 
  

@@ -5,8 +5,8 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import  User
 from mainapp.models import *
-# Create your views here.
 
+# Create your views here.
 def admin_login(request):
 
     #Login form
@@ -18,9 +18,9 @@ def admin_login(request):
 
         if admin_auth is not None:
             login(request, admin_auth)
-            return redirect('')
+            return redirect('admin-dashboard')
         else:
-            return redirect(request,'')
+            return redirect(request,'admin-login')
     return render(request, "")
 
 @login_required
@@ -31,20 +31,26 @@ def admin_home(request):
     # Search 
     if request.method == 'POST':
         search_word = request.POST.get('')
-        search = Unit.objects.filter(unit_name__icontains = search_word)
+        members = Business.objects.filter(unit_name__icontains = search_word)
 
     else:
         members = Business.objects.all()
 
     context = {
-
+        'members' : members,
+        'units' : Unit.objects.all(),
     }
 
     return render(request, "",context)
 
 @login_required
-def admin_account(request):
+def admin_profile(request):
     return render(request, "")
+
+@login_required
+def manage_admin(request):
+
+    return render(request, '')
 
 @login_required
 def register_admin(request):
@@ -101,7 +107,7 @@ def register_member(request):
     return render(request, "")
 
 @login_required
-def view_member(request):
+def manage_member(request):
     members = Business.objects.all()
 
     context = {
@@ -136,6 +142,41 @@ def delete_member(request, id):
     member.delete()
 
     return render(request, "")
+
+@login_required
+def manage_unit(request):
+    units = Unit.objects.all()
+    return render(request,'')
+
+@login_required
+def edit_unit(request):
+
+    return render(request,'')
+
+@login_required
+def add_unit(request,):
+    if request.method == 'POST':
+        unit = request.POST.get('')
+
+        new_unit = Unit(name = unit)
+        new_unit.save()
+    else:
+        pass
+    return render(request,'')
+
+@login_required
+def delete_unit(request):
+    return render(request,'')
+
+@login_required
+def approvals(request):
+
+    return render(request, '')
+
+@login_required
+def unit_message(request):
+
+    return render(request, '')
 
 @login_required
 def admin_logout(request):

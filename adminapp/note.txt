@@ -1,0 +1,12 @@
+Admin dashboard:
+	total members
+	new wallet
+	total units
+	total members
+	add new unit
+	add new member
+	create finance
+	send message
+	financial report
+	admin profile
+
