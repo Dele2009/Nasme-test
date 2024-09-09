@@ -1,0 +1,53 @@
+.navbar input::placeholder {
+    font-variant: small-caps;
+}
+
+.navbar-brand {
+    width: 50px;
+}
+
+.navbar-brand img {
+    width: 100%
+}
+
+input,
+button {
+    border: none;
+    outline: none;
+}
+
+#btn-search {
+    background: white;
+    box-shadow: none !important;
+}
+
+.navbar {
+    height: 75px;
+}
+
+.navGrid {
+    display: grid !important;
+    grid-template-columns: 1fr auto auto auto;
+}
+
+@media screen and (max-width:450.9px) {
+    .navbar {
+        height: 150px;
+    }
+
+    .navGrid {
+        grid-template-rows: auto auto;
+        row-gap: 10px;
+    }
+
+    .navSearch {
+        grid-row: 2;
+        grid-column: 1/5;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .navbar-brand.none {
+        width: 0;
+    }
+}

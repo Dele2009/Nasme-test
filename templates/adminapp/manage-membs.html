@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+     <link rel="stylesheet" href="./styles.css">
+
+     <style>
+          body {
+               background-color: #f4f8f4;
+               display: grid;
+               place-items: center;
+               height: 100vh;
+          }
+
+          .table-container {
+               background-color: #fff;
+               padding: 20px;
+               border-radius: 10px;
+               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          }
+
+          .table-actions {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               margin: 10px 0;
+          }
+
+          .table {
+               border-radius: 5px !important;
+               overflow: hidden;
+          }
+
+          .table tbody td {
+               background-color: #eaf2e3;
+          }
+
+          .action-icons i {
+               font-size: 1.2rem;
+               padding: 8px;
+               margin-right: 5px;
+          }
+
+          .pagination-arrow {
+               color: green;
+               font-size: 30px;
+               cursor: pointer;
+          }
+     </style>
+
+</head>
+
+<body>
+     <div class="container my-5">
+          <div class="row justify-content-center align-items-center">
+               <div class="col-lg-12">
+                    <div class="table-container">
+                         <div class="table-actions">
+                              <h2>Members List</h2>
+                              <div class="d-flex justify-content-center align-items-center gap-3">
+                                   <button class="btn btn-custom">
+                                        <i class="bi bi-plus-circle icon icon-btn"></i>
+                                        <span>Add Member</span>
+                                   </button>
+                                   <button class="btn btn-custom">
+                                        <i class="bi bi-download icon icon-btn"></i>
+                                        <span>Export List</span>
+                                   </button>
+                              </div>
+                         </div>
+                         <div class="table-responsive-xxl">
+                              <table class="table  table-hover">
+                                   <thead>
+                                        <tr>
+                                             <th class="text-center">Business Name</th>
+                                             <th class="text-center">Phone</th>
+                                             <th class="text-center">Email</th>
+                                             <th class="text-center">Units</th>
+                                             <th class="text-center">Pending Dues</th>
+                                             <th class="text-center">Dues Paid</th>
+                                             <th class="text-center">Action</th>
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                        <tr>
+                                             <td>VALUEMAX CODERS' HUB</td>
+                                             <td>07032060088</td>
+                                             <td>info@valuemaxonline.com</td>
+                                             <td>ICT and Creative Industry</td>
+                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
+                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
+                                             <td class="action-icons">
+                                                  <div class="action-icons-container">
+                                                       <a href="#" class="text-info"><i
+                                                                 class="bi bi-pencil-square"></i></a>
+                                                       <a href="#" class="text-secondary"><i
+                                                                 class="bi bi-chat-left-text-fill"></i></a>
+                                                       <a href="#" class="text-warning"><i
+                                                                 class="bi bi-eye-fill"></i></a>
+                                                       <a href="#" class="text-dark"><i
+                                                                 class="bi bi-person-fill-lock"></i></a>
+                                                       <a href="#" class="text-danger"><i
+                                                                 class="bi bi-trash-fill"></i></a>
+                                                  </div>
+                                             </td>
+                                        </tr>
+                                        <!-- <tr>
+                                             <td>None</td>
+                                             <td>09023983884</td>
+                                             <td>None</td>
+                                             <td>None</td>
+                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
+                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
+                                             <td class="action-icons">
+                                                  <div class="action-icons-container">
+                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
+                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
+                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
+                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
+                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                                                  </div>
+                                             </td>
+                                        </tr>
+                                        <tr>
+                                             <td>TOBI WEBTONIC</td>
+                                             <td>12345678912</td>
+                                             <td>tobbswiththestuffl@tobbs.com</td>
+                                             <td>ICT, Creative Industry, Printing Press</td>
+                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
+                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
+                                             <td class="action-icons">
+                                                  <div class="action-icons-container">
+                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
+                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
+                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
+                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
+                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                                                  </div>
+                                             </td>
+                                        </tr> -->
+                                   </tbody>
+                              </table>
+                         </div>
+                         <div class="d-flex justify-content-center gap-4 align-items-center mt-4">
+                              <i class="bi bi-arrow-left pagination-arrow"></i>
+                              <div>
+                                   <button class="btn-pagination">1</button>
+                              </div>
+                              <i class="bi bi-arrow-right pagination-arrow"></i>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

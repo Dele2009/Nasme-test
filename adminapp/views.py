@@ -107,6 +107,10 @@ def register_member(request):
     return render(request, "")
 
 @login_required
+def bulk_register(request):
+    return render(request, '')
+
+@login_required
 def manage_member(request):
     members = Business.objects.all()
 
@@ -173,10 +177,10 @@ def approvals(request):
 
     return render(request, '')
 
-@login_required
+#@login_required
 def unit_message(request):
 
-    return render(request, '')
+    return render(request, 'adminapp/send-message.html')
 
 @login_required
 def admin_logout(request):
