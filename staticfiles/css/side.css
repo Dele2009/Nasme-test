@@ -105,14 +105,15 @@ body {
 .main-content {
     position: relative;
     background-color: #fff;
-    min-height: calc(100vh - 75px);
+    height: 100dvh;
+    /* min-height: calc(100vh - 75px); */
     top: 75px;
     left: 60px;
     transition: all 0.5s ease;
     width: calc(100% - 60px);
-    border-top: 2px solid rgba(255, 0, 0, 0.678);
-    border-left: 2px solid rgba(255, 0, 0, 0.678);
+    overflow-y: auto;
     z-index: 1;
+    padding-bottom: 70px;
 
 }
 

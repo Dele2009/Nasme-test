@@ -1,19 +1,19 @@
+<<<<<<< HEAD
 {% comment %} {% extends 'mainapp/dashboard_layout.html' %} {% endcomment %}
 {% load static %},
 <!DOCTYPE html>
 <html lang="en">
+=======
+{% extends 'partials/base.html' %}
+{% load static %}
+>>>>>>> ef8f3066615ceb83e78483ccf1a69d4f4c185f21
 
-<head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Send Message to Units</title>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-     <style>
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+<style>
           /* Unique Styles for Send Message Page */
           body {
-               background-color: #e8f5e9;
+              /* {% comment %} background-color: #e8f5e9; {% endcomment %} */
                font-family: 'Arial', sans-serif;
           }
 
@@ -118,10 +118,11 @@
                color: #ff7043;
           }
      </style>
-</head>
 
-<body>
+      {% endblock styles %}
 
+
+      {% block content %}
      <div class="container">
           <div class="row justify-content-center align-items-start">
                <div class="col-lg-5">
@@ -187,9 +188,4 @@
 
      </div>
 
-
-
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+     {% endblock content %}
