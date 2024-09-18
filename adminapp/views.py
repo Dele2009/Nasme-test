@@ -24,7 +24,7 @@ def admin_login(request):
     return render(request, "")
 
 @login_required
-def admin_home(request):
+def admin_dashboard(request):
     members = Business.objects.all()
     current_admin = User.objects.get(username = request.user)
 
@@ -52,14 +52,14 @@ def manage_admin(request):
 
     return render(request, '')
 
-@login_required
+#@login_required
 def register_admin(request):
 
     if request.method == 'POST':
         pass
-    return render(request, "")
+    return render(request, "adminapp/add-admin.html")
 
-@login_required
+#@login_required
 def register_member(request):
 
     if request.method == 'POST':
@@ -104,20 +104,20 @@ def register_member(request):
         Socials.save()
         pass
 
-    return render(request, "")
+    return render(request, "adminapp/add-member.html")
 
-@login_required
+#@login_required
 def bulk_register(request):
-    return render(request, '')
+    return render(request, 'adminapp/bulk-reg.html')
 
-@login_required
+#@login_required
 def manage_member(request):
     members = Business.objects.all()
 
     context = {
         'all_members' : members,
     }
-    return render(request, "",context)
+    return render(request, "adminapp/manage-membs.html",context)
 
 @login_required
 def edit_member(request, id):
@@ -157,7 +157,7 @@ def edit_unit(request):
 
     return render(request,'')
 
-@login_required
+#@login_required
 def add_unit(request,):
     if request.method == 'POST':
         unit = request.POST.get('')
@@ -166,7 +166,7 @@ def add_unit(request,):
         new_unit.save()
     else:
         pass
-    return render(request,'')
+    return render(request,'adminapp/add-unit.html')
 
 @login_required
 def delete_unit(request):
