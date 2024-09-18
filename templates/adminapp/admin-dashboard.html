@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="dashboard">
-  <a href="/admin/manage_members" class="rounded myCard">
+  <a href="{% url 'manage-member' %}" class="rounded myCard">
     <div class="my-3">
       <i class="bi bi-people-fill fs-4"></i>
     </div>
@@ -21,7 +21,7 @@
       <p class="hidep">0</p>
     </div>
   </a>
-  <a href="/admin/manage_units/" class="rounded myCard">
+  <a href="{% url 'manage-unit' %}" class="rounded myCard">
     <div class="my-3">
       <i class="bi bi-stack fs-4"></i>
     </div>
@@ -30,7 +30,7 @@
       <p>5</p>
     </div>
   </a>
-  <a href="/admin/register-unit" class="rounded myCard">
+  <a href="{% url 'add-unit' %}" class="rounded myCard">
     <div class="my-3">
       <i class="bi bi-layers-fill fs-4"></i>
     </div>
@@ -39,7 +39,7 @@
       <p class="hidep">0</p>
     </div>
   </a>
-  <a href="/admin/register-member" class="rounded myCard">
+  <a href="{% url 'register-member' %}" class="rounded myCard">
     <div class="my-3">
       <i class="bi bi-person-fill fs-4"></i>
     </div>
@@ -57,7 +57,7 @@
       <p class="hidep">0</p>
     </div>
   </a>
-  <a href="/admin/send_unit_message" class="rounded myCard">
+  <a href="{% url 'unit-message' %}" class="rounded myCard">
     <div class="my-3">
       <i class="bi bi-chat-left-text-fill fs-4"></i>
     </div>
@@ -75,7 +75,7 @@
       <p class="hidep">0</p>
     </div>
   </a>
-  <a href="/admin/manage_admin/1/edit" class="rounded myCard">
+  <a href="{% url 'admin-profile' %}" class="rounded myCard">
     <div class="my-3">
       <i class="bi bi-person-circle fs-4"></i>
     </div>
