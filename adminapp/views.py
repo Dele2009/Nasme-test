@@ -47,10 +47,10 @@ def admin_home(request):
 def admin_profile(request):
     return render(request, "")
 
-@login_required
+# @login_required
 def manage_admin(request):
 
-    return render(request, '')
+    return render(request, 'adminapp/admin_login.html')
 
 @login_required
 def register_admin(request):
