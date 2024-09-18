@@ -1,103 +1,107 @@
-{% extends 'partials/base.html' %}
-{% load static %}
+{% extends 'partials/base.html' %} {% load static %} {% block styles %}
 
-     {% block styles %}
-     
-     <link rel="stylesheet" href="{%static './css/styles.css' %}">
-     <style>
-        
-          
+<link rel="stylesheet" href="{%static './css/styles.css' %}" />
+<style>
+  .form-container {
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
 
-          .form-container {
-               background-color: #fdfdfd;
-               border-radius: 8px;
-               padding: 30px;
-               box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-               text-align: center;
-          }
+  .custom-file-input::file-selector-button {
+    padding: 8px 15px;
+    background-color: #2e5903d2 !important;
+    color: white !important;
+    border-radius: 4px;
+  }
 
-          .custom-file-input::file-selector-button {
-               padding: 8px 15px;
-               background-color: #2e5903d2 !important;
-               color: white !important;
-               border-radius: 4px;
-          }
+  .features-list {
+    color: #386f05;
+  }
 
-          .features-list {
-               color: #386f05;
-          }
+  .template-link {
+    color: #007bff;
+    text-decoration: none;
+  }
 
-          .template-link {
-               color: #007bff;
-               text-decoration: none;
-          }
+  .template-link:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock styles %} {% block content %}
+<div class="container mt-5">
+  <!-- Title and Description -->
+  <div class="text-center mb-4">
+    <i class="bi bi-people-fill icon"></i>
+    <h1>Bulk Registration</h1>
+    <p class="lead">
+      Effortlessly register multiple users at once by uploading a CSV file with
+      their details.
+    </p>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <!-- Additional Information Section -->
+      <div class="additional-info text-center">
+        <div class="info-box">
+          <i class="bi bi-info-circle icon"></i>
+          <h3>File Requirements</h3>
+          <p>
+            Your CSV file should include a valid <strong>Phone Number.</strong>
+          </p>
+        </div>
 
-          .template-link:hover {
-               text-decoration: underline;
-          }
-     </style>
-     {% endblock styles %}
-
-
-     {% block content %}
-     <div class="container mt-5">
-          <!-- Title and Description -->
-          <div class="text-center mb-4">
-               <i class="bi bi-people-fill icon"></i>
-               <h1>Bulk Registration</h1>
-               <p class="lead">Effortlessly register multiple users at once by uploading a CSV file with their
-                    details.</p>
-          </div>
-          <div class="row justify-content-center">
-
-
-               <div class="col-md-6">
-                    <!-- Additional Information Section -->
-                    <div class="additional-info text-center">
-                         <div class="info-box">
-                              <i class="bi bi-info-circle icon"></i>
-                              <h3>File Requirements</h3>
-                              <p>Your CSV file should include a valid <strong>Phone Number.</strong></p>
-                         </div>
-
-                         <div class="info-box">
-                              <i class="bi bi-exclamation-triangle icon"></i>
-                              <h3>Important Notes</h3>
-                              <ul class="features-list list-unstyled">
-                                   <!-- <li><i class="bi bi-check-circle-fill"></i> Ensure each user has a unique email
+        <div class="info-box">
+          <i class="bi bi-exclamation-triangle icon"></i>
+          <h3>Important Notes</h3>
+          <ul class="features-list list-unstyled">
+            <!-- <li><i class="bi bi-check-circle-fill"></i> Ensure each user has a unique email
                                         address.
                                    </li> -->
-                                   <li><i class="bi bi-x-circle-fill"></i> Avoid duplicate entries in your CSV file.
-                                   </li>
-                                   <li><i class="bi bi-x-circle-fill"></i> Use a valid phone number format for each
-                                        entry.</li>
-                              </ul>
-                         </div>
-
-
-                    </div>
-               </div>
-               <div class="col-md-6">
-                    <!-- Form Section -->
-                    <div class="form-container">
-                         <h2 class="mb-3">Upload CSV File</h2>
-                         <p>Please ensure your CSV file contains the correct format as described</p>
-                         <form>
-                              <div class="mb-3">
-                                   <label for="formFile" class="form-label">Select a CSV file</label>
-                                   <input class="form-control custom-file-input" type="file" id="formFile" required>
-                              </div>
-                              <button type="submit" class="btn btn-custom w-100">
-                                   <i class="bi bi-upload icon icon-btn"></i> <span>Submit</span>
-                              </button>
-                         </form>
-                         <p class="mt-4">Need help with formatting? <a href="#" class="link-a link-a-hoverable">Click
-                                   here</a> to
-                              download a sample CSV template.</p>
-                    </div>
-
-               </div>
+            <li>
+              <i class="bi bi-x-circle-fill"></i> Avoid duplicate entries in
+              your CSV file.
+            </li>
+            <li>
+              <i class="bi bi-x-circle-fill"></i> Use a valid phone number
+              format for each entry.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Form Section -->
+      <div class="form-container">
+        <h2 class="mb-3">Upload CSV File</h2>
+        <p>
+          Please ensure your CSV file contains the correct format as described
+        </p>
+        <form>
+          <div
+            class="mb-3 d-flex justify-content-center align-items-start flex-column w-full"
+          >
+            <label for="formFile" class="form-label">Select a CSV file</label>
+            <input
+              class="form-control custom-file-input w-full"
+              type="file"
+              id="formFile"
+              required
+            />
           </div>
-     </div> 
-     {% endblock content %}
-   
+          <button type="submit" class="btn btn-custom w-100">
+            <i class="bi bi-upload icon icon-btn"></i> <span>Submit</span>
+          </button>
+        </form>
+        <p class="mt-4">
+          Need help with formatting?
+          <a href="#" class="link-a link-a-hoverable">Click here</a> to download
+          a sample CSV template.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

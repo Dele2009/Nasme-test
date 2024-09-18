@@ -1,185 +1,185 @@
-
-{% extends 'partials/base.html' %}
-{% load static %}
-
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+{% extends 'partials/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 <style>
-          /* Unique Styles for Send Message Page */
-          body {
-              /* {% comment %} background-color: #e8f5e9; {% endcomment %} */
-               font-family: 'Arial', sans-serif;
-          }
+  /* Unique Styles for Send Message Page */
+  body {
+    /* {% comment %} background-color: #e8f5e9; {% endcomment %} */
+    font-family: "Arial", sans-serif;
+  }
 
-          .message-container {
-               background-color: #fff;
-               border-radius: 10px;
-               padding: 30px;
-               margin: 50px auto;
-               max-width: 600px;
-               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-               text-align: center;
-          }
+  .message-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 50px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
 
-          .message-container h2 {
-               color: #33691e;
-               font-size: 1.75rem;
-               margin-bottom: 20px;
-               display: flex;
-               align-items: center;
-               justify-content: center;
-          }
+  .message-container h2 {
+    color: #33691e;
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-          .message-container h2 i {
-               margin-right: 10px;
-               font-size: 1.5rem;
-               color: #2e7d32;
-          }
+  .message-container h2 i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+    color: #2e7d32;
+  }
 
-          .form-group {
-               margin-bottom: 15px;
-               text-align: left;
-          }
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
 
-          .form-group label {
-               color: #33691e;
-               font-size: 1rem;
-               margin-bottom: 5px;
-          }
+  .form-group label {
+    color: #33691e;
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
 
-          .form-control {
-               width: 100%;
-               padding: 10px;
-               font-size: 1rem;
-               border-radius: 5px;
-               border: 1px solid #a5d6a7;
-               background-color: #f1f8e9;
-          }
+  .form-control-sec {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #a5d6a7;
+    background-color: #f1f8e9;
+  }
 
-          .form-control:focus {
-               outline: none;
-               border-color: #66bb6a;
-          }
+  .form-control-sec:focus {
+    outline: none;
+    border-color: #66bb6a;
+  }
 
+  .send-all {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
-          .send-all {
-               margin-top: 20px;
-               display: flex;
-               align-items: center;
-               justify-content: flex-start;
-          }
+  .send-all input {
+    margin-right: 10px;
+  }
 
-          .send-all input {
-               margin-right: 10px;
-          }
+  /* Recently Sent Messages Section */
+  .recent-messages {
+    margin-top: 40px;
+  }
 
+  .recent-messages h4 {
+    color: #388e3c;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
 
-          /* Recently Sent Messages Section */
-          .recent-messages {
-               margin-top: 40px;
-          }
+  .message-list {
+    list-style: none;
+    padding-left: 0;
+  }
 
-          .recent-messages h4 {
-               color: #388e3c;
-               font-size: 1.5rem;
-               margin-bottom: 20px;
-          }
+  .message-list li {
+    background-color: #f1f8e9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-          .message-list {
-               list-style: none;
-               padding-left: 0;
-          }
+  .message-list .status {
+    font-weight: bold;
+  }
 
-          .message-list li {
-               background-color: #f1f8e9;
-               padding: 15px;
-               margin-bottom: 10px;
-               border-radius: 5px;
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-          }
+  .status-sent {
+    color: #2e7d32;
+  }
 
-          .message-list .status {
-               font-weight: bold;
-          }
+  .status-pending {
+    color: #ff7043;
+  }
+</style>
 
-          .status-sent {
-               color: #2e7d32;
-          }
-
-          .status-pending {
-               color: #ff7043;
-          }
-     </style>
-
-      {% endblock styles %}
-
-
-      {% block content %}
-     <div class="container">
-          <div class="row justify-content-center align-items-start">
-               <div class="col-lg-5">
-                    <div class="recent-messages">
-                         <h4><i class="bi bi-clock-history"></i> Recently Sent Messages</h4>
-                         <ul class="message-list">
-                              <li>
-                                   <span>Message to ICT and Creative Initiatives</span>
-                                   <span class="status status-sent">Sent</span>
-                              </li>
-                              <li>
-                                   <span>Message to Operations and Logistics</span>
-                                   <span class="status status-pending">Pending</span>
-                              </li>
-                              <li>
-                                   <span>Message to Marketing and Communications</span>
-                                   <span class="status status-sent">Sent</span>
-                              </li>
-                         </ul>
-                    </div>
-                    <div class="info-box">
-                         <h4><i class="bi bi-info-circle-fill"></i> Need Help?</h4>
-                         <p>If you're having trouble sending messages, please contact support for assistance or
-                              consult
-                              the help
-                              section.</p>
-                    </div>
-               </div>
-               <div class="col-lg-7">
-                    <div class="message-container">
-                         <h2><i class="bi bi-envelope-fill"></i> Send Message to Units</h2>
-                         <form action="#" method="POST">
-                              <div class="form-group">
-                                   <label for="title">Title</label>
-                                   <input type="text" id="title" name="title" class="form-control"
-                                        placeholder="Enter the message title">
-                              </div>
-                              <div class="form-group">
-                                   <label for="message">Message</label>
-                                   <textarea id="message" name="message" class="form-control" rows="5"
-                                        placeholder="Write your message here"></textarea>
-                              </div>
-                              <div class="form-group">
-                                   <label for="unit">Unit</label>
-                                   <select id="unit" name="unit" class="form-control" value=''>
-                                        <option value="">....Select a unit to message....</option>
-                                        <option value="ict">ICT and Creative Initiatives</option>
-                                        <option value="marketing">Marketing and Communications</option>
-                                        <option value="operations">Operations and Logistics</option>
-                                   </select>
-                              </div>
-                              <div class="send-all">
-                                   <input type="checkbox" id="sendAll" name="sendAll">
-                                   <label for="sendAll">Send to All Units</label>
-                              </div>
-                              <button type="submit" class="btn btn-custom w-100 mt-3">Send Message</button>
-                         </form>
-
-                    </div>
-               </div>
-
+{% endblock styles %} {% block content %}
+<div class="container">
+  <div class="row justify-content-center align-items-start">
+    <div class="col-lg-5">
+      <div class="recent-messages">
+        <h4><i class="bi bi-clock-history"></i> Recently Sent Messages</h4>
+        <ul class="message-list">
+          <li>
+            <span>Message to ICT and Creative Initiatives</span>
+            <span class="status status-sent">Sent</span>
+          </li>
+          <li>
+            <span>Message to Operations and Logistics</span>
+            <span class="status status-pending">Pending</span>
+          </li>
+          <li>
+            <span>Message to Marketing and Communications</span>
+            <span class="status status-sent">Sent</span>
+          </li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4><i class="bi bi-info-circle-fill"></i> Need Help?</h4>
+        <p>
+          If you're having trouble sending messages, please contact support for
+          assistance or consult the help section.
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="message-container">
+        <h2><i class="bi bi-envelope-fill"></i> Send Message to Units</h2>
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              class="form-control-sec"
+              placeholder="Enter the message title"
+            />
           </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              class="form-control-sec"
+              rows="5"
+              placeholder="Write your message here"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="unit">Unit</label>
+            <select id="unit" name="unit" class="form-control-sec" value="">
+              <option value="">....Select a unit to message....</option>
+              <option value="ict">ICT and Creative Initiatives</option>
+              <option value="marketing">Marketing and Communications</option>
+              <option value="operations">Operations and Logistics</option>
+            </select>
+          </div>
+          <div class="send-all">
+            <input type="checkbox" id="sendAll" name="sendAll" />
+            <label for="sendAll">Send to All Units</label>
+          </div>
+          <button type="submit" class="btn btn-custom w-100 mt-3">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-     </div>
-
-     {% endblock content %}
+{% endblock content %}

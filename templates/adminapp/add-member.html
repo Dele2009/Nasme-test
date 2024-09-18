@@ -1,90 +1,82 @@
-{% extends 'partials/base.html' %}
-{% load static %}
+{% extends 'partials/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+<style>
+  .form-section {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
+  .heading-text {
+    color: #3d5b3e;
+  }
 
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
-     <style>
-          
-          .form-section {
-               background-color: #fff;
-               border-radius: 8px;
-               padding: 10px 20px;
-               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          }
+  .icon {
+    font-size: 2.5rem;
+    margin-right: 10px;
+  }
 
-          .heading-text {
-               color: #3d5b3e;
-          }
+  .content-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+</style>
+{% endblock styles %} {% block content %}
 
-          .icon {
-               font-size: 2.5rem;
-               margin-right: 10px;
-          }
+<div class="container">
+  <div class="text-center mb-4">
+    <i class="bi bi-phone icon"></i>
+    <h1 class="heading-text">Register a new member</h1>
 
-          .content-box {
-               background-color: #f9f9f9;
-               padding: 15px;
-               border-radius: 6px;
-               margin-bottom: 20px;
-          }
-     </style>
-{% endblock styles %}
-     
-
-
-{% block content %}
-    
-    
-     <div class=" container ">
-          <div class="text-center mb-4">
-               <i class="bi bi-phone icon"></i>
-               <h1 class="heading-text">Register a new member</h1>
-               
-               <p class="lead">Add a new member using their phone numbers.</p>
+    <p class="lead">Add a new member using their phone numbers.</p>
+  </div>
+  <div class="row justify-content-center align-items-center mt-5">
+    <div class="col-md-6">
+      <div class="content-box text-center">
+        <i class="bi bi-shield-check icon"></i>
+        <h2 class="heading-text">Why Update User Phone Numbers?</h2>
+        <p>
+          Maintaining up-to-date contact details is crucial for notifications,
+          security alerts, and account recovery.
+        </p>
+        <div class="text-center mt-4">
+          <a href="#" class="btn btn-custom">
+            <i class="bi bi-list icon icon-btn"></i> <span>View User List</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 m-auto">
+      <div class="form-section">
+        <form>
+          <div class="d-flex justify-content-center align-items-center mb-4">
+            <i class="bi bi-telephone icon"></i>
           </div>
-          <div class="row justify-content-center align-items-center mt-5">
-               <div class="col-md-6">
-                    <div class="content-box text-center">
-                         <i class="bi bi-shield-check icon"></i>
-                         <h2 class="heading-text">Why Update User Phone Numbers?</h2>
-                         <p>Maintaining up-to-date contact details is crucial for notifications, security alerts, and
-                              account
-                              recovery.</p>
-                         <div class="text-center mt-4">
-                              <a href="#" class="btn btn-custom">
-                                   <i class="bi bi-list icon icon-btn"></i> <span>View User List</span>
-                              </a>
-                         </div>
-                    </div>
-
-               </div>
-               <div class="col-md-4 m-auto">
-
-                    <div class="form-section">
-                         <form>
-                              <div class="d-flex justify-content-center align-items-center mb-4">
-                                   <i class="bi bi-telephone icon"></i>
-                              </div>
-                              <div class="mb-3">
-                                   <input type="tel" class="form-control" id="phoneNumber"
-                                        placeholder="Enter members phone number" required>
-                              </div>
-                              <button type="submit" class="btn btn-custom w-100">
-                                   <i class="bi bi-save icon icon-btn"></i> <span>Add member</span>
-                              </button>
-                         </form>
-                         <div class="text-left mt-2">
-                              <p class="text-muted"><strong>Note:</strong> Ensure that the number is valid and belongs
-                                   to the correct
-                                   user.</p>
-                         </div>
-                    </div>
-
-               </div>
+          <div class="mb-3">
+            <input
+              type="tel"
+              class="form-control-sec"
+              id="phoneNumber"
+              placeholder="Enter members phone number"
+              required
+            />
           </div>
+          <button type="submit" class="btn btn-custom w-100">
+            <i class="bi bi-save icon icon-btn"></i> <span>Add member</span>
+          </button>
+        </form>
+        <div class="text-left mt-2">
+          <p class="text-muted">
+            <strong>Note:</strong> Ensure that the number is valid and belongs
+            to the correct user.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-         
-     </div>
- 
 {% endblock content %}

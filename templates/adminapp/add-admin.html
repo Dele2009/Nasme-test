@@ -1,121 +1,137 @@
-{% extends 'partials/base.html' %}
-{% load static %}
+{% extends 'partials/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/styles.css'%}" />
+<style>
+  body {
+    background-color: #f4f8f4;
+  }
 
-     {% block styles %}
-     <link rel="stylesheet" href="{% static 'css/styles.css'%}">
-     <style>
-          body {
-               background-color: #f4f8f4;
-          }
+  .form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
 
-          .form-container {
-               background-color: #fff;
-               padding: 30px;
-               border-radius: 15px;
-               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-               margin-top: 50px;
-          }
+  h2 {
+    margin-bottom: 20px;
+  }
 
-          h2 {
-               margin-bottom: 20px;
-          }
+  .form-control-sec {
+    border-radius: 10px;
+    border: 1px solid #bddbb0;
+  }
 
-          .form-control {
-               border-radius: 10px;
-               border: 1px solid #bddbb0;
-          }
+  .info-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #eaf2e3;
+    border-left: 5px solid #386f05;
+    border-radius: 10px;
+  }
 
-          .info-section {
-               margin-top: 30px;
-               padding: 20px;
-               background-color: #eaf2e3;
-               border-left: 5px solid #386f05;
-               border-radius: 10px;
-          }
+  .info-section h4 {
+    color: #2b5d2d;
+  }
 
-          .info-section h4 {
-               color: #2b5d2d;
-          }
+  .faq-section {
+    background-color: #eaf2e3;
+    padding: 20px;
+    border-left: 5px solid #386f05;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+</style>
 
-          .faq-section {
-               background-color: #eaf2e3;
-               padding: 20px;
-               border-left: 5px solid #386f05;
-               border-radius: 10px;
-               margin-top: 20px;
-          }
-     </style>
+{% endblock styles %} {% block content %}
 
-           
-     {% endblock styles %}
-  
-     {% block content %}
-    
-          
-     <div class="container">
-          <div class="row justify-content-center">
-               <!-- Info Section Column -->
-               <div class="col-md-6">
-                    <!-- Instructions & Benefits Section -->
-                    <div class="info-section">
-                         <h4>Why Add a New Admin?</h4>
-                         <p>Admins help you manage your platform more efficiently. They can assist in moderating users,
-                              managing content, and overseeing system operations. Superadmins, with more control, can
-                              manage site-wide settings.</p>
-                    </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <!-- Info Section Column -->
+    <div class="col-md-6">
+      <!-- Instructions & Benefits Section -->
+      <div class="info-section">
+        <h4>Why Add a New Admin?</h4>
+        <p>
+          Admins help you manage your platform more efficiently. They can assist
+          in moderating users, managing content, and overseeing system
+          operations. Superadmins, with more control, can manage site-wide
+          settings.
+        </p>
+      </div>
 
-                    <!-- FAQ Section -->
-                    <div class="faq-section">
-                         <h5>Frequently Asked Questions</h5>
-                         <p><strong>Who should be an admin?</strong><br>
-                              Admins should be trusted individuals who can help manage key aspects of your platform.
-                         </p>
-                         <p><strong>What is a superadmin?</strong><br>
-                              A superadmin has unrestricted access to all features and settings. <a href="#">Learn
-                                   more</a>
-                         </p>
-                    </div>
-               </div>
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <h5>Frequently Asked Questions</h5>
+        <p>
+          <strong>Who should be an admin?</strong><br />
+          Admins should be trusted individuals who can help manage key aspects
+          of your platform.
+        </p>
+        <p>
+          <strong>What is a superadmin?</strong><br />
+          A superadmin has unrestricted access to all features and settings.
+          <a href="#">Learn more</a>
+        </p>
+      </div>
+    </div>
 
+    <!-- Form Column -->
+    <div class="col-md-6 form-container">
+      <h2>Add Admin</h2>
+      <form>
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control-sec"
+            placeholder="Admin Email"
+            aria-label="Admin Email"
+            required
+          />
+        </div>
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="superadminCheck"
+          />
+          <label class="form-check-label" for="superadminCheck"
+            >Add as superadmin
+            <span
+              class="tooltip-btn"
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="Superadmins have full access to all system settings and controls."
+              ><i class="bi bi-info-circle"></i
+            ></span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-custom w-100">Add Member</button>
+      </form>
+      <p class="text-muted">
+        You can assign admin rights and manage access levels later.
+      </p>
+    </div>
+  </div>
+</div>
 
-               <!-- Form Column -->
-               <div class="col-md-6 form-container">
-                    <h2>Add Admin</h2>
-                    <form>
-                         <div class="mb-3">
-                              <input type="email" class="form-control" placeholder="Admin Email"
-                                   aria-label="Admin Email" required>
-                         </div>
-                         <div class="mb-3 form-check">
-                              <input type="checkbox" class="form-check-input" id="superadminCheck">
-                              <label class="form-check-label" for="superadminCheck">Add as superadmin
-                                   <span class="tooltip-btn" data-bs-toggle="tooltip" data-bs-placement="right"
-                                        title="Superadmins have full access to all system settings and controls."><i
-                                             class="bi bi-info-circle"></i></span>
-                              </label>
-                         </div>
-                         <button type="submit" class="btn btn-custom w-100">Add Member</button>
-                    </form>
-                    <p class="text-muted">You can assign admin rights and manage access levels later.</p>
-               </div>
-          </div>
-     </div>
+<!-- Footer with Social Links -->
+<footer>
+  <p>Need help? <a href="#">Contact Support</a></p>
+  <div class="social-icons">
+    <a href="#"><i class="bi bi-facebook"></i></a>
+    <a href="#"><i class="bi bi-twitter"></i></a>
+    <a href="#"><i class="bi bi-linkedin"></i></a>
+  </div>
+</footer>
 
-     <!-- Footer with Social Links -->
-     <footer>
-          <p>Need help? <a href="#">Contact Support</a></p>
-          <div class="social-icons">
-               <a href="#"><i class="bi bi-facebook"></i></a>
-               <a href="#"><i class="bi bi-twitter"></i></a>
-               <a href="#"><i class="bi bi-linkedin"></i></a>
-          </div>
-     </footer>
-
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-     <script>
-          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-               return new bootstrap.Tooltip(tooltipTriggerEl)
-          })
-     </script>
-     {% endblock content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+</script>
+{% endblock content %}
