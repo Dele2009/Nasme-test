@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,21 +14,11 @@
 </head>
 
 <body>
-{% comment %} 
+
     <!-- flashed messages  -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{category}} d-flex align-items-center w-100 rounded-top-0 alert-dismissible" role="alert">
-        <!-- <i class="flex-shrink-0 bi bi-exclamation-triangle-fill fs-4"></i> -->
-        <div class="fs-5 text-center w-100" style="font-variant: small-caps;">
-            {{message}}
-        </div>
-        <button class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %} {% endcomment %}
+    
+    
+    
 
 
 
@@ -44,23 +35,17 @@
                         id='form'>
 
 
-                        {{ form.hidden_tag() }}
+                        <input id="csrf_token" name="csrf_token" type="hidden" value="IjA2NzA1YmNlMzI4NTQxNTBjNDlkNDU4ZjcwNmFmNTE5ODVkYzJmZmYi.ZurEvA.6EPBwZSWJaxY_3PoRo_3Y7heOBo">
 
                         <h4 class="text-dark text-center pb-3">ADMIN'S LOGIN</h4>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            {# <input type="tel" class="form-control" id="exampleInputEmail1"> #}
+                            
 
-                            {% if form.email.errors %}
-                            {{ form.email(type="email", id="email", class="form-control", placeholder="Email") }}
+                            
+                            <input class="form-control" id="email" name="email" placeholder="Email" required type="email" value="">
                             <span class="error"></span>
-                            {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                            {% else %}
-                            {{ form.email(type="email", id="email", class='form-control', placeholder="Email") }}
-                            <span class="error"></span>
-                            {% endif %}
+                            
 
 
 
@@ -69,40 +54,29 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            {# <input type="password" class="form-control" id="exampleInputPassword1"> #}
+                            
 
-                            {% if form.password.errors %}
-                            {{ form.password(type="password", id="password", class="form-control",
-                            placeholder="Password") }}
+                            
+                            <input class="form-control" id="password" name="password" placeholder="Password" required type="password" value="">
                             <span class="error"></span>
-                            {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                            {% else %}
-                            {{ form.password(type="password", id="password", class="form-control",
-                            placeholder="Password") }}
-                            <span class="error"></span>
-                            {% endif %}
+                            
 
 
                         </div>
                         <div class="mb-3 form-check d-flex justify-content-between my-4">
                             <div>
 
-                                {{ form.remember(type="checkbox", class='form-check-input', id='exampleCheck1') }}
-                                {{ form.remember.label(class='form-check-label', for='exampleCheck1') }}
+                                <input class="form-check-input" id="exampleCheck1" name="remember" type="checkbox" value="y">
+                                <label class="form-check-label" for="exampleCheck1">Remember me</label>
 
-                                {# <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Remember Me </label> #}
+                                
                             </div>
                             <div>
                                 <a href="/reset_password" target="_blank" class='nav-link'>Forgot Password? </a>
                             </div>
                         </div>
-                        {# <button type="submit" id='ric' class="btn w-100 mt-2 text-light"
-                            style="background: #228c2e;">Submit</button> #}
-                        {{ form.submit(type="submit", class="btn w-100 mt-2 text-light", style="background: #228c2e",
-                        id="ric") }}
+                        
+                        <input class="btn w-100 mt-2 text-light" id="ric" name="submit" style="background: #228c2e" type="submit" value="Log In">
                     </form>
                 </div>
             </div>

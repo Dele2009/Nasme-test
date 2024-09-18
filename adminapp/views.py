@@ -21,10 +21,11 @@ def admin_login(request):
             return redirect('admin-dashboard')
         else:
             return redirect(request,'admin-login')
-    return render(request, "")
+    return render(request, "adminapp/admin_login.html")
 
-@login_required
+#@login_required
 def admin_dashboard(request):
+    '''
     members = Business.objects.all()
     current_admin = User.objects.get(username = request.user)
 
@@ -40,17 +41,17 @@ def admin_dashboard(request):
         'members' : members,
         'units' : Unit.objects.all(),
     }
+    '''
+    return render(request, "adminapp/admin-dashboard.html")
 
-    return render(request, "",context)
-
-@login_required
+#@login_required
 def admin_profile(request):
     return render(request, "")
 
 # @login_required
 def manage_admin(request):
 
-    return render(request, 'adminapp/admin_login.html')
+    return render(request, 'adminapp/manage-admin.html')
 
 #@login_required
 def register_admin(request):
@@ -119,7 +120,7 @@ def manage_member(request):
     }
     return render(request, "adminapp/manage-membs.html",context)
 
-@login_required
+#@login_required
 def edit_member(request, id):
     member = Business.objects.get(id = id)
 
@@ -140,19 +141,19 @@ def edit_member(request, id):
         pass
     return render(request, "")
 
-@login_required
+#@login_required
 def delete_member(request, id):
     member = Business.objects.get(id = id)
     member.delete()
 
     return render(request, "")
 
-@login_required
+#@login_required
 def manage_unit(request):
     units = Unit.objects.all()
     return render(request,'')
 
-@login_required
+#@login_required
 def edit_unit(request):
 
     return render(request,'')
@@ -168,11 +169,11 @@ def add_unit(request,):
         pass
     return render(request,'adminapp/add-unit.html')
 
-@login_required
+#@login_required
 def delete_unit(request):
     return render(request,'')
 
-@login_required
+#@login_required
 def approvals(request):
 
     return render(request, '')
@@ -182,7 +183,7 @@ def unit_message(request):
 
     return render(request, 'adminapp/send-message.html')
 
-@login_required
+#@login_required
 def admin_logout(request):
     logout(request)
-    return redirect()
+    return redirect('admin-login')

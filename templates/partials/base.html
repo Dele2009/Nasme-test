@@ -198,7 +198,7 @@
     </div>
     <ul class="px-0 mb-0">
       <li class="log">
-        <a href="/admin/home">
+        <a href="{% url 'admin-dashboard' %}">
           <i class="bi bi-house-check" title="Dashboard"></i>
           <span class="nav-item" aria-label="Home">Dashboard</span>
         </a>
@@ -210,13 +210,13 @@
         </a>
 
         <div class="sideDrop shadow-sm">
-          <a href="/admin/register-member" class="cont"
+          <a href="{% url 'register-member' %}" class="cont"
             >Add Member</a
           >
-          <a href="/admin/manage_members" class="cont"
+          <a href="{% url 'manage-member' %}" class="cont"
             >Manage Member</a
           >
-          <a href="/admin/register-bulk" class="cont"
+          <a href="{% url 'bulk-register' %}" class="cont"
             >Bulk Registration</a
           >
         </div>
@@ -227,10 +227,10 @@
           <span class="nav-item">Admin</span>
         </a>
         <div class="sideDrop shadow-sm">
-          <a href="/admin/register-admin" class="cont"
+          <a href="{% url 'register-admin' %}" class="cont"
             >Add Admin</a
           >
-          <a href="/admin/manage_admins/" class="cont"
+          <a href="{% url 'manage-admin' %}" class="cont"
             >Manage Admin</a
           >
         </div>
@@ -241,10 +241,10 @@
           <span class="nav-item">Unit</span>
         </a>
         <div class="sideDrop shadow-sm">
-          <a href="/admin/register-unit" class="cont"
+          <a href="{% url 'add-unit' %}" class="cont"
             >Add Unit</a
           >
-          <a href="/admin/manage_units/" class="cont"
+          <a href="{% url 'manage-unit' %}" class="cont"
             >Manage Unit</a
           >
         </div>
@@ -281,7 +281,7 @@
         </div>
       </li>
       <li class="log">
-        <a href="/admin/send_unit_message">
+        <a href="{% url 'unit-message' %}">
           <i class="bi bi-chat-left-text" title="Send Message"></i>
           <span class="nav-item">Send Messages</span>
         </a>
@@ -294,7 +294,7 @@
       </li>
       <li class="log">
         <a
-          href="/admin-logout/"
+          href="{% url 'admin-logout' %}"
           data-bs-toggle="modal"
           data-bs-target="#logoutmodal"
         >
@@ -597,7 +597,7 @@
         >
           No
         </button>
-        <a href="/user-logout" class="btn btn-primary"
+        <a href="{% url 'admin-logout' %}" class="btn btn-primary"
           >Logout</a
         >
       </div>
