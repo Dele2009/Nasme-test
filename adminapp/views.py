@@ -151,7 +151,7 @@ def delete_member(request, id):
 #@login_required
 def manage_unit(request):
     units = Unit.objects.all()
-    return render(request,'')
+    return render(request,'adminapp/manage-unit.html')
 
 #@login_required
 def edit_unit(request):
@@ -174,9 +174,19 @@ def delete_unit(request):
     return render(request,'')
 
 #@login_required
-def approvals(request):
+def pending_approvals(request):
 
-    return render(request, '')
+    return render(request, 'adminapp/pending-approvals.html')
+
+#@login_required
+def disapproved_profiles(request):
+
+    return render(request, 'adminapp/disapproved-profiles.html')
+
+#@login_required
+def approved_profiles(request):
+
+    return render(request, 'adminapp/approved-profiles.html')
 
 #@login_required
 def unit_message(request):

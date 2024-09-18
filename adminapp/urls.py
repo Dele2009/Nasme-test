@@ -3,7 +3,7 @@ from adminapp import views
 
 urlpatterns = [
     path('admin-login', views.admin_login, name='admin-login'),
-    path('admin-dashboard/',views.admin_dashboard, name='admin-dashboard'),
+    path('',views.admin_dashboard, name='admin-dashboard'),
     path('admin-profile/', views.admin_profile, name='admin-profile'),
     path('manage-admin/', views.manage_admin, name='manage-admin'),
     path('register-admin/',views.register_admin, name='register-admin'),
@@ -16,7 +16,8 @@ urlpatterns = [
     path('edit-unit/', views.edit_unit, name='edit-unit'),
     path('add-unit/', views.add_unit, name='add-unit'),
     path('delete-unit/', views.delete_unit, name='delete-unit'),
-    path('approvals/', views.approvals, name='approvals'),
+    path('pending-approvals/', views.pending_approvals, name='pending-approvals'),
+    path('disapproved-profiles/', views.disapproved_profiles, name='disapproved-profiles'),
     path('unit-message/', views.unit_message, name='unit-message'),
     path('admin-logout/', views.admin_logout, name='admin-logout'),
 ]
