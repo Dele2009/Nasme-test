@@ -38,10 +38,10 @@
   <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
   <!-- font CSS -->
   <!-- fontawesome -->
-  <script
+  <!-- <script
     src="https://kit.fontawesome.com/f2545b0bd6.js"
     crossorigin="anonymous"
-  ></script>
+  ></script> -->
 
   <link rel="stylesheet" href="/static/css/main.css" />
   <link rel="stylesheet" href="/static/css/header.css" />
@@ -211,7 +211,7 @@
       </li>
       <li class="hasDrop log">
         <a for="drop4" class="toggleDrop">
-          <i class="bi bi-person-circle" title="Approvals"></i>
+          <i class="bi bi-bookmark-star" title="Approvals"></i>
           <span class="nav-item">Profile</span>
         </a>
         <div class="sideDrop shadow-sm">
@@ -229,8 +229,10 @@
           <span class="nav-item">Finance</span>
         </a>
         <div class="sideDrop shadow-sm">
-          <a href="#" class="cont">Create Payment</a>
-          <a href="#" class="cont">Generate Financial Report</a>
+          <a href="{% url 'create-payment' %}" class="cont">Create Payment</a>
+          <a href="{% url 'financial-report' %}" class="cont"
+            >Generate Financial Report</a
+          >
         </div>
       </li>
       <li class="log">
@@ -240,9 +242,15 @@
         </a>
       </li>
       <li class="log">
-        <a href="#">
+        <a href="{% url 'under-construction' %}">
           <i class="bi bi-chat" title="Account"></i>
           <span class="nav-item">Account</span>
+        </a>
+      </li>
+      <li class="log">
+        <a href="{% url 'under-construction' %}">
+          <i class="bi bi-person-circle" title="My Profile"></i>
+          <span class="nav-item">My Profile</span>
         </a>
       </li>
       <li class="log">

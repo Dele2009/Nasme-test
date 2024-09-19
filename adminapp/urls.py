@@ -19,5 +19,8 @@ urlpatterns = [
     path('pending-approvals/', views.pending_approvals, name='pending-approvals'),
     path('disapproved-profiles/', views.disapproved_profiles, name='disapproved-profiles'),
     path('unit-message/', views.unit_message, name='unit-message'),
+    path('create-payment/', views.create_payment, name='create-payment'),
+    path('financial-report/', views.financial_report, name='financial-report'),
+    path('under-construction/', views.under_construction, name='under-construction'),
     path('admin-logout/', views.admin_logout, name='admin-logout'),
 ]
