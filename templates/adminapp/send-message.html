@@ -140,6 +140,7 @@
       <div class="message-container">
         <h2><i class="bi bi-envelope-fill"></i> Send Message to Units</h2>
         <form action="#" method="POST">
+          {% csrf_token %}
           <div class="form-group">
             <label for="title">Title</label>
             <input
@@ -164,9 +165,9 @@
             <label for="unit">Unit</label>
             <select id="unit" name="unit" class="form-control-sec" value="">
               <option value="">....Select a unit to message....</option>
-              <option value="ict">ICT and Creative Initiatives</option>
-              <option value="marketing">Marketing and Communications</option>
-              <option value="operations">Operations and Logistics</option>
+              {% for unit in units %}
+              <option value="{{unit.id}}">{{unit.unit_name}}</option>
+              {% endfor %}
             </select>
           </div>
           <div class="send-all">

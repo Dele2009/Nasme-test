@@ -14,6 +14,11 @@ class User(AbstractUser):
 
 class Unit(models.Model):
     unit_name = models.CharField(max_length=100)
+    date_created = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.unit_name
+    
 
 class Business(models.Model):
     models.ManyToManyField(Unit)

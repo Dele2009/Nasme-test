@@ -36,13 +36,14 @@ def admin_dashboard(request):
 
     else:
         members = Business.objects.all()
+    '''
 
     context = {
-        'members' : members,
+        #'members' : members,
         'units' : Unit.objects.all(),
     }
-    '''
-    return render(request, "adminapp/admin-dashboard.html")
+    
+    return render(request, "adminapp/admin-dashboard.html", context)
 
 #@login_required
 def admin_profile(request):
@@ -151,22 +152,32 @@ def delete_member(request, id):
 #@login_required
 def manage_unit(request):
     units = Unit.objects.all()
-    return render(request,'adminapp/manage-unit.html')
+    if request.method == 'POST':
+        unit_id = request.POST.get('unit-id')
+        new_unit_name = request.POST.get('unit-name')
 
-#@login_required
-def edit_unit(request):
+        unit = Unit.objects.get(id = unit_id)
+        unit.unit_name = new_unit_name
+        unit.save()
 
-    return render(request,'')
+        return redirect('manage-unit')
+
+    context = {
+        'units' : units,
+    }
+
+    return render(request,'adminapp/manage-unit.html', context)
 
 #@login_required
 def add_unit(request,):
     if request.method == 'POST':
-        unit = request.POST.get('')
-
-        new_unit = Unit(name = unit)
-        new_unit.save()
-    else:
-        pass
+        unit = request.POST.get('unit_name')
+        if unit is not None and len(unit.strip()) > 5:
+            new_unit = Unit(unit_name = unit)
+            new_unit.save()
+            messages.success(request, 'Unit created successfully')
+        else:
+            messages.error(request, 'Invalid input, Length of unit name should be greater than 5 chahracters')
     return render(request,'adminapp/add-unit.html')
 
 #@login_required
@@ -190,15 +201,29 @@ def approved_profiles(request):
 
 #@login_required
 def unit_message(request):
+    # To send message to a unit
+    if request.method == 'POST':
 
-    return render(request, 'adminapp/send-message.html')
+        # To send message to all units
+        if 'sendAll' in request.POST:
+            pass
+
+        else:
+            pass
+
+    context = {
+        'units' : Unit.objects.all()
+    }
+    return render(request, 'adminapp/send-message.html', context)
 
 #@login_required
 def create_payment(request):
     return render(request, 'adminapp/under-construction.html')
+
 #@login_required
 def financial_report(request):
     return render(request, 'adminapp/under-construction.html')
+
 #@login_required
 def under_construction(request):
     return render(request, 'adminapp/under-construction.html')

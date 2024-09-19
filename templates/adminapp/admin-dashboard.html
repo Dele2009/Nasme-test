@@ -13,8 +13,8 @@
       <p>Active Members</p>
     </div>
     <div class="stat-card">
-      <h2>5</h2>
-      <p>Total Units</p>
+      <h2>{{units | length}}</h2>
+      <p>Total Unit{{units.count|pluralize:"s"}}</p>
     </div>
     <div class="stat-card">
       <h2>0</h2>
@@ -41,8 +41,8 @@
     <a href="{% url 'manage-unit' %}" class="rounded myCard">
       <i class="bi bi-stack"></i>
       <div class="text-center my-2">
-        <p>Total Unit(s)</p>
-        <p>5</p>
+        <p>Total Unit{{units.count|pluralize:"s"}}</p>
+        <p>{{units | length}}</p>
       </div>
     </a>
     <a href="{% url 'add-unit' %}" class="rounded myCard">

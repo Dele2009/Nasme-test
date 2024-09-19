@@ -13,7 +13,6 @@ urlpatterns = [
     path('edit-member/',views.edit_member, name='edit-member'),
     path('delete-member/',views.delete_member, name='delete-member'),
     path('manage-unit/', views.manage_unit, name='manage-unit'),
-    path('edit-unit/', views.edit_unit, name='edit-unit'),
     path('add-unit/', views.add_unit, name='add-unit'),
     path('delete-unit/', views.delete_unit, name='delete-unit'),
     path('pending-approvals/', views.pending_approvals, name='pending-approvals'),
