@@ -194,6 +194,16 @@ def unit_message(request):
     return render(request, 'adminapp/send-message.html')
 
 #@login_required
+def create_payment(request):
+    return render(request, 'adminapp/under-construction.html')
+#@login_required
+def financial_report(request):
+    return render(request, 'adminapp/under-construction.html')
+#@login_required
+def under_construction(request):
+    return render(request, 'adminapp/under-construction.html')
+
+#@login_required
 def admin_logout(request):
     logout(request)
     return redirect('admin-login')
