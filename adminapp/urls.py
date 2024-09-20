@@ -21,5 +21,6 @@ urlpatterns = [
     path('create-payment/', views.create_payment, name='create-payment'),
     path('financial-report/', views.financial_report, name='financial-report'),
     path('under-construction/', views.under_construction, name='under-construction'),
+    path('export-members/', views.export_members, name='export-members'),
     path('admin-logout/', views.admin_logout, name='admin-logout'),
 ]

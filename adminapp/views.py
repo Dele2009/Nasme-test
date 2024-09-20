@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import  User
 from mainapp.models import *
+import csv
 
 # Create your views here.
 def admin_login(request):
@@ -64,7 +65,7 @@ def admin_profile(request):
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
     
-    return render(request, "")
+    return render(request, "adminapp/under-construction.html")
 
 # @login_required
 def manage_admin(request):
@@ -129,6 +130,36 @@ def bulk_register(request):
         return redirect('admin-login')
     
     return render(request, 'adminapp/bulk-reg.html')
+
+def export_members(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
+    all_members = User.objects.filter(is_staff = False)
+    for member in all_members:
+        details =  [{'Business_name': member.first_name},
+                    # {'Phone_number': member.phone_num},
+                    # {'Email': member.email}, 
+                    # {'Address': 'A Quiet Place'},
+                    # {'Services': ''},
+                    # {'Website': ''},
+                    # {'Facebook': ''},
+                    # {'Twitter(x)': ''},
+                    # {'Linkedln': ''},
+                    # {'Whatsapp': ''}
+                    ]
+    
+    with open('members_list.csv', mode='w') as csvfile:
+        for i in range(len(details)):
+            fieldnames = details[i].keys()
+            print(fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter = ';')
+        writer.writeheader()
+        for row in details:
+            writer.writerow(row)
+
+    return redirect('manage-member')
 
 #@login_required
 def manage_member(request):
