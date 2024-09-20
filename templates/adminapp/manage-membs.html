@@ -76,8 +76,8 @@
               </tr>
             </thead>
             <tbody>
+              {% for member in members %}
               <tr>
-                {% for member in members %}
                 <td>{{forloop.counter}}</td>
                 <td>{{member.first_name}} {{member.last_name}}</td>
                 <td>{{member.phone_num}}</td>
@@ -110,8 +110,8 @@
                     ></a>
                   </div>
                 </td>
-                {% endfor %}
               </tr>
+              {% endfor %}
               <!-- <tr>
                                              <td>None</td>
                                              <td>09023983884</td>

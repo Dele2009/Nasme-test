@@ -107,14 +107,15 @@ def register_member(request):
     # To handle login required
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
+    members = len(User.objects.filter(is_staff = False))
 
     if request.method == 'POST':
         phone_number = request.POST.get('phoneNumber')
         new_member = User.objects.create(
-                        first_name = 'Undefined',
-                        last_name = 'Undefined',
-                        username = 'Undefined',
-                        email = 'Undefined',
+                        first_name = 'N/A',
+                        last_name = 'N/A',
+                        username = f'Member{members + 1}',
+                        email = 'N/A',
                         phone_num = phone_number,
                     )
         new_member.set_password('superadmin')
