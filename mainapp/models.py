@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
+from django.core import validators
 
 
 # # Create your models here.
 class User(AbstractUser):
+    profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    phone_num = models.CharField(null=True, max_length=20, validators=[validators.MinLengthValidator(10)])
     dob = models.DateField(auto_now=False, auto_now_add=False, null=True)
     has_filled_profile = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
@@ -25,7 +28,6 @@ class Business(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     units = models.ManyToManyField('Unit', related_name='units')
     name = models.CharField(max_length=200)
-    email = models.EmailField(verbose_name='business email', max_length=254)
     address  = models.CharField(max_length=100)
     phone_no = models.CharField(max_length=20)
     about = models.TextField()

@@ -51,10 +51,10 @@
         <div class="table-actions">
           <h2>Members List</h2>
           <div class="d-flex justify-content-center align-items-center gap-3">
-            <button class="btn btn-custom">
+            <a href="{% url 'register-member' %}" class="btn btn-custom">
               <i class="bi bi-plus-circle icon icon-btn"></i>
               <span>Add Member</span>
-            </button>
+            </a>
             <button class="btn btn-custom">
               <i class="bi bi-download icon icon-btn"></i>
               <span>Export List</span>
@@ -77,10 +77,11 @@
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
-                <td>VALUEMAX CODERS' HUB</td>
-                <td>07032060088</td>
-                <td>info@valuemaxonline.com</td>
+                {% for member in members %}
+                <td>{{forloop.counter}}</td>
+                <td>{{member.first_name}} {{member.last_name}}</td>
+                <td>{{member.phone_num}}</td>
+                <td>{{member.email}}</td>
                 <td>ICT and Creative Industry</td>
                 <td>
                   2023 Dues<br /><a href="#" class="text-success">See More</a>
@@ -109,6 +110,7 @@
                     ></a>
                   </div>
                 </td>
+                {% endfor %}
               </tr>
               <!-- <tr>
                                              <td>None</td>
