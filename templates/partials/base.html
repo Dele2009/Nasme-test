@@ -112,45 +112,16 @@
         <div
           class="dropdown-menu mt-md-3 border-0 outline-0 rounded-bottom-2 me-2 bg-white py-0"
         >
+        {% for unit in units %}
           <a
             class="text-wrap dropdown-item border-top py-1 rounded-bottom"
             style="min-width: 0 !important; font-variant: small-caps !important"
             href="/admin/manage_unit_members/11"
           >
-            ICT and Creative Industry
+            {{unit.unit_name}}
           </a>
-
-          <a
-            class="text-wrap dropdown-item border-top py-1 rounded-bottom"
-            style="min-width: 0 !important; font-variant: small-caps !important"
-            href="/admin/manage_unit_members/12"
-          >
-            Printing Press and Publishing
-          </a>
-
-          <a
-            class="text-wrap dropdown-item border-top py-1 rounded-bottom"
-            style="min-width: 0 !important; font-variant: small-caps !important"
-            href="/admin/manage_unit_members/13"
-          >
-            Agribusiness
-          </a>
-
-          <a
-            class="text-wrap dropdown-item border-top py-1 rounded-bottom"
-            style="min-width: 0 !important; font-variant: small-caps !important"
-            href="/admin/manage_unit_members/14"
-          >
-            Real Estate
-          </a>
-
-          <a
-            class="text-wrap dropdown-item border-top py-1 rounded-bottom"
-            style="min-width: 0 !important; font-variant: small-caps !important"
-            href="/admin/manage_unit_members/15"
-          >
-            Sport and Logistics
-          </a>
+          {% endfor %}
+          
         </div>
       </button>
 

@@ -30,8 +30,11 @@ def admin_login(request):
             return redirect('admin-login')
     return render(request, "adminapp/admin_login.html")
 
-@login_required
+#@login_required
 def admin_dashboard(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     current_admin = User.objects.get(username = request.user)
     user_members = User.objects.filter(is_staff = False)
@@ -57,10 +60,18 @@ def admin_dashboard(request):
 
 #@login_required
 def admin_profile(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     return render(request, "")
 
 # @login_required
 def manage_admin(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+
     all_admins = User.objects.filter(is_staff = True)
     context = {
         'admins' : all_admins
@@ -69,6 +80,9 @@ def manage_admin(request):
 
 #@login_required
 def register_admin(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -89,6 +103,9 @@ def register_admin(request):
 
 #@login_required
 def register_member(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     if request.method == 'POST':
         phone_number = request.POST.get('phoneNumber')
@@ -107,10 +124,18 @@ def register_member(request):
 
 #@login_required
 def bulk_register(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     return render(request, 'adminapp/bulk-reg.html')
 
 #@login_required
 def manage_member(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     members = User.objects.filter(is_staff = False)
 
     context = {
@@ -120,6 +145,10 @@ def manage_member(request):
 
 #@login_required
 def edit_member(request, id):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     member = Business.objects.get(id = id)
 
     if request.method == 'POST':
@@ -141,6 +170,10 @@ def edit_member(request, id):
 
 #@login_required
 def delete_member(request, id):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     member = Business.objects.get(id = id)
     member.delete()
 
@@ -148,6 +181,10 @@ def delete_member(request, id):
 
 #@login_required
 def manage_unit(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     units = Unit.objects.all()
     if request.method == 'POST':
         unit_id = request.POST.get('unit-id')
@@ -167,6 +204,10 @@ def manage_unit(request):
 
 #@login_required
 def add_unit(request,):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     if request.method == 'POST':
         unit = request.POST.get('unit_name')
         if unit is not None and len(unit.strip()) > 5:
@@ -179,25 +220,42 @@ def add_unit(request,):
 
 #@login_required
 def delete_unit(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     return render(request,'')
 
 #@login_required
 def pending_approvals(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     return render(request, 'adminapp/pending-approvals.html')
 
 #@login_required
 def disapproved_profiles(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     return render(request, 'adminapp/disapproved-profiles.html')
 
 #@login_required
 def approved_profiles(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     return render(request, 'adminapp/approved-profiles.html')
 
 #@login_required
 def unit_message(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     # To send message to a unit
     if request.method == 'POST':
 
@@ -215,17 +273,33 @@ def unit_message(request):
 
 #@login_required
 def create_payment(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     return render(request, 'adminapp/under-construction.html')
 
 #@login_required
 def financial_report(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     return render(request, 'adminapp/under-construction.html')
 
 #@login_required
 def under_construction(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     return render(request, 'adminapp/under-construction.html')
 
 #@login_required
 def admin_logout(request):
+    # To handle login required
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
+    
     logout(request)
     return redirect('admin-login')
