@@ -33,6 +33,13 @@ body {
     width: calc(100% - 180px);
 }
 
+.sidebar.active .main-content .table-content {
+    /* left: 180px; */
+    /* width: calc(100% - 180px) !important; */
+    display: none !important;
+}
+
+
 .sidebar.active {
     width: 180px;
 }
@@ -112,6 +119,7 @@ body {
     transition: all 0.5s ease;
     width: calc(100% - 60px);
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 1;
     padding-bottom: 70px;
 

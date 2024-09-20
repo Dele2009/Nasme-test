@@ -13,6 +13,7 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
 
   .table-actions {
@@ -44,9 +45,9 @@
   }
 </style>
 {% endblock styles %} {% block content %}
-<div class="container my-5">
+<div class="container my-5 table-content">
   <div class="row justify-content-center align-items-center">
-    <div class="col-lg-12">
+    <div class="">
       <div class="table-container">
         <div class="table-actions">
           <h2>Members List</h2>
@@ -87,27 +88,17 @@
                   2023 Dues<br /><a href="#" class="text-success">See More</a>
                 </td>
                 <td>
-                  Membership Fees<br /><a href="#" class="text-success"
-                    >See More</a
-                  >
+                  Membership Fees<br /><a href="#" class="text-success">See More</a>
                 </td>
                 <td class="action-icons">
                   <div class="action-icons-container">
-                    <a href="#" class="text-info" title="edit-member"
-                      ><i class="bi bi-pencil-square"></i
-                    ></a>
-                    <a href="#" class="text-secondary" title="message-member"
-                      ><i class="bi bi-chat-left-text-fill"></i
-                    ></a>
-                    <a href="#" class="text-warning" title="view-member-details"
-                      ><i class="bi bi-eye-fill"></i
-                    ></a>
-                    <a href="#" class="text-dark" title="Suspend-member"
-                      ><i class="bi bi-person-fill-lock"></i
-                    ></a>
-                    <a href="#" class="text-danger" title="Delete-member"
-                      ><i class="bi bi-trash-fill"></i
-                    ></a>
+                    <a href="#" class="text-info" title="edit-member"><i class="bi bi-pencil-square"></i></a>
+                    <a href="#" class="text-secondary" title="message-member"><i
+                        class="bi bi-chat-left-text-fill"></i></a>
+                    <a href="#" class="text-warning" title="view-member-details"><i class="bi bi-eye-fill"></i></a>
+                    <a href="#disapprovemodal" class="text-dark" data-bs-toggle="modal" title="Suspend-member"><i
+                        class="bi bi-person-fill-lock"></i></a>
+                    <a href="#" class="text-danger" title="Delete-member"><i class="bi bi-trash-fill"></i></a>
                   </div>
                 </td>
                 {% endfor %}
@@ -149,9 +140,7 @@
             </tbody>
           </table>
         </div>
-        <div
-          class="d-flex justify-content-center gap-4 align-items-center mt-4"
-        >
+        <div class="d-flex justify-content-center gap-4 align-items-center mt-4">
           <i class="bi bi-arrow-left pagination-arrow"></i>
           <div>
             <button class="btn-pagination">1</button>
