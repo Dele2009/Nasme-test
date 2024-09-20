@@ -51,12 +51,14 @@
     </div>
     <div class="col-md-4 m-auto">
       <div class="form-section">
-        <form>
+        <form method="POST">
+          {% csrf_token %}
           <div class="d-flex justify-content-center align-items-center mb-4">
             <i class="bi bi-telephone icon"></i>
           </div>
           <div class="mb-3">
-            <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter members phone number" required />
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+              placeholder="Enter members phone number" required />
           </div>
           <button type="submit" class="btn btn-custom w-100">
             <i class="bi bi-save icon icon-btn"></i> <span>Add member</span>

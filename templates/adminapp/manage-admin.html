@@ -51,10 +51,10 @@
         <div class="table-actions">
           <h2>Admins List</h2>
           <div class="d-flex justify-content-center align-items-center gap-3">
-            <button class="btn btn-custom">
+            <a href="{%url 'register-admin' %}" class="btn btn-custom">
               <i class="bi bi-plus-circle icon icon-btn"></i>
               <span>Add Admin</span>
-            </button>
+            </a>
             <button class="btn btn-custom">
               <i class="bi bi-download icon icon-btn"></i>
               <span>Export List</span>
@@ -74,10 +74,11 @@
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
-                <td>VALUEMAX CODERS' HUB</td>
-                <td>07032060088</td>
-                <td>info@valuemaxonline.com</td>
+                {% for admin in admins %}
+                <td>{{forloop.counter}}</td>
+                <td>{{admin.first_name}} {{admin.last_name}}</td>
+                <td>{{admin.phone_num}}</td>
+                <td>{{admin.email}}</td>
                 <td class="action-icons">
                   <div class="action-icons-container">
                     <a href="#" class="text-info" title="edit-admin"
@@ -98,6 +99,7 @@
                   </div>
                 </td>
               </tr>
+              {% endfor %}
               <!-- <tr>
                                              <td>None</td>
                                              <td>09023983884</td>

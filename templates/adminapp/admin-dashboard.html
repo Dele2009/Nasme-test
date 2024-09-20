@@ -2,19 +2,19 @@
 <div class="dashboard-container py-5">
   <!-- Greeting Section -->
   <div class="greeting-section px-5">
-    <h1>Welcome back, Admin!</h1>
+    <h1>Welcome back, {{admin.first_name}}!</h1>
     <p>Here's a summary of your current activities and status</p>
   </div>
 
   <!-- Statistics Section -->
   <div class="stats-section px-5">
     <div class="stat-card">
-      <h2>9</h2>
-      <p>Active Members</p>
+      <h2>{{members.count}}</h2>
+      <p>Active Member{{members.count | pluralize:'s'}}</p>
     </div>
     <div class="stat-card">
-      <h2>5</h2>
-      <p>Total Units</p>
+      <h2>{{units | length}}</h2>
+      <p>Total Unit{{units.count|pluralize:"s"}}</p>
     </div>
     <div class="stat-card">
       <h2>0</h2>
@@ -27,8 +27,8 @@
     <a href="{% url 'manage-member' %}" class="rounded myCard">
       <i class="bi bi-people-fill"></i>
       <div class="text-center my-2">
-        <p>Total Member(s)</p>
-        <p>3</p>
+        <p>Total Member{{members.count | pluralize:'s'}}</p>
+        <p>{{members.count}}</p>
       </div>
     </a>
     <a href="{% url 'financial-report' %}" class="rounded myCard">
@@ -41,8 +41,8 @@
     <a href="{% url 'manage-unit' %}" class="rounded myCard">
       <i class="bi bi-stack"></i>
       <div class="text-center my-2">
-        <p>Total Unit(s)</p>
-        <p>5</p>
+        <p>Total Unit{{units.count|pluralize:"s"}}</p>
+        <p>{{units | length}}</p>
       </div>
     </a>
     <a href="{% url 'add-unit' %}" class="rounded myCard">

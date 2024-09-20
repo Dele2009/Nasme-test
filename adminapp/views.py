@@ -8,26 +8,35 @@ from mainapp.models import *
 
 # Create your views here.
 def admin_login(request):
+    # If user is already logged in
+    if request.user.is_authenticated and request.user.is_staff:
+        messages.warning(request, 'User is already logged in...')
+        return redirect('/')
 
     #Login form
     if request.method == 'POST':
-        email = request.POST.get('')
-        password = request.POST.get('')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
-        admin_auth = authenticate(email=email, password=password)
+        admin_auth = authenticate(username=email, password=password)
 
         if admin_auth is not None:
             login(request, admin_auth)
-            return redirect('admin-dashboard')
+            if request.user.is_staff == True:
+                return redirect('admin-dashboard')
+            else:
+                return redirect('admin-login')
         else:
-            return redirect(request,'admin-login')
+            return redirect('admin-login')
     return render(request, "adminapp/admin_login.html")
 
-#@login_required
+@login_required
 def admin_dashboard(request):
+
+    current_admin = User.objects.get(username = request.user)
+    user_members = User.objects.filter(is_staff = False)
     '''
     members = Business.objects.all()
-    current_admin = User.objects.get(username = request.user)
 
     # Search 
     if request.method == 'POST':
@@ -36,13 +45,15 @@ def admin_dashboard(request):
 
     else:
         members = Business.objects.all()
+    '''
 
     context = {
-        'members' : members,
+        'members' : user_members,
         'units' : Unit.objects.all(),
+        'admin' : current_admin,
     }
-    '''
-    return render(request, "adminapp/admin-dashboard.html")
+    
+    return render(request, "adminapp/admin-dashboard.html", context)
 
 #@login_required
 def admin_profile(request):
@@ -50,60 +61,47 @@ def admin_profile(request):
 
 # @login_required
 def manage_admin(request):
-
-    return render(request, 'adminapp/manage-admin.html')
+    all_admins = User.objects.filter(is_staff = True)
+    context = {
+        'admins' : all_admins
+    }
+    return render(request, 'adminapp/manage-admin.html', context)
 
 #@login_required
 def register_admin(request):
 
     if request.method == 'POST':
-        pass
+        email = request.POST.get('email')
+        new_admin = User.objects.create(
+                        first_name = 'Undefined',
+                        last_name = 'Undefined',
+                        username = email,
+                        email = email,
+                    )
+        new_admin.set_password('superadmin')
+        new_admin.is_staff = True
+        if 'is_superadmin' in request.POST:
+            new_admin.is_superuser = True
+            new_admin.save()
+        else:
+            new_admin.save()
     return render(request, "adminapp/add-admin.html")
 
 #@login_required
 def register_member(request):
 
     if request.method == 'POST':
-        #getting the data
-        business_name = request.POST.get('')
-        phone_no = request.POST.get('')
-        email = request.POST.get('')
-        unit = request.POST.get('')
-        address = request.POST.get('')
-        services = request.POST.get('')
-        about = request.POST.get('')
-        logo = request.POST.get('')
-        business_images = request.POST.get('')
-        website = request.POST.get('')
-        facebook = request.POST.get('')
-        twitter = request.POST.get('')
-        linkedln = request.POST.get('')
-        whatsapp = request.POST.get('')
-
-        #savng data to Business model
-        Business.owner = ''
-        Business.name = business_name
-        Business.email = email
-        Business.phone_no = phone_no
-        Business.address = address
-        Business.services = services
-        Business.about = about
-        Business.logo = logo
-
-        #saving to BusinessImages model
-        BusinessImages.image = business_images
-
-        #saving to Socials model
-        Socials.website = website
-        Socials.facebook = facebook
-        Socials.whatsapp = whatsapp
-        Socials.linkedin = linkedln
-        Socials.twitter = twitter
-
-        Business.save()
-        BusinessImages.save()
-        Socials.save()
-        pass
+        phone_number = request.POST.get('phoneNumber')
+        new_member = User.objects.create(
+                        first_name = 'Undefined',
+                        last_name = 'Undefined',
+                        username = 'Undefined',
+                        email = 'Undefined',
+                        phone_num = phone_number,
+                    )
+        new_member.set_password('superadmin')
+        
+        new_member.save()
 
     return render(request, "adminapp/add-member.html")
 
@@ -113,10 +111,10 @@ def bulk_register(request):
 
 #@login_required
 def manage_member(request):
-    members = Business.objects.all()
+    members = User.objects.filter(is_staff = False)
 
     context = {
-        'all_members' : members,
+        'members' : members,
     }
     return render(request, "adminapp/manage-membs.html",context)
 
@@ -151,22 +149,32 @@ def delete_member(request, id):
 #@login_required
 def manage_unit(request):
     units = Unit.objects.all()
-    return render(request,'adminapp/manage-unit.html')
+    if request.method == 'POST':
+        unit_id = request.POST.get('unit-id')
+        new_unit_name = request.POST.get('unit-name')
 
-#@login_required
-def edit_unit(request):
+        unit = Unit.objects.get(id = unit_id)
+        unit.unit_name = new_unit_name
+        unit.save()
 
-    return render(request,'')
+        return redirect('manage-unit')
+
+    context = {
+        'units' : units,
+    }
+
+    return render(request,'adminapp/manage-unit.html', context)
 
 #@login_required
 def add_unit(request,):
     if request.method == 'POST':
-        unit = request.POST.get('')
-
-        new_unit = Unit(name = unit)
-        new_unit.save()
-    else:
-        pass
+        unit = request.POST.get('unit_name')
+        if unit is not None and len(unit.strip()) > 5:
+            new_unit = Unit(unit_name = unit)
+            new_unit.save()
+            messages.success(request, 'Unit created successfully')
+        else:
+            messages.error(request, 'Invalid input, Length of unit name should be greater than 5 chahracters')
     return render(request,'adminapp/add-unit.html')
 
 #@login_required
@@ -190,15 +198,29 @@ def approved_profiles(request):
 
 #@login_required
 def unit_message(request):
+    # To send message to a unit
+    if request.method == 'POST':
 
-    return render(request, 'adminapp/send-message.html')
+        # To send message to all units
+        if 'sendAll' in request.POST:
+            pass
+
+        else:
+            pass
+
+    context = {
+        'units' : Unit.objects.all()
+    }
+    return render(request, 'adminapp/send-message.html', context)
 
 #@login_required
 def create_payment(request):
     return render(request, 'adminapp/under-construction.html')
+
 #@login_required
 def financial_report(request):
     return render(request, 'adminapp/under-construction.html')
+
 #@login_required
 def under_construction(request):
     return render(request, 'adminapp/under-construction.html')

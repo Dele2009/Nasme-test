@@ -51,7 +51,7 @@
         <div class="table-actions">
           <h2>Unit's List</h2>
           <div class="d-flex justify-content-center align-items-center gap-3">
-            <a href="#" class="btn btn-custom">
+            <a href="{% url 'add-unit' %}" class="btn btn-custom">
               <i class="bi bi-plus-circle icon icon-btn"></i>
               <span>Add Unit</span>
             </a>
@@ -72,64 +72,25 @@
               </tr>
             </thead>
             <tbody>
+              {% for unit in units %}
               <tr>
-                <td>1</td>
-                <td>Agric-Culture</td>
-                <td>12/09/24</td>
+                <td>{{forloop.counter}}</td>
+                <td>{{unit.unit_name}}</td>
+                <td>{{unit.date_created}}</td>
                 <td class="action-icons">
                   <div class="action-icons-container">
-                    <a href="#" class="text-info"
-                      ><i class="bi bi-pencil-square"></i
-                    ></a>
-                    <a href="#" class="text-warning"
-                      ><i class="bi bi-eye-fill"></i
-                    ></a>
-                    <a href="#" class="text-danger"
-                      ><i class="bi bi-trash-fill"></i
-                    ></a>
+                    <a data-bs-toggle="modal" data-bs-unitName="{{unit.unit_name}}" data-bs-unitId="{{unit.id}}" href="#edit-unit-modal"
+                      class="text-info"><i class="bi bi-pencil-square"></i></a>
+                    <a href="#" class="text-warning"><i class="bi bi-eye-fill"></i></a>
+                    <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
                   </div>
                 </td>
               </tr>
-              <!-- <tr>
-                                             <td>None</td>
-                                             <td>09023983884</td>
-                                             <td>None</td>
-                                             <td>None</td>
-                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
-                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
-                                             <td class="action-icons">
-                                                  <div class="action-icons-container">
-                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
-                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
-                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
-                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
-                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
-                                                  </div>
-                                             </td>
-                                        </tr>
-                                        <tr>
-                                             <td>TOBI WEBTONIC</td>
-                                             <td>12345678912</td>
-                                             <td>tobbswiththestuffl@tobbs.com</td>
-                                             <td>ICT, Creative Industry, Printing Press</td>
-                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
-                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
-                                             <td class="action-icons">
-                                                  <div class="action-icons-container">
-                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
-                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
-                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
-                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
-                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
-                                                  </div>
-                                             </td>
-                                        </tr> -->
+              {% endfor %}
             </tbody>
           </table>
         </div>
-        <div
-          class="d-flex justify-content-center gap-4 align-items-center mt-4"
-        >
+        <div class="d-flex justify-content-center gap-4 align-items-center mt-4">
           <i class="bi bi-arrow-left pagination-arrow"></i>
           <div>
             <button class="btn-pagination">1</button>
@@ -140,4 +101,55 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade mt-5" id="edit-unit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog mt-5">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update unit</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="hidden" id="unit-id" name="unit-id">
+          <div class="mb-3">
+            <label for="unit-name" class="text-left col-form-label">Unit name:</label>
+            <input id="unit-name" name="unit-name" type="text" class="form-control" id="unit-name">
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" style="background: #ff0000;" class="btn" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-custom">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  const unitmodal = document.getElementById('edit-unit-modal')
+  if (unitmodal) {
+    unitmodal.addEventListener('show.bs.modal', event => {
+      // Button that triggered the modal
+      const button = event.relatedTarget
+      // Extract info from data-bs-* attributes
+      const unitId = button.getAttribute('data-bs-unitId')
+      const unitName = button.getAttribute('data-bs-unitName')
+      // If necessary, you could initiate an Ajax request here
+      // and then do the updating in a callback.
+
+      // Update the modal's content.
+      const unitIdInput = unitmodal.querySelector('#unit-id')
+      const unitNameInput = unitmodal.querySelector('#unit-name')
+
+      unitIdInput.value = unitId
+      unitNameInput.value = unitName
+    })
+  }
+</script>
 {% endblock content %}
