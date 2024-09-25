@@ -2,17 +2,14 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 <style>
-  body {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-  }
 
   .table-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* overflow: hidden; */
+    width: 100% !important;
   }
 
   .table-actions {
@@ -44,8 +41,8 @@
   }
 </style>
 {% endblock styles %} {% block content %}
-<div class="container my-5">
-  <div class="row justify-content-center align-items-center">
+<div class="w-100 my-5 table-contents">
+  <div class="row justify-content-center align-items-center h-100">
     <div class="col-lg-12">
       <div class="table-container">
         <div class="table-actions">
@@ -61,7 +58,7 @@
             </a>
           </div>
         </div>
-        <div class="table-responsive-xxl">
+        <div class="table-responsive-xxl w-100">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -76,38 +73,34 @@
               </tr>
             </thead>
             <tbody>
-              {% for member in members %}
+              {% for business in businesses %}
               <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{member.first_name}} {{member.last_name}}</td>
-                <td>{{member.phone_num}}</td>
-                <td>{{member.email}}</td>
-                <td>ICT and Creative Industry</td>
+                <td>{{business.name}}</td>
+                <td>{{business.owner.phone_num}}</td>
+                <td>{{business.owner.email}}</td>
+                <td>{{business.unit}}</td>
                 <td>
                   2023 Dues<br /><a href="#" class="text-success">See More</a>
                 </td>
                 <td>
-                  Membership Fees<br /><a href="#" class="text-success"
-                    >See More</a
-                  >
+                  Membership Fees<br /><a href="#" class="text-success">See More</a>
                 </td>
                 <td class="action-icons">
                   <div class="action-icons-container">
-                    <a href="#" class="text-info" title="edit-member"
-                      ><i class="bi bi-pencil-square"></i
-                    ></a>
-                    <a href="#" class="text-secondary" title="message-member"
-                      ><i class="bi bi-chat-left-text-fill"></i
-                    ></a>
-                    <a href="#" class="text-warning" title="view-member-details"
-                      ><i class="bi bi-eye-fill"></i
-                    ></a>
-                    <a href="#" class="text-dark" title="Suspend-member"
-                      ><i class="bi bi-person-fill-lock"></i
-                    ></a>
-                    <a href="#" class="text-danger" title="Delete-member"
-                      ><i class="bi bi-trash-fill"></i
-                    ></a>
+                    <a href="#editMemberModal" data-bs-toggle="modal" data-bs-business='
+                      {
+                        "memberName": "{{member.first_name}} {{member.last_name}}",
+                        "memberNum": "{{member.phone_num}}",
+                        "memberEmail": "{{member.email}}"
+                      }
+                    ' class="text-info" title="edit-member"><i class="bi bi-pencil-square"></i></a>
+                    <a href="#MessageMemberModal" data-bs-memberId="{{member.id}}" data-bs-businessName='{{member.first_name}} {{member.last_name}}' data-bs-toggle="modal" class="text-secondary" title="message-member"><i
+                        class="bi bi-chat-left-text-fill"></i></a>
+                    <a href="#" class="text-warning" title="view-member-details"><i class="bi bi-eye-fill"></i></a>
+                    <a href="#SuspendMemberModal" data-bs-memberId="{{member.id}}" data-bs-businessName='{{member.first_name}} {{member.last_name}}' class="text-dark" data-bs-toggle="modal" title="Suspend-member"><i
+                        class="bi bi-person-fill-lock"></i></a>
+                    <a href="#deleteMembermodal" data-bs-toggle="modal" class="text-danger" title="Delete-member"><i class="bi bi-trash-fill"></i></a>
                   </div>
                 </td>
               </tr>
@@ -149,9 +142,7 @@
             </tbody>
           </table>
         </div>
-        <div
-          class="d-flex justify-content-center gap-4 align-items-center mt-4"
-        >
+        <div class="d-flex justify-content-center gap-4 align-items-center mt-4">
           <i class="bi bi-arrow-left pagination-arrow"></i>
           <div>
             <button class="btn-pagination">1</button>
@@ -162,4 +153,206 @@
     </div>
   </div>
 </div>
+
+<!-- Messageimg modal -->
+<div class="modal fade" id="MessageMemberModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" name="memberId" id="memberId">
+          <div class="mb-3">
+            <label for="business-name" class="col-form-label">Member:</label>
+            <input type="text" class="form-control" id="business-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-custom">
+          <i class="bi bi-send-fill me-2"></i>
+          Send message
+        </button>      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Suspention modal -->
+<div class="modal fade" id="SuspendMemberModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Member suspension request</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" name="memberId" id="memberId">
+          <div class="mb-3">
+            <label class="col-form-label">Requesting to suspend 
+              <span id="business-name"></span>
+            </label>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Please Provide reason of suspension</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-custom">
+          <i class="bi bi-person-fill-slash me-2"></i>
+          Suspend member
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Edit Member Details Modal -->
+<div class="modal fade" id="editMemberModal" tabindex="-1" aria-labelledby="editMemberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 shadow-sm">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="editMemberModalLabel">Edit Member Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+                    <input type="hidden" name="memberId" id="memberId">
+
+          <!-- Profile Image and Upload -->
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="d-flex flex-column align-items-start mb-3">
+                <img src="/static/web_images/nasme-removebg-preview.png" class="object-fit-cover border rounded" style="height: 200px; width: 200px;" alt="Profile Picture">
+                <div class="ms-3">
+                  <label class="form-label d-block fw-semibold text-secondary">Update Profile Picture</label>
+                  <input class="form-control" type="file" id="profilePicture" style="max-width: 200px;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Fields -->
+            <div class="col-lg-7">
+              <div class="mb-3">
+                <label for="businessName" class="form-label text-secondary">Business Name</label>
+                <input type="text" class="form-control rounded-3 py-2" id="businessName" >
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label text-secondary">Phone</label>
+                <input type="text" class="form-control rounded-3 py-2" id="phone">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label text-secondary">Email</label>
+                <input type="email" class="form-control rounded-3 py-2" id="email">
+              </div>
+              <!-- <div class="mb-3">
+                <label for="password" class="form-label text-secondary">Password</label>
+                <input type="password" class="form-control rounded-3 py-2" id="password" value="12345678">
+              </div> -->
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="btn btn-light text-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-custom px-4">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade" id="deleteMembermodal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST">
+        <div class="modal-body">
+          Are you sure you want to Proceed ?
+          
+            <input type="hidden" name="userId" id="userId" />
+
+           
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-custom" href="#">
+            Yes, Delete
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  const exampleModal = document.querySelectorAll('.modal')
+if (exampleModal) {
+  exampleModal.forEach(modal=>{
+modal.addEventListener('show.bs.modal', event => {
+  const Modal = event.target
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const memberId = button.getAttribute('data-bs-memberId')
+    const business = button.getAttribute('data-bs-businessName')
+
+    Modal.querySelector('#memberId').value = memberId
+
+    // Update the modal's content.
+    if(Modal.id === 'MessageMemberModal'){
+    const modalTitle = Modal.querySelector('.modal-title')
+    const modalBodyInput = Modal.querySelector('.modal-body input#business-name')
+
+    modalTitle.textContent = `New message to ${business}`
+    modalBodyInput.value = business
+    }
+    else if(Modal.id === 'SuspendMemberModal'){
+      const userName = Modal.querySelector('#business-name')
+      userName.innerHTML = `${business}`
+    }
+    else if(Modal.id === 'editMemberModal'){
+      const businessData = button.getAttribute('data-bs-business')
+      console.log(businessData)
+      const business = JSON.parse(businessData)
+      console.log(business)
+      
+
+
+      const Name = Modal.querySelector('.modal-body input#businessName')
+      const Phone = Modal.querySelector('.modal-body input#phone')
+      const Email = Modal.querySelector('.modal-body input#email')
+      // const Password = Modal.querySelector('.modal-body input#password')
+
+      Name.value = `${business.memberName}`
+      Phone.value = `${business.memberNum}`
+      Email.value = `${business.memberEmail}`
+      // Password.value = `${business.first_name} ${business.last_name}`
+      // userName.innerHTML = `${business}`
+    }
+  })
+  })
+  
+}
+</script>
 {% endblock content %}

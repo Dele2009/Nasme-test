@@ -36,6 +36,9 @@ class Business(models.Model):
         verbose_name = ('Business')
         verbose_name_plural = ('Businesses')
 
+    def __str__(self) -> str:
+        return self.name
+
    
 class BusinessImages(models.Model):
     owner = models.ForeignKey(Business, on_delete=models.CASCADE)

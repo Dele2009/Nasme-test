@@ -1,0 +1,159 @@
+{% extends 'partials/user-base.html' %} {% load static %}
+{% block styles %}
+<style>
+.dashboard {
+    margin: 50px;
+    display: grid;
+    gap: 30px;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.myCard {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    color: #2e7d32;
+}
+
+.myCard:hover {
+    transform: translateY(-5px);
+    background: rgba(46, 125, 50, 0.1);
+    border: 1px solid #2e7d32;
+}
+
+.myCard i {
+    font-size: 2rem !important;
+    margin-bottom: 10px !important;
+    color: #2e7d32 !important;
+}
+
+.myCard p {
+    font-size: 1.2rem !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+    color: #555 !important;
+}
+
+.myCard .text-center p:first-of-type {
+    font-weight: bold !important;
+}
+
+.greeting-section {
+    margin-bottom: 40px;
+}
+
+.greeting-section>* {
+    text-align: left !important;
+}
+
+.greeting-section h1 {
+    font-size: 2rem;
+    color: #2e7d32;
+}
+
+.greeting-section p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.stats-section {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: #2e7d32;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.stat-card p {
+    font-size: 1.1rem;
+    color: #555;
+}
+</style>
+ {% endblock styles %}
+ {% block content %}
+<div class="container-fluid pt-5 w-100">
+       <div class="greeting-section px-5">
+    <h1>Welcome back, Member!</h1>
+    <p>Here's a summary of your current activities and status</p>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="stats-section px-5">
+    <div class="stat-card">
+      <h2>2</h2>
+      <p>Active Member</p>
+    </div>
+    <div class="stat-card">
+      <h2>1</h2>
+      <p>Total Unit</p>
+    </div>
+    <div class="stat-card">
+      <h2>0</h2>
+      <p>Wallet Balance</p>
+    </div>
+  </div>
+
+  <!-- Cards Section -->
+  <div class="dashboard">
+    
+    <a href="{% url 'edit-profile' %}" class="rounded myCard">
+      <i class="bi bi-person-fill"></i>
+      <div class="text-center my-2">
+        <p>Edit Profile</p>
+      </div>
+    </a>
+    <a href="#" class="rounded myCard">
+      <i class="bi bi-people-fill"></i>
+      <div class="text-center my-2">
+        <p>Public Profile</p>
+      </div>
+    </a>
+    <a href="{% url 'my-dues' %}" class="rounded myCard">
+      <i class="bi bi-briefcase-fill"></i>
+      <div class="text-center my-2">
+        <p>My Dues</p>
+      </div>
+    </a>
+    <a href="{% url 'transaction-log' %}" class="rounded myCard">
+      <i class="bi bi-stack"></i>
+      <div class="text-center my-2">
+        <p>Transaction Log</p>
+      </div>
+    </a>
+    <a href="{% url 'add-unit' %}" class="rounded myCard">
+      <i class="bi bi-layers-fill"></i>
+      <div class="text-center my-2">
+        <p>Add New Unit</p>
+      </div>
+    </a>
+    <a href="{% url 'register-member' %}" class="rounded myCard">
+      <i class="bi bi-person-fill"></i>
+      <div class="text-center my-2">
+        <p>Add New Member</p>
+      </div>
+    </a>
+    
+   </div>
+</div>
+</div>
+{% endblock content %}

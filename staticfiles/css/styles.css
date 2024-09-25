@@ -92,6 +92,7 @@ h5 {
      padding: 20px !important;
      border-radius: 10px !important;
      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+     width: 100%;
 }
 
 .table {
@@ -156,6 +157,16 @@ h5 {
      cursor: pointer !important;
 }
 
+
+.modal-content{
+     border: 4px solid #2e7d32 !important;
+}
+.modal-content input{
+     border: 1px solid #2e7d32 !important;
+}
+.modal-content textarea{
+     border: 1px solid #2e7d32 !important;
+}
 /* Footer */
 footer {
      text-align: center !important;

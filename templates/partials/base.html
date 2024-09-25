@@ -1,616 +1,249 @@
+
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-  <title>NASME</title>
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-  />
-  <script type="application/x-javascript">
-    addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }>
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard with Submenus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/css/test/dashboard.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"
-  ></script>
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-    crossorigin="anonymous"
-  />
-
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
-  />
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"
-  />
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
-  <!-- font CSS -->
-  <!-- fontawesome -->
-  <!-- <script
-    src="https://kit.fontawesome.com/f2545b0bd6.js"
-    crossorigin="anonymous"
-  ></script> -->
-
-  <link rel="stylesheet" href="/static/css/main.css" />
-  <link rel="stylesheet" href="/static/css/header.css" />
-  <link rel="stylesheet" href="/static/css/side.css" />
-
-  <style>
-    @media screen and (max-width: 450.9px) {
-      .sidebar {
-        top: 150px;
-      }
-
-      .main-content {
-        top: 150px;
-      }
-    }
-  </style>
-
-  {% block styles %} {% endblock styles %}
+    {% block styles %}{% endblock styles %}
 </head>
-
 <body>
-  <!-- flashed messages  -->
+    <!-- Header -->
+    <nav class="navbar fixed-top" style="flex-wrap: nowrap; background-color: #228c2e; height: 75px;">
+        <div class="container-fluid d-flex">
+            <div class="d-flex align-items-center">
 
-  <nav
-    class="navbar fixed-top"
-    style="flex-wrap: nowrap; background-color: rgb(20, 64, 23)"
-  >
-    <div class="container navGrid px-md-5 px-3">
-      <a class="navbar-brand p-0" id="navBrand" href="/">
-        <img
-          class=""
-          src="/static/web_images/nasme-removebg-preview.png"
-          alt=""
-        />
-      </a>
+                    <!-- Sidebar Toggler -->
+                    <button class="btn ms-3" type="button" id="togglerLg" title="Toggler">
+                         <i class="fs-4 bi bi-list text-light"></i>
+                    </button>
+                    <a style="width: 60px; height: 60px;" class="rounded-pill bg-white p-2" id="navBrand" href="/">
+                         <img src="/static/web_images/nasme-removebg-preview.png" alt="Logo" class="w-100 h-100">
+                    </a>
+               </div>
+            <div class="d-flex align-items-center">
+                <!-- Notification Bell -->
+                <a href="/messages" class="btn position-relative rounded-0 rounded-end mx-0" title="Notifications">
+                    <i class="fs-4 bi bi-bell-fill text-light"></i>
+                    <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger mt-2">0</span>
+                </a>
+                <!-- Profile Dropdown -->
+                <button class="btn ms-3 dropdown nav-item" title="Profile">
+                    <i class="fs-4 bi bi-person-fill-gear text-light dropdown-toggle" data-bs-toggle="dropdown"></i>
+                    <ul class="dropdown-menu  mt-3 border-0 rounded-bottom-2 me-2 bg-light">
+                        <li><a class="dropdown-item" href="/edit-business-profile">Edit Profile</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal" href="#">Logout</a></li>
+                    </ul>
+                </button>
 
-      <form
-        class="d-flex rounded mx-lg-2 mx-1 navSearch"
-        method="POST"
-        action="/admin/search"
-      >
-        <input
-          class="form-control rounded-0 rounded-start border-0 w-100"
-          id="search"
-          style="box-shadow: none"
-          type="text"
-          placeholder="Search"
-          aria-label="Search"
-          name="search_query"
-        />
-        <button
-          class="rounded-0 rounded-end btn border-0"
-          id="btn-search"
-          type="submit"
-        >
-          <i class="bi bi-search text-dark"></i>
+                <form class="d-flex rounded mx-lg-2 mx-1 navSearch" method="POST" action="/admin/search">
+        <input class="form-control rounded-0 rounded-start border-0 w-100" id="search" style="box-shadow: none"
+          type="text" placeholder="Search" aria-label="Search" name="search_query" />
+        <button class="rounded-0 rounded-end btn border-0" id="btn-search" type="submit" style="background: #fff;">
+          <i class="bi bi-search" style="color: black !important"></i>
         </button>
       </form>
 
-      <button
-        class="btn ms-md-3 mx-0 dropdown nav-item"
-        title="Sort by Clusters/Units"
-      >
-        <i
-          class="bi bi-collection-fill text-light dropdown-toggle nav-link"
-          data-bs-toggle="dropdown"
-        ></i>
-        <div
-          class="dropdown-menu mt-md-3 border-0 outline-0 rounded-bottom-2 me-2 bg-white py-0"
-        >
-        {% for unit in units %}
-          <a
-            class="text-wrap dropdown-item border-top py-1 rounded-bottom"
-            style="min-width: 0 !important; font-variant: small-caps !important"
-            href="/admin/manage_unit_members/11"
-          >
+      <div class="btn-group dropstart ms-md-3 mx-0 dropdown nav-item" title="Sort by Clusters/Units">
+        <button type="button" class="btn dropdown-toggle text-light" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-collection-fill"></i>
+        </button>
+        <div class="dropdown-menu mt-md-3 border-0 outline-0 rounded-bottom-2 me-2 bg-white py-0">
+          {% for unit in units %}
+          <a class="text-wrap dropdown-item border-top py-1 rounded-bottom"
+            style="min-width: 0 !important; font-variant: small-caps !important" href="">
             {{unit.unit_name}}
           </a>
           {% endfor %}
-          
-        </div>
-      </button>
 
-      <button
-        class="rounded-0 rounded-end btn ms-md-3 mx-0"
-        type="submit"
-        id="togglerLg"
-        title="Toggler"
-      >
-        <i class="bi bi-list text-light"></i>
-      </button>
-    </div>
-  </nav>
-
-  <div class="sidebar">
-    <div class="top">
-      <i class="bi bi-list" id="btn"></i>
-      <span>NasmeOyo</span>
-    </div>
-    <ul class="px-0 mb-0">
-      <li class="log">
-        <a href="/">
-          <i class="bi bi-house-check" title="Dashboard"></i>
-          <span class="nav-item" aria-label="Home">Dashboard</span>
-        </a>
-      </li>
-      <li class="hasDrop log">
-        <a class="toggleDrop" for="drop1">
-          <i class="bi bi-file-person" title="Member"></i>
-          <span class="nav-item" aria-label="Home">Member</span>
-        </a>
-
-        <div class="sideDrop shadow-sm">
-          <a href="{% url 'register-member' %}" class="cont">Add Member</a>
-          <a href="{% url 'manage-member' %}" class="cont">Manage Member</a>
-          <a href="{% url 'bulk-register' %}" class="cont">Bulk Registration</a>
-        </div>
-      </li>
-      <li class="hasDrop log">
-        <a for="drop2" class="toggleDrop">
-          <i class="bi bi-person-lines-fill" title="Admin"></i>
-          <span class="nav-item">Admin</span>
-        </a>
-        <div class="sideDrop shadow-sm">
-          <a href="{% url 'register-admin' %}" class="cont">Add Admin</a>
-          <a href="{% url 'manage-admin' %}" class="cont">Manage Admin</a>
-        </div>
-      </li>
-      <li class="hasDrop log">
-        <a for="drop3" class="toggleDrop">
-          <i class="bi bi-stack" title="Unit"></i>
-          <span class="nav-item">Unit</span>
-        </a>
-        <div class="sideDrop shadow-sm">
-          <a href="{% url 'add-unit' %}" class="cont">Add Unit</a>
-          <a href="{% url 'manage-unit' %}" class="cont">Manage Unit</a>
-        </div>
-      </li>
-      <li class="hasDrop log">
-        <a for="drop4" class="toggleDrop">
-          <i class="bi bi-bookmark-star" title="Approvals"></i>
-          <span class="nav-item">Profile</span>
-        </a>
-        <div class="sideDrop shadow-sm">
-          <a href="{% url 'pending-approvals' %}" class="cont"
-            >Pending Approvals</a
-          >
-          <a href="{% url 'disapproved-profiles' %}" class="cont"
-            >Disapproved Profiles</a
-          >
-        </div>
-      </li>
-      <li class="hasDrop log">
-        <a for="drop5" class="toggleDrop">
-          <i class="bi bi-cash-coin" title="Finance"></i>
-          <span class="nav-item">Finance</span>
-        </a>
-        <div class="sideDrop shadow-sm">
-          <a href="{% url 'create-payment' %}" class="cont">Create Payment</a>
-          <a href="{% url 'financial-report' %}" class="cont"
-            >Generate Financial Report</a
-          >
-        </div>
-      </li>
-      <li class="log">
-        <a href="{% url 'unit-message' %}">
-          <i class="bi bi-chat-left-text" title="Send Message"></i>
-          <span class="nav-item">Send Messages</span>
-        </a>
-      </li>
-      <li class="log">
-        <a href="{% url 'under-construction' %}">
-          <i class="bi bi-chat" title="Account"></i>
-          <span class="nav-item">Account</span>
-        </a>
-      </li>
-      <li class="log">
-        <a href="{% url 'under-construction' %}">
-          <i class="bi bi-person-circle" title="My Profile"></i>
-          <span class="nav-item">My Profile</span>
-        </a>
-      </li>
-      <li class="log">
-        <a
-          href="{% url 'admin-logout' %}"
-          data-bs-toggle="modal"
-          data-bs-target="#logoutmodal"
-        >
-          <i class="bi bi-escape" title="Logout"></i>
-          <span class="nav-item">Logout</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <style>
-    .hidep {
-      display: none;
-    }
-  </style>
-
-  <div class="main-content">{% block content %} {% endblock content %}</div>
-
-  <div
-    class="modal fade"
-    id="disapprovemodal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-uppercase" id="exampleModalLabel">
-            Disapprove User profile?
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          Are you sure you really want to DISAPPROVE this member's profile
-          update?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            No
-          </button>
-
-          <form
-            method="POST"
-            id="disapprove_profile_update_form"
-            action="/admin/pending_approvals"
-          >
-            <input
-              type="hidden"
-              name="profile_updateid_disapprove"
-              id="disapproveprofilehiddenid"
-            />
-
-            <button type="submit" class="btn btn-primary" href="#">
-              Yes, Disapprove
-            </button>
-          </form>
         </div>
       </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout (Sidebar + Content) -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <ul class="px-0 mb-0">
+                <!-- Dashboard Link -->
+                <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                    <a href="/"  class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                                   <i class="bi bi-house-check"></i>
+                                   <span class="nav-item ms-3">Dashboard</span>
+                              </div>
+                              <i class="bi bi-chevron-double-down"></i>
+                    </a>
+                </li>
+
+                <!-- Member Section with Collapse -->
+                <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Members">
+                    <a data-bs-target="#memberSubmenu" role="button"  class="d-flex justify-content-between align-items-center" data-bs-toggle="collapse" aria-expanded="false">
+                        <div class="d-flex  align-items-center" > 
+                                   <i class="bi bi-people"></i>
+                                   <span class="nav-item ms-3">Member</span>
+                              </div>
+                              <i class="bi bi-chevron-double-down"></i>
+                    </a>
+                    <ul class="collapse  ms-4" id="memberSubmenu">
+                        <li><a href="{% url 'register-member' %}">Add Member</a></li>
+          <li><a href="{% url 'manage-member' %}">Manage Member</a></li>
+          <li><a href="{% url 'bulk-register' %}">Bulk Registration</a></li>
+                    </ul>
+                </li>
+
+                <!-- Admin Section with Collapse -->
+                <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Admins">
+                     <a href="#adminSubmenu" role="button"  class="d-flex justify-content-between align-items-center" data-bs-toggle="collapse" aria-expanded="false">
+                        <div class="d-flex  align-items-center" > 
+                                   <i class="bi bi-person-badge"></i>
+                                   <span class="nav-item ms-3">Admin</span>
+                              </div>
+                              <i class="bi bi-chevron-double-down"></i>
+                    </a>
+                    <ul class="collapse  ms-4" id="adminSubmenu">
+                        <li><a href="{% url 'register-admin' %}">Add Admin</a></li>
+          <li><a href="{% url 'manage-admin' %}">Manage Admin</a></li>
+                    </ul>
+                </li>
+
+                <!-- Unit Section with Collapse -->
+                <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Units">
+                     <a href="#unitSubmenu" class="d-flex justify-content-between align-items-center" data-bs-toggle="collapse" aria-expanded="false">
+                        <div class="d-flex  align-items-center" > 
+                                   <i class="bi bi-building"></i>
+                        <span class="nav-item ms-3">Unit</span>
+                              </div>
+                              <i class="bi bi-chevron-double-down"></i>
+                    </a>
+                    <ul class="collapse  ms-4" id="unitSubmenu">
+                        <li><a href="{% url 'add-unit' %}">Add Unit</a></li>
+          <li><a href="{% url 'manage-unit' %}">Manage Unit</a></li>
+                    </ul>
+                </li>
+
+                <!-- Profile Section with Collapse -->
+                <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Profile">
+                    <a href="#profileSubmenu" class="d-flex justify-content-between align-items-center" data-bs-toggle="collapse" aria-expanded="false">
+                        <div class="d-flex  align-items-center" > 
+                                   <i class="bi bi-person-circle"></i>
+                        <span class="nav-item ms-3">Profile</span>
+                              </div>
+                              <i class="bi bi-chevron-double-down"></i>
+                    </a>
+                    <ul class="collapse  ms-4" id="profileSubmenu">
+                        <li><a href="{% url 'pending-approvals' %}" class="cont">Pending Approvals</a></li>
+          <li><a href="{% url 'disapproved-profiles' %}" class="cont">Disapproved Profiles</a></li>
+                    </ul>
+                </li>
+
+                <!-- Finance Section with Collapse -->
+                <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Finance">
+                    <a href="#financeSubmenu" class="d-flex justify-content-between align-items-center" data-bs-toggle="collapse" aria-expanded="false">
+                        <div class="d-flex  align-items-center"> 
+                                   <i class="bi bi-currency-exchange"></i>
+                        <span class="nav-item ms-3">Finance</span>
+                              </div>
+                              <i class="bi bi-chevron-double-down"></i>
+                    </a>
+                    <ul class="collapse  ms-4" id="financeSubmenu">
+                        <li><a href="{% url 'create-payment' %}" class="cont">Create Payment</a></li>
+          <li><a href="{% url 'financial-report' %}" class="cont">Generate Financial Report</a></li>
+                    </ul>
+                </li>
+
+
+                <!-- Send Messages -->
+                     <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="Send Messages">
+                         <a 
+                              href="{% url 'unit-message' %}" class="d-flex align-items-center">
+                              <i class="bi bi-chat-left-text"></i>
+                              <span class="nav-item ms-3">Send Messages</span>
+                         </a>
+                    </li>
+
+                    <!-- Admin profile -->
+                     <li class="log" data-bs-toggle="tooltip" data-bs-placement="right" title="My Profile">
+                         <a 
+                              href="{% url 'under-construction' %}" class="d-flex align-items-center">
+                              <i class="bi bi-pencil-square"></i>
+                              <span class="nav-item ms-3">My Profile</span>
+                         </a>
+                    </li>
+
+                <!-- Logout Link -->
+                <li class="log">
+                    <a href="#logoutModal" data-bs-toggle="modal" class="d-flex align-items-center">
+                        <i class="bi bi-escape"></i>
+                        <span class="nav-item ms-3">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="main-content">
+            {% comment %} <div class="container-fluid pt-5">
+                <h1 class="mt-5">Welcome to Your Dashboard</h1>
+                <!-- Content Example -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 1</h5>
+                                <p class="card-text">Some quick example text.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 2</h5>
+                                <p class="card-text">Some quick example text.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Card 3</h5>
+                                <p class="card-text">Some quick example text.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {% endcomment %}
+            {% block content %}{% endblock content %}
+        </div>
     </div>
-  </div>
 
-  <!-- approve user profile -->
-  <div
-    class="modal fade"
-    id="approvemodal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-uppercase" id="exampleModalLabel">
-            Approve User Profile?
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="modal"
-            aria-label="Close"
-          ></button>
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Log Out</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">Ready to wrap up your session? Confirm your logout.</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="/user-logout" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          Do you relly want to APPROVE this member's profile update?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            No
-          </button>
-
-          <form
-            method="POST"
-            action="/admin/pending_approvals"
-            id="approve_profile_update_form"
-          >
-            <input
-              type="hidden"
-              name="profile_updateid"
-              id="profileupdatehiddenid"
-            />
-
-            <button type="submit" class="btn btn-primary" id="">
-              Yes, Approve
-            </button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- End of approve user profile -->
-
-  <!-- Delete Modal -->
-  <div
-    class="modal fade"
-    id="deletemodal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="deleteModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteModalLabel">Delete ?</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">Are you sure you want to delete this user?</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <form method="POST" action="/admin/delete_user">
-            <input type="hidden" name="user_id" id="deletehiddenid" />
-
-            <button type="submit" class="btn btn-primary" href="#">
-              Yes, Delete
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--  View Member Modal -->
-  <div
-    class="modal fade"
-    id="staticBackdrop"
-    data-backdrop="static"
-    data-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">User Details</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="bedd">
-            <div>
-              <img id="modalUserImage" src="" alt="image" width="100px" />
-            </div>
-            <br />
-
-            <br />
-            <div>
-              <p id="modalUserName">N/A</p>
-            </div>
-
-            <br />
-            <div>
-              <p id="modalUserEmail">N/A</p>
-            </div>
-            <br />
-            <div>
-              <p id="modalUserPhone">N/A</p>
-            </div>
-
-            <br />
-            <div>
-              <p id="modalUserAbout">N/A</p>
-            </div>
-
-            <br />
-            <div>
-              <p id="modalUserUnits">N/A</p>
-            </div>
-            <br />
-
-            <div>
-              <p id="modalUserHomeAddr">N/A</p>
-            </div>
-
-            <br />
-
-            <div>
-              <p id="modalUserWebsite">N/A</p>
-            </div>
-
-            <br />
-
-            <div>
-              <p id="modalUserFacebook">N/A</p>
-            </div>
-            <br />
-
-            <div>
-              <p id="modalUserLinkedin">N/A</p>
-            </div>
-            <br />
-
-            <div>
-              <p id="modalUserTwitter">N/A</p>
-            </div>
-
-            <br />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- </div> -->
-
-  <!-- Logout modal -->
-
-  <div
-    class="modal fade"
-    id="logoutmodal"
-    tabindex="-1"
-    aria-labelledby="logoutmodallabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-uppercase" id="logoutmodallabel">
-            Log Out
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          Ready to wrap up your session? Confirm your logout!
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            No
-          </button>
-          <a href="{% url 'admin-logout' %}" class="btn btn-primary">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- end of logout modal -->
-
-  <!-- suspend modal -->
-  <div
-    class="modal fade"
-    id="suspendmodal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-uppercase" id="exampleModalLabel">
-            Suspend User
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">Do you really want to suspend this member?</div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            No
-          </button>
-          <form method="POST" action="/admin/suspend_user">
-            <input type="hidden" name="user_id" id="suspendhiddenid" />
-            <input type="submit" class="btn btn-primary" />
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End of Modal -->
-
-  <script>
-    // TOGGLER
-    let btn = document.querySelector("#btn");
-    let sidebar = document.querySelector(".sidebar");
-    let sideDrops = document.querySelectorAll(".sideDrop");
-    let toggleDrops = document.querySelectorAll(".toggleDrop");
-    let smallToggler = document.getElementById("togglerLg");
-    let tog = document.querySelectorAll(".log");
-
-    btn.onclick = function () {
-      sidebar.classList.toggle("active");
-    };
-
-    tog.forEach(function (tog) {
-      tog.onclick = function () {
-        sidebar.classList.add("active");
-      };
-    });
-    //TOGGlER
-
-    // TOGGLER AT SM
-    smallToggler.onclick = function () {
-      if (window.innerWidth <= 450) {
-        sidebar.style.display =
-          sidebar.style.display === "none" || sidebar.style.display === ""
-            ? "block"
-            : "none";
-
-        sidebar.classList.add("active");
-      }
-    };
-
-    // TOGGLER AT SM ENDS
-  </script>
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"
-  ></script>
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-    crossorigin="anonymous"
-  ></script>
-
-  <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"
-  ></script>
+    <!-- Bootstrap and JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="/static/css/test/dashboard.js"></script>
 </body>
+</html>

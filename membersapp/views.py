@@ -13,23 +13,27 @@ def member_login(request):
         pass
     return render(request, "")
 
-@login_required
+# @login_required
 def member_dashboard(request):
-    return render(request, "")
+    return render(request, "membersapp/dashboard.html")
 
-@login_required
+# @login_required
 def member_account(request):
     return render(request, "")
 
-@login_required
+# @login_required
 def business_profile_edit(request):
-    return render(request, "")
+    return render(request, "membersapp/edit-profile.html")
 
-@login_required
+# @login_required
 def transaction_history(request):
     return render(request, "")
 
-@login_required
+# @login_required
+def my_dues(request):
+    return render(request, "")
+
+# @login_required
 def member_logout(request):
     logout(request)
     messages.error(request, 'Logged out successfully')

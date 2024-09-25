@@ -63,6 +63,7 @@ def admin_dashboard(request):
         'members' : user_members,
         'units' : Unit.objects.all(),
         'admin' : current_admin,
+        'businesses' : Business.objects.all(),
     }
     
     return render(request, "adminapp/admin-dashboard.html", context)
@@ -139,6 +140,10 @@ def register_member(request):
             new_member.set_password('superadmin')
             
             new_member.save()
+            new_member = User.objects.get(username = phone_number)
+            new_business = Business(owner= new_member, 
+                                    name = '-----',)
+            new_business.save()
         except IntegrityError:
             messages.error(request, 'Phone number already exists')
 
@@ -189,11 +194,12 @@ def manage_member(request):
         return redirect('admin-login')
     
     members = User.objects.filter(is_staff = False)
+    businesses = Business.objects.all()
 
     context = {
         'members' : members,
+        'businesses' : businesses,
     }
-    print(dir(uuid))
     return render(request, "adminapp/manage-membs.html",context)
 
 #@login_required
