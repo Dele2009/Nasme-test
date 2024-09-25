@@ -11,6 +11,7 @@ class User(AbstractUser):
     dob = models.DateField(auto_now=False, auto_now_add=False, null=True)
     has_filled_profile = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
+    random_id = models.CharField(max_length=24, null=True)
 
 # class Profile(models.Model):
 #     profile_owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -24,15 +25,12 @@ class Unit(models.Model):
     
 
 class Business(models.Model):
-    models.ManyToManyField(Unit)
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    units = models.ManyToManyField('Unit', related_name='units')
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    unit = models.OneToOneField(Unit, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=200)
     address  = models.CharField(max_length=100)
-    phone_no = models.CharField(max_length=20)
     about = models.TextField()
     services = models.CharField(max_length=500, help_text='Add services seperated by comma "," ')
-    logo = models.ImageField(upload_to='logos', height_field=None, width_field=None, max_length=None)
 
     class Meta:
         verbose_name = ('Business')

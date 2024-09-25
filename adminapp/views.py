@@ -5,14 +5,25 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import  User
 from mainapp.models import *
+from django.db.utils import IntegrityError
 import csv
+import random
+import string
+
+
+def generate_random_string():
+    chars = string.ascii_letters + string.digits  # Upper and lowercase letters + digits
+    sections = [''.join(random.choices(chars, k=5)) for _ in range(4)]  # Generate 4 sections of 5 characters
+    return '-'.join(sections)
+
 
 # Create your views here.
 def admin_login(request):
     # If user is already logged in
-    if request.user.is_authenticated and request.user.is_staff:
+    if request.user.is_authenticated == True and request.user.is_staff == True:
         messages.warning(request, 'User is already logged in...')
         return redirect('/')
+    
 
     #Login form
     if request.method == 'POST':
@@ -40,15 +51,12 @@ def admin_dashboard(request):
     current_admin = User.objects.get(username = request.user)
     user_members = User.objects.filter(is_staff = False)
     '''
-    members = Business.objects.all()
-
     # Search 
     if request.method == 'POST':
         search_word = request.POST.get('')
         members = Business.objects.filter(unit_name__icontains = search_word)
 
     else:
-        members = Business.objects.all()
     '''
 
     context = {
@@ -60,10 +68,12 @@ def admin_dashboard(request):
     return render(request, "adminapp/admin-dashboard.html", context)
 
 #@login_required
-def admin_profile(request):
+def admin_profile(request, id):
     # To handle login required
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
+    
+    current_admin = User.objects.get(random_id = id)
     
     return render(request, "adminapp/under-construction.html")
 
@@ -85,21 +95,26 @@ def register_admin(request):
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
 
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        new_admin = User.objects.create(
-                        first_name = 'Undefined',
-                        last_name = 'Undefined',
-                        username = email,
-                        email = email,
-                    )
-        new_admin.set_password('superadmin')
-        new_admin.is_staff = True
-        if 'is_superadmin' in request.POST:
-            new_admin.is_superuser = True
-            new_admin.save()
-        else:
-            new_admin.save()
+    try:
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            random_id = generate_random_string()
+            new_admin = User.objects.create(
+                            first_name = '-----',
+                            last_name = '-----',
+                            username = email,
+                            email = email,
+                            random_id = random_id
+                        )
+            new_admin.set_password('superadmin')
+            new_admin.is_staff = True
+            if 'is_superadmin' in request.POST:
+                new_admin.is_superuser = True
+                new_admin.save()
+            else:
+                new_admin.save()
+    except IntegrityError:
+            messages.error(request, 'Email already exists')
     return render(request, "adminapp/add-admin.html")
 
 #@login_required
@@ -110,17 +125,22 @@ def register_member(request):
     members = len(User.objects.filter(is_staff = False))
 
     if request.method == 'POST':
-        phone_number = request.POST.get('phoneNumber')
-        new_member = User.objects.create(
-                        first_name = 'N/A',
-                        last_name = 'N/A',
-                        username = f'Member{members + 1}',
-                        email = 'N/A',
-                        phone_num = phone_number,
-                    )
-        new_member.set_password('superadmin')
-        
-        new_member.save()
+        try:
+            random_id = generate_random_string()
+            phone_number = request.POST.get('phoneNumber')
+            new_member = User.objects.create(
+                            first_name = '-----',
+                            last_name = '-----',
+                            username = phone_number,
+                            email = '-----',
+                            phone_num = phone_number,
+                            random_id = random_id
+                        )
+            new_member.set_password('superadmin')
+            
+            new_member.save()
+        except IntegrityError:
+            messages.error(request, 'Phone number already exists')
 
     return render(request, "adminapp/add-member.html")
 
@@ -173,6 +193,7 @@ def manage_member(request):
     context = {
         'members' : members,
     }
+    print(dir(uuid))
     return render(request, "adminapp/manage-membs.html",context)
 
 #@login_required
@@ -181,24 +202,25 @@ def edit_member(request, id):
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
     
-    member = Business.objects.get(id = id)
+    current_member = User.objects.get(random_id = id)
+    
+    member = User.objects.get(id = id)
 
     if request.method == 'POST':
-        name = request.POST.get('')
-        phone_no = request.POST.get('')
-        email = request.POST.get('')
-        password = request.POST.get('')
+        new_name = request.POST.get('')
+        new_phone_no = request.POST.get('')
+        new_email = request.POST.get('')
 
         #saving data to Business model
-        Business.name = name
-        Business.phone_no = phone_no
-        Business.email = email
+        member.name = new_name
+        member.phone_no = new_phone_no
+        member.email = new_email
         #Business.password = password
 
         Business.save()
         # the user model will be needed to save the passsword...
         pass
-    return render(request, "")
+    return redirect("")
 
 #@login_required
 def delete_member(request, id):
@@ -206,10 +228,10 @@ def delete_member(request, id):
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
     
-    member = Business.objects.get(id = id)
-    member.delete()
+    current_member = User.objects.get(random_id = id)
+    current_member.delete()
 
-    return render(request, "")
+    return redirect(request, "manage-member")
 
 #@login_required
 def manage_unit(request):
@@ -247,14 +269,17 @@ def add_unit(request,):
             new_unit.save()
             messages.success(request, 'Unit created successfully')
         else:
-            messages.error(request, 'Invalid input, Length of unit name should be greater than 5 chahracters')
+            messages.warning(request, 'Invalid input, Length of unit name should be greater than 5 chahracters')
     return render(request,'adminapp/add-unit.html')
 
 #@login_required
-def delete_unit(request):
+def delete_unit(request, id):
     # To handle login required
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
+    
+    unit = Unit.objects.get(id = id)
+    unit.delete()
     
     return render(request,'')
 
