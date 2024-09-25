@@ -13,7 +13,7 @@
     display: grid;
     gap: 30px;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .myCard {
@@ -36,20 +36,20 @@
 }
 
 .myCard i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: #2e7d32;
+    font-size: 2rem !important;
+    margin-bottom: 10px !important;
+    color: #2e7d32 !important;
 }
 
 .myCard p {
-    font-size: 1.2rem;
-    margin: 0;
-    font-weight: 500;
-    color: #555;
+    font-size: 1.3rem !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+    color: #555 !important;
 }
 
 .myCard .text-center p:first-of-type {
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 .greeting-section {
