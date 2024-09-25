@@ -34,8 +34,8 @@ def admin_login(request):
 #@login_required
 def admin_dashboard(request):
     # To handle login required
-    # if request.user.is_authenticated == False and request.user.is_staff == False:
-    #     return redirect('admin-login')
+    if request.user.is_authenticated == False and request.user.is_staff == False:
+        return redirect('admin-login')
 
     current_admin = User.objects.get(username = request.user)
     user_members = User.objects.filter(is_staff = False)
