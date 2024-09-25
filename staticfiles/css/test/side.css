@@ -1,0 +1,41 @@
+.sidebar {
+     background-color: #228c2e;
+     height: 100vh;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 250px;
+     padding-top: 75px;
+     transition: all 0.3s;
+}
+
+.sidebar ul {
+     list-style: none;
+     padding: 0;
+     margin: 0;
+}
+
+.sidebar ul li {
+     padding: 15px;
+     font-size: 16px;
+     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul li a {
+     text-decoration: none;
+     color: white;
+     display: flex;
+     align-items: center;
+}
+
+.sidebar ul li a i {
+     margin-right: 10px;
+}
+
+.sidebar.active {
+     width: 60px;
+}
+
+.sidebar.active ul li a span {
+     display: none;
+}

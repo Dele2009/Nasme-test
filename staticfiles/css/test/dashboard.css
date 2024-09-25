@@ -1,0 +1,221 @@
+/* Basic Layout */
+.dashboard-container {
+     display: grid !important;
+     grid-template-columns: 100% 1fr !important;
+     /* height: 100vh; */
+     /* Sidebar width + content flex */
+     /* background-color: red; */
+     transition: all 0.3s ease !important;
+}
+
+/* General Button Styling */
+/* button {
+     background-color: #228c2e !important;
+     color: white !important;
+     border: none !important;
+     padding: 10px 15px !important;
+     transition: background-color 0.3s ease-in-out !important;
+}
+
+button:hover {
+     background-color: #1b7327 !important;
+} */
+
+/* Navbar Styling */
+.navbar {
+     background-color: #228c2e !important;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar-brand img {
+     height: 50px !important;
+}
+
+.navbar .btn i {
+     color: white !important;
+}
+
+/* Main Content */
+.main-content {
+     margin-left: 60px !important;
+     padding: 20px !important;
+     padding-top: 45px !important;
+     transition: all 0.3s ease !important;
+}
+
+h1 {
+     font-size: 24px !important;
+     font-weight: bold !important;
+     margin-bottom: 20px !important;
+     color: #333 !important;
+}
+
+p {
+     font-size: 14px !important;
+     line-height: 1.5 !important;
+     color: #666 !important;
+}
+
+/* Sidebar Styles */
+.sidebar {
+     background-color: #228c2e !important;
+     height: 100vh !important;
+     position: fixed !important;
+     top: 0 !important;
+     left: 0 !important;
+     width: 60px;
+     padding-top: 75px !important;
+     /* Account for header */
+     transition: all 0.2s ease !important;
+}
+
+.sidebar ul {
+     list-style: none !important;
+     padding: 0 !important;
+     margin: 0 !important;
+}
+
+.sidebar ul li {
+     padding: 14px 15px !important;
+     font-size: 13px !important;
+     border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.sidebar ul li a {
+     text-decoration: none;
+     color: white;
+     padding: 10px;
+     border-radius: 10px;
+     display: flex !important;
+     align-items: center !important;
+     background-color: transparent !important;
+
+     transition: background-color 0.2s ease-in-out !important;
+}
+
+
+
+.sidebar ul li a:hover {
+     color: #228c2e;
+     background-color: white !important;
+}
+
+/* Custom Scrollbar */
+.sidebar {
+     overflow-y: auto !important;
+}
+
+.sidebar::-webkit-scrollbar {
+     width: 5px !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+     background-color: white !important;
+     border-radius: 4px !important;
+     border: 1px solid #228c2e;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+     background-color: rgba(255, 255, 255, 0.747) !important;
+}
+
+/* Collapsed Sidebar */
+
+
+.sidebar.active {
+     width: 200px;
+}
+
+.sidebar.active ul li a i {
+     margin-right: 10px !important;
+}
+.sidebar > ul > li > ul {
+     background-color: #227f2e !important;
+     border-radius: 10px !important;
+}
+
+.sidebar ul li a span {
+     display: none !important;
+}
+.sidebar i.bi-chevron-double-down {
+     display: none !important;
+}
+.sidebar.active i.bi-chevron-double-down {
+     display: inline !important;
+}
+
+.sidebar.active ul li a span {
+     display: -webkit-box !important;
+     -webkit-line-clamp: 1;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+}
+
+
+
+
+.dashboard-container .sidebar.active+.main-content {
+     margin-left: 200px !important;
+     /* Adjust for collapsed sidebar */
+}
+
+
+/* Card Styles */
+.myCard {
+     border: none !important;
+     border-radius: 10px !important;
+     overflow: hidden !important;
+     transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out !important;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+     width: 300px;
+     height: 300px;
+     background-color: white;
+}
+
+.myCard:hover {
+     transform: translateY(-5px) !important;
+     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+
+}
+
+.myCard .myCard-title {
+     font-size: 18px !important;
+     font-weight: bold !important;
+}
+
+.myCard .myCard-text {
+     font-size: 14px !important;
+     color: #555 !important;
+}
+
+/* Responsive Layout for Smaller Screens */
+@media (max-width: 768px) {
+     .dashboard-container {
+          grid-template-columns: 100% 1fr !important;
+          /* Smaller sidebar */
+     }
+
+     /* .sidebar {
+          width: 60px !important;
+     } */
+
+     .main-content {
+          margin-left: 60px !important;
+     }
+}
+
+@media (max-width: 450px) {
+     .sidebar {
+          display: none !important;
+          /* Hide sidebar on mobile */
+     }
+
+     .main-content {
+          margin-left: 0 !important;
+          /* Full width on mobile */
+     }
+
+     #togglerLg {
+          display: block !important;
+     }
+}

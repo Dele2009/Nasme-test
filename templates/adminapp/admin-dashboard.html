@@ -1,8 +1,14 @@
-{% extends 'partials/base.html' %} {% load static %} {% block content %}
-<div class="dashboard-container py-5">
+{% extends 'partials/base.html' %} {% load static %} 
+{}
+{% block styles %}
+    <link rel="stylesheet" href="/static/css/main.css">
+
+{% endblock styles %}
+{% block content %}
+<div class=" py-5 mt-5">
   <!-- Greeting Section -->
   <div class="greeting-section px-5">
-    <h1>Welcome back, {{admin.first_name}}!</h1>
+    <h1>Welcome back, {% if admin.first_name == 'Undefined' or admin.first_name == '' %}Admin{% else %}{{admin.first_name}}{% endif %}!</h1>
     <p>Here's a summary of your current activities and status</p>
   </div>
 

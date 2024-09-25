@@ -1,0 +1,12 @@
+.navbar {
+     background-color: #228c2e;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+     height: 50px;
+}
+
+.btn:hover {
+     color: #ddd;
+}
