@@ -46,14 +46,26 @@
               <tr>
                 <th class="text-center">Business Name</th>
 
+                <th class="text-center">Role</th>
                 <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
+              {% for user in users %}
               <tr>
-                <td>VALUEMAX CODERS' HUB</td>
+                <td class="text-center">
+                  {% if not user.is_staff %}
+                      {% if user.business %}
+                          {{user.business.name}}
+                      {% else %}
+                          {{user.username}}
+                      {% endif %}
+                  {% else %}
+                      {{ user.username }}
+                  {% endif %}</td>
+                <td class="text-center">{% if user.is_staff == False %}Member{% else %}Admin{% endif %}</td>
                 <td class="action-icons">
-                  <div class="action-icons-container">
+                  <div class="action-icons-container d-flex justify-content-center align-items-center">
                     <a href="#" class="text-info"
                       ><i class="bi bi-pencil-square"></i
                     ></a>
@@ -72,6 +84,7 @@
                   </div>
                 </td>
               </tr>
+              {% endfor %}
               <!-- <tr>
                                              <td>None</td>
                                              <td>09023983884</td>

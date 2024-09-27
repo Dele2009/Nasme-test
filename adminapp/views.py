@@ -9,6 +9,10 @@ from django.db.utils import IntegrityError
 import csv
 import random
 import string
+from PIL import Image
+from django.core.files.base import ContentFile
+from io import BytesIO
+
 
 
 def generate_random_string():
@@ -49,7 +53,10 @@ def admin_dashboard(request):
         return redirect('admin-login')
 
     current_admin = User.objects.get(username = request.user)
-    user_members = User.objects.filter(is_staff = False)
+    active_users = User.objects.all()
+    active_members = active_users.filter(is_active = True)
+    active_members = active_members.filter(is_staff = False)
+
     '''
     # Search 
     if request.method == 'POST':
@@ -60,7 +67,8 @@ def admin_dashboard(request):
     '''
 
     context = {
-        'members' : user_members,
+        'active_users' : active_users,
+        'active_members': active_members,
         'units' : Unit.objects.all(),
         'admin' : current_admin,
         'businesses' : Business.objects.all(),
@@ -193,8 +201,66 @@ def manage_member(request):
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
     
+    if request.method == 'POST':
+        member_id = request.POST.get('member_id')
+        current_member = User.objects.get(random_id = member_id)
+        
+        member_business = Business.objects.get(owner = current_member.id)
+        
+        if 'save_edit' in request.POST:
+
+            new_name = request.POST.get('business_name')
+            new_number = request.POST.get('phone_num')
+            new_email = request.POST.get('email')
+            image_file = request.FILES.get('business_image')
+            print(image_file)
+
+            if image_file:
+                img = Image.open(image_file)
+                img = img.resize((1024, 1024), Image.Resampling.LANCZOS)
+                if img.mode == 'RGBA':
+                    # Convert the image to RGB before saving as JPEG
+                    img = img.convert('RGB')
+                img_io = BytesIO()
+                img.save(img_io, format='JPEG')
+                img_content = ContentFile(img_io.getvalue(), name=image_file.name)
+                current_member.profile_pic.delete()
+                current_member.profile_pic = img_content
+
+            member_business.name = new_name
+            current_member.phone_num = new_number
+            current_member.username = new_number
+            current_member.email = new_email
+            member_business.save()
+            current_member.save()
+        
+        elif 'delete_member' in request.POST:
+            member_id = request.POST.get('member_id')
+            member = User.objects.get(random_id = member_id)
+            member.profile_pic.delete()
+            member.delete()
+        
+        elif 'suspend_member' in request.POST:
+            member_id = request.POST.get('member_id')
+            suspend_message = request.POST.get('suspend_message')
+
+            member = User.objects.get(random_id = member_id)
+            member.suspend_message = suspend_message
+            member.is_active = False
+            member.save()
+
+        elif 'submit_member_message' in request.POST:
+            member_id = request.POST.get('member_id')
+            member_message = request.POST.get('member_message')
+
+            member = User.objects.get(random_id = member_id)
+
+            message = Message(owner = member, 
+                              message = member_message)
+            message.save()
+            
     members = User.objects.filter(is_staff = False)
-    businesses = Business.objects.all()
+    businesses = Business.objects.filter(owner__is_active = True)
 
     context = {
         'members' : members,
@@ -202,31 +268,6 @@ def manage_member(request):
     }
     return render(request, "adminapp/manage-membs.html",context)
 
-#@login_required
-def edit_member(request, id):
-    # To handle login required
-    if request.user.is_authenticated == False and request.user.is_staff == False:
-        return redirect('admin-login')
-    
-    current_member = User.objects.get(random_id = id)
-    
-    member = User.objects.get(id = id)
-
-    if request.method == 'POST':
-        new_name = request.POST.get('')
-        new_phone_no = request.POST.get('')
-        new_email = request.POST.get('')
-
-        #saving data to Business model
-        member.name = new_name
-        member.phone_no = new_phone_no
-        member.email = new_email
-        #Business.password = password
-
-        Business.save()
-        # the user model will be needed to save the passsword...
-        pass
-    return redirect("")
 
 #@login_required
 def delete_member(request, id):
@@ -295,7 +336,15 @@ def pending_approvals(request):
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
 
-    return render(request, 'adminapp/pending-approvals.html')
+    users = User.objects.filter(is_active = False)
+    businesses = Business.objects.all()
+
+    context = {
+        'users' : users,
+        'businesses' : businesses,
+    }
+
+    return render(request, 'adminapp/pending-approvals.html', context)
 
 #@login_required
 def disapproved_profiles(request):

@@ -12,6 +12,14 @@ class User(AbstractUser):
     has_filled_profile = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
     random_id = models.CharField(max_length=24, null=True)
+    suspend_message = models.CharField(max_length=500, null=True)
+
+class Message(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=500)
+
+    def __str__(self) -> str:
+        return f'Message for: {self.owner}'
 
 # class Profile(models.Model):
 #     profile_owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -25,7 +33,7 @@ class Unit(models.Model):
     
 
 class Business(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE,)
     unit = models.OneToOneField(Unit, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=200)
     address  = models.CharField(max_length=100)
