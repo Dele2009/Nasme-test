@@ -108,6 +108,7 @@ h5 {
 
 .table tbody td {
      background-color: #eaf2e3 !important;
+     text-align: center !important;
 }
 
 
@@ -116,6 +117,12 @@ h5 {
      font-size: 1.2rem !important;
      padding: 8px !important;
      margin-right: 5px !important;
+}
+
+.action-icons-container {
+     display: flex !important;
+     justify-content: center !important;
+     align-items: center !important;
 }
 
 /* Info Boxes */
@@ -158,15 +165,18 @@ h5 {
 }
 
 
-.modal-content{
+.modal-content {
      border: 4px solid #2e7d32 !important;
 }
-.modal-content input{
+
+.modal-content input {
      border: 1px solid #2e7d32 !important;
 }
-.modal-content textarea{
+
+.modal-content textarea {
      border: 1px solid #2e7d32 !important;
 }
+
 /* Footer */
 footer {
      text-align: center !important;

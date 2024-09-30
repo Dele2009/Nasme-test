@@ -27,11 +27,11 @@ def business_profile_edit(request):
 
 # @login_required
 def transaction_history(request):
-    return render(request, "")
+    return render(request, "membersapp/under-construction.html")
 
 # @login_required
 def my_dues(request):
-    return render(request, "")
+    return render(request, "membersapp/under-construction.html")
 
 # @login_required
 def member_logout(request):
