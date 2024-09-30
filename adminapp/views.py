@@ -143,7 +143,8 @@ def register_member(request):
                             username = phone_number,
                             email = '-----',
                             phone_num = phone_number,
-                            random_id = random_id
+                            random_id = random_id,
+                            is_active = False
                         )
             new_member.set_password('superadmin')
             
@@ -166,34 +167,51 @@ def bulk_register(request):
     return render(request, 'adminapp/bulk-reg.html')
 
 def export_members(request):
-    # To handle login required
-    if request.user.is_authenticated == False and request.user.is_staff == False:
+    import csv
+from django.http import HttpResponse
+from django.shortcuts import redirect
+
+def export_members(request):
+    # Handle login required
+    if not request.user.is_authenticated or not request.user.is_staff:
         return redirect('admin-login')
     
-    all_members = User.objects.filter(is_staff = False)
-    for member in all_members:
-        details =  [{'Business_name': member.first_name},
-                    # {'Phone_number': member.phone_num},
-                    # {'Email': member.email}, 
-                    # {'Address': 'A Quiet Place'},
-                    # {'Services': ''},
-                    # {'Website': ''},
-                    # {'Facebook': ''},
-                    # {'Twitter(x)': ''},
-                    # {'Linkedln': ''},
-                    # {'Whatsapp': ''}
-                    ]
-    
-    with open('members_list.csv', mode='w') as csvfile:
-        for i in range(len(details)):
-            fieldnames = details[i].keys()
-            print(fieldnames)
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter = ';')
-        writer.writeheader()
-        for row in details:
-            writer.writerow(row)
+    # Create the HttpResponse object with CSV headers
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="members_list.csv"'
 
-    return redirect('manage-member')
+    writer = csv.writer(response)
+    # Writing the header row
+    writer.writerow(['Business Name', 'Phone Number', 'Email', 'Address', 'Services', 'Website', 'Facebook', 'Twitter (X)', 'LinkedIn', 'WhatsApp'])
+
+    # Fetch all non-staff users
+    all_members = User.objects.filter(is_staff=False)
+    all_members = all_members.filter(is_active = True)
+    
+    # Loop through each user and extract their details along with business details
+    for member in all_members:
+        current_member = member.username
+        print(current_member)
+        business = Business.objects.get(owner = current_member)
+        print(business)
+
+        writer.writerow([
+            business.name,
+            member.phone_num,
+            member.email,
+            business.address,
+            business.services,
+            'N/A',
+            'N/A',
+            'N/A',
+            'N/A',
+            'N/A',
+
+        ])
+
+    #return response
+
+    return redirect('manage-member'), response
 
 #@login_required
 def manage_member(request):
@@ -247,6 +265,7 @@ def manage_member(request):
             member = User.objects.get(random_id = member_id)
             member.suspend_message = suspend_message
             member.is_active = False
+            member.is_suspended = True
             member.save()
 
         elif 'submit_member_message' in request.POST:
@@ -337,6 +356,7 @@ def pending_approvals(request):
         return redirect('admin-login')
 
     users = User.objects.filter(is_active = False)
+    users = users.filter(is_suspended = False)
     businesses = Business.objects.all()
 
     context = {
@@ -351,8 +371,17 @@ def disapproved_profiles(request):
     # To handle login required
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
+    
+    users = User.objects.filter(is_suspended = True)
+    businesses = Business.objects.all()
 
-    return render(request, 'adminapp/disapproved-profiles.html')
+    context = {
+        'users' : users,
+        'businesses' : businesses,
+    }
+
+
+    return render(request, 'adminapp/disapproved-profiles.html', context)
 
 #@login_required
 def approved_profiles(request):

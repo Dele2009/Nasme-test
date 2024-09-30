@@ -4,3 +4,4 @@ mainapp/__pycache__
 adminapp/__pycache__
 membersapp/__pycache__
 all_staticfiles/
+.sqlite3
