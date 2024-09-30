@@ -13,6 +13,7 @@ class User(AbstractUser):
     last_updated = models.DateTimeField(auto_now=True)
     random_id = models.CharField(max_length=24, null=True)
     suspend_message = models.CharField(max_length=500, null=True)
+    is_suspended = models.BooleanField(default=False)
 
 class Message(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
