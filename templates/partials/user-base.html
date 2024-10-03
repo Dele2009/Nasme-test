@@ -54,14 +54,14 @@
           <div class="sidebar" id="sidebar">
                <ul class="px-0 mb-0">
                     <li class="log">
-                         <a data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard" href='{% url "member" %}'
+                         <a data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard"
                               href="{% url 'dashboard' %}" class="d-flex align-items-center">
-                                   <i class="bi bi-house-check"></i>
-                                   <span class="nav-item ms-3">Dashboard</span>
+                              <i class="bi bi-house-check"></i>
+                              <span class="nav-item ms-3">Dashboard</span>
                          </a>
                     </li>
                     <li class="log">
-                         <a data-bs-toggle="tooltip" data-bs-placement="right" title="Public Profile" href=""
+                         <a data-bs-toggle="tooltip" data-bs-placement="right" title="Public Profile" href="#"
                               target="_blank" class="d-flex align-items-center">
                               <i class="bi bi-box-arrow-up-right"></i>
                               <span class="nav-item ms-3">Public Profile</span>
@@ -75,22 +75,23 @@
                          </a>
                     </li>
                     <li class="log">
-                         <a data-bs-toggle="tooltip" data-bs-placement="right" title="My Dues" href=""
-                              class="d-flex align-items-center">
+                         <a data-bs-toggle="tooltip" data-bs-placement="right" title="My Dues"
+                              href="{% url 'my-dues' %}" class="d-flex align-items-center">
                               <i class="bi bi-wallet"></i>
                               <span class="nav-item ms-3">My Dues</span>
                          </a>
                     </li>
                     <li class="log">
-                         <a href="" data-bs-toggle="tooltip" data-bs-placement="right" title="Transaction Log"
-                              class="d-flex align-items-center">
+                         <a href="{% url 'transaction-log' %}" data-bs-toggle="tooltip" data-bs-placement="right"
+                              title="Transaction Log" class="d-flex align-items-center">
                               <i class="bi bi-list"></i>
                               <span class="nav-item ms-3">Transaction Log</span>
                          </a>
                     </li>
                     <li class="log">
-                         <a href="/user-logout" data-bs-toggle="tooltip" data-bs-placement="right" title="Logout"
-                              data-bs-toggle="modal" data-bs-target="#logoutModal" class="d-flex align-items-center">
+                         <a href="{% url 'member-logout' %}" data-bs-toggle="tooltip" data-bs-placement="right"
+                              title="Logout" data-bs-toggle="modal" data-bs-target="#logoutModal"
+                              class="d-flex align-items-center">
                               <i class="bi bi-escape"></i>
                               <span class="nav-item ms-3">Logout</span>
                          </a>

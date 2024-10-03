@@ -1,345 +1,441 @@
- {% extends 'partials/user-base.html' %} {% load static %}
+{% extends 'partials/user-base.html' %} {% load static %}
 
- {% block extraheadjs %}
-    {% comment %} <!-- Include TinyMCE --> {% endcomment %}
-  <script src="https://cdn.tiny.cloud/1/s2wmyj0a6srmak9w1bbon5fxe4jkht4w3m939ojiva9ciw54/tinymce/7/tinymce.min.js"
-    referrerpolicy="origin"></script>
-    <script>
-    {% comment %} Initialize TinyMCE for text areas {% endcomment %}
-    tinymce.init({
-      selector: "textarea",
-      plugins:
-        "lists link image preview code fullscreen anchor autolink emoticons searchreplace table visualblocks wordcount",
-      toolbar:
-        "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview fullscreen",
-      height: 250,
-      menubar: false,
-      branding: false,
-    });
+<!-- {% comment %} Include TinyMCE {% endcomment %} -->
 
-    {% comment %} // tinymce.init({
-    //      selector: 'textarea',
-    //      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-    //      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-    // }); {% endcomment %}
-  </script>
- {% endblock extraheadjs %}
- {% block styles %}
- <style>
-    {% comment %} /* .upload-container, .upload-container > *{
-               cursor: pointer; 
-          } */
-    /* Custom green theme based on #2e7d32 */ {% endcomment %}
-    .primary-green {
-      background-color: #2e7d32;
-      color: white;
-    }
+{% block extraheadjs%}
+<script
+  src="https://cdn.tiny.cloud/1/s2wmyj0a6srmak9w1bbon5fxe4jkht4w3m939ojiva9ciw54/tinymce/7/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
+<script>
+  tinymce.init({
+    selector: "textarea",
+    plugins:
+      "lists link image preview code fullscreen anchor autolink emoticons searchreplace table visualblocks wordcount",
+    toolbar:
+      "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview fullscreen",
+    height: 250,
+    menubar: false,
+    branding: false,
+    setup: function (editor) {
+      editor.on("change", function () {
+        tinymce.triggerSave(); // Ensure that the TinyMCE content gets submitted on form submission
+      });
+    },
+  });
+</script>
+{% endblock extraheadjs %} {% block styles %}
+<style>
+  .primary-green {
+    background-color: #2e7d32;
+    color: white;
+  }
 
-    .primary-green:hover {
-      background-color: #27662a;
-    }
+  .primary-green:hover {
+    background-color: #27662a;
+  }
 
-    .primary-green-text {
-      color: #2e7d32;
-    }
+  .primary-green-text {
+    color: #2e7d32;
+  }
 
-    .primary-green-border {
-      border-color: #2e7d32;
-    }
+  .primary-green-border {
+    border-color: #2e7d32;
+  }
 
+  .upload-image {
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px dashed #2e7d32;
+    width: 200px;
+    height: 200px;
+  }
+
+  .add-image {
+    cursor: pointer;
+    border-radius: 10px;
+    border: 3px solid #2e7d32;
+    width: 130px;
+    height: 130px;
+  }
+
+  .bi-cloud-upload {
+    transition: 0.7s 0s ease;
+  }
+
+  .cancel-image {
+    position: absolute;
+    z-index: 100;
+
+    top: -10px;
+    right: -10px;
+    border: none;
+    background: transparent;
+    transition: 0.7s 0s ease;
+    color: #ff1313;
+  }
+
+  .uploaded-img {
+    z-index: 100 !important;
+  }
+
+  .upload-image:hover .bi-cloud-upload {
+    transform: scale(1.3);
+  }
+
+  .cancel-image:hover {
+    transform: scale(1.3);
+  }
+
+  .cancel {
+    font-size: 20px;
+  }
+
+  .alert {
+    z-index: 99999 !important;
+  }
+
+  .image-error {
+    background-color: #ff1313b0;
+    border-radius: 10px;
+    color: white;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .alert-danger {
+    background-color: #ff1313b0;
+    border-radius: 10px;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
     .upload-image {
-      cursor: pointer;
-      border-radius: 10px;
-      border: 2px dashed #2e7d32;
-      width: 200px;
-      height: 200px;
-    }
-
-    .add-image {
-      cursor: pointer;
-      border-radius: 10px;
-      border: 3px solid #2e7d32;
-      width: 130px;
-      height: 130px;
-    }
-
-    .bi-cloud-upload {
-      transition: 0.7s 0s ease;
-    }
-
-    .cancel-image {
-      position: absolute;
-      z-index: 100;
-
-      top: -10px;
-      right: -10px;
-      border: none;
-      background: transparent;
-      transition: 0.7s 0s ease;
-      color: #ff1313;
-    }
-
-    .uploaded-img {
-      z-index: 100 !important;
-    }
-
-    .upload-image:hover .bi-cloud-upload {
-      transform: scale(1.3);
-    }
-
-    .cancel-image:hover {
-      transform: scale(1.3);
+      width: 140px;
+      height: 140px;
     }
 
     .cancel {
-      font-size: 20px;
+      font-size: 17px;
     }
+  }
+</style>
+{% endblock styles %} {% block content %}
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check-circle-fill" viewBox="0 0 16 16">
+    <path
+      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+    />
+  </symbol>
+  <symbol id="info-fill" viewBox="0 0 16 16">
+    <path
+      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+    />
+  </symbol>
+  <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+    <path
+      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+    />
+  </symbol>
+</svg>
 
-    .alert {
-      z-index: 99999 !important;
-    }
-
-    .image-error {
-      background-color: #ff1313b0;
-      border-radius: 10px;
-      color: white;
-      z-index: 99;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      inset: 0;
-    }
-
-    .alert-danger {
-      background-color: #ff1313b0;
-      border-radius: 10px;
-      color: white;
-    }
-
-    @media (max-width: 768px) {
-      .upload-image {
-        width: 140px;
-        height: 140px;
-      }
-
-      .cancel {
-        font-size: 17px;
-      }
-    }
-  </style>
- {% endblock styles %}
- {% block content %}
-  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="check-circle-fill" viewBox="0 0 16 16">
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-    </symbol>
-    <symbol id="info-fill" viewBox="0 0 16 16">
-      <path
-        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-    </symbol>
-    <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
-      <path
-        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-    </symbol>
-  </svg>
-
-  <div class="container my-5">
-    <form action="/edit-business-profile" method="POST" id="form" enctype="multipart/form-data" class="container-fluid">
-      <div class="col-lg-10 m-auto">
-        <!-- Business Info Section -->
-        <div class="row justify-content-center py-5 my-5">
-          <h4 class="text-center primary-green-text">UPDATE BUSINESS INFO</h4>
-          <div class="row shadow bg-light rounded-3 py-3 px-4">
-            <!-- Left Side (Business Logo and Other Info) -->
-            <div class="col-md-6">
-              <img src="https://via.placeholder.com/150" class="rounded-5 shadow-sm w-50" alt="Placeholder Image" />
-              <div class="form-control my-4 border-0 bg-transparent">
-                <div class="mb-3">
-                  <label class="form-label primary-green-text" for="business_photo">Upload Business Logo</label>
-                  <input accept=".jpg, .png, .jpeg" class="form-control primary-green-border" id="business_photo"
-                    name="business_photo" type="file" />
-                </div>
-
-                <div class="mb-3">
-                  <label class="primary-green-text" for="update_password">Update Password</label>
-                  <input class="form-control primary-green-border" id="update_password" maxlength="16" minlength="8"
-                    name="password" required type="password" />
-                </div>
-
-                <div class="mb-3">
-                  <label class="primary-green-text">Select Unit</label>
-                  <select name="mymultiselect" class="form-select primary-green-border" multiple>
-                    <option value="ICT and Creative Industry" selected>
-                      ICT and Creative Industry
-                    </option>
-                    <option value="Printing Press and Publishing">
-                      Printing Press and Publishing
-                    </option>
-                    <option value="Agribusiness">Agribusiness</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Sport and Logistics">
-                      Sport and Logistics
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Side (Business Name and Details) -->
-            <div class="col-md-6">
+<div class="container my-5">
+  <form
+    method="POST"
+    id="form"
+    enctype="multipart/form-data"
+    class="container-fluid"
+  >
+    {% csrf_token %}
+    <div class="col-lg-10 m-auto">
+      <!-- Business Info Section -->
+      <div class="row justify-content-center py-5 my-5">
+        <h4 class="text-center primary-green-text">UPDATE BUSINESS INFO</h4>
+        <div class="row shadow bg-light rounded-3 py-3 px-4">
+          <!-- Left Side (Business Logo and Other Info) -->
+          <div class="col-md-6">
+            <img
+              src="https://via.placeholder.com/150"
+              class="rounded-5 shadow-sm w-50"
+              alt="Placeholder Image"
+            />
+            <div class="form-control my-4 border-0 bg-transparent">
               <div class="mb-3">
-                <label class="primary-green-text" for="business_name">Business Name</label>
-                <input class="form-control primary-green-border" id="business_name" maxlength="40" minlength="10"
-                  name="business_name" required type="text" />
+                <label
+                  class="form-label primary-green-text"
+                  for="business_photo"
+                  >Upload Business Logo</label
+                >
+                <input
+                  accept=".jpg, .png, .jpeg"
+                  class="form-control primary-green-border"
+                  id="business_photo"
+                  name="business_photo"
+                  type="file"
+                />
               </div>
+
               <div class="mb-3">
-                <label class="primary-green-text" for="business_address">Business Location</label>
-                <input class="form-control primary-green-border" id="business_address" maxlength="40" minlength="20"
-                  name="business_address" required type="text" />
-              </div>
-              <div class="mb-3">
-                <label class="primary-green-text">About Your Business</label>
-                <textarea class="form-control primary-green-border" id="business_about"
-                  name="business_about"></textarea>
-              </div>
-              <div class="mb-3">
-                <label class="primary-green-text">Services Rendered</label>
-                <textarea class="form-control primary-green-border" id="business_services"
-                  name="business_services"></textarea>
+                <label class="primary-green-text" for="update_password"
+                  >Update Password</label
+                >
+                <input
+                  class="form-control primary-green-border"
+                  id="update_password"
+                  maxlength="16"
+                  minlength="8"
+                  name="password"
+                  required
+                  type="password"
+                />
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Product Images Section -->
-        <div class="my-4">
-          <h3 class="text-center primary-green-text">Update Products & Service Images</h3>
-          <div class="shadow bg-light rounded-3 py-3 px-4">
-            <div class="alert alert-dismissible fade show position-sticky top-0 alert-danger d-none align-items-center"
-              role="alert" id="image-alert">
-              <svg class="bi flex-shrink-0 me-2" style="width: 20px; height: 20px" role="img" aria-label="Danger:">
-                <use xlink:href="#check-circle-fill" />
-              </svg>
-              <div id="alert-message"></div>
-              <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+          <!-- Right Side (Business Name and Details) -->
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="primary-green-text" for="business_name"
+                >Business Name</label
+              >
+              <input
+                class="form-control primary-green-border"
+                id="business_name"
+                maxlength="40"
+                minlength="10"
+                name="business_name"
+                required
+                type="text"
+              />
             </div>
-            <div id="image-upload-sections" class="row py-3 align-items-center">
-              <div class="col-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center">
-                <button
-                  class="add-image position-relative bg-white d-flex flex-column justify-content-center align-items-center p-0 primary-green-border"
-                  id="add-image-btn" type="button">
-                  <div class="d-flex flex-column justify-content-center align-items-center">
-                    <i class="bi bi-folder-plus primary-green-text fs-3"></i>
-                    <i class="primary-green-text" style="font-size: 13px">Add more images</i>
-                  </div>
-                </button>
-              </div>
+            <div class="mb-3">
+              <label class="primary-green-text" for="business_address"
+                >Business Location</label
+              >
+              <input
+                class="form-control primary-green-border"
+                id="business_address"
+                maxlength="40"
+                minlength="20"
+                name="business_address"
+                required
+                type="text"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="primary-green-text">About Your Business</label>
+              <textarea
+                class="form-control primary-green-border"
+                id="business_about"
+                name="business_about"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="primary-green-text">Services Rendered</label>
+              <textarea
+                class="form-control primary-green-border"
+                id="business_services"
+                name="business_services"
+              ></textarea>
             </div>
           </div>
-        </div>
-
-        <!-- Contact Information Section -->
-        <div class="my-5">
-          <h4 class="text-center primary-green-text my-4">UPDATE LINKS & CONTACT INFORMATION</h4>
-          <div class="shadow bg-light rounded-3 py-lg-3 px-lg-4 row p-3">
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">Business Phone Number</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-telephone-fill input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_phone" maxlength="14" minlength="8"
-                  name="business_phone" required type="text" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">Business Email</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-envelope-fill input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_email" maxlength="40" minlength="5"
-                  name="business_email" required type="email" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">Business Website</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-browser-edge input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_website" maxlength="40" minlength="5"
-                  name="business_website" type="url" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">Facebook</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-facebook input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_facebook" name="business_facebook"
-                  type="url" />
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">LinkedIn</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-linkedin input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_linkedin" name="business_linkedin"
-                  type="url" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">Twitter / X</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-twitter input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_twitter" name="business_twitter"
-                  type="url" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label primary-green-text">WhatsApp</label>
-              <div class="input-group mb-3">
-                <i class="bi bi-whatsapp input-group-text primary-green"></i>
-                <input class="form-control primary-green-border" id="business_whatsapp" name="business_whatsapp"
-                  type="url" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="my-5 text-center">
-          <button class="btn primary-green px-5 py-2" type="submit">Submit Changes</button>
         </div>
       </div>
-    </form>
-  </div>
 
- 
-  <script>
-    let imageCount = 0;
-    const ImageDimension = 1024;
-    function previewImage(event, elementPosition) {
-      const input = event.target;
-      const textSectionId = `input-text-section-${elementPosition}`;
-      const imagePreviewId = `img-preview-${elementPosition}`;
-      const textSection = document.getElementById(textSectionId);
-      const imagePreview = document.getElementById(imagePreviewId);
+      <!-- Product Images Section -->
+      <div class="my-4">
+        <h3 class="text-center primary-green-text">
+          Update Products & Service Images
+        </h3>
+        <div class="shadow bg-light rounded-3 py-3 px-4">
+          <div
+            class="alert alert-dismissible fade show position-sticky top-0 alert-danger d-none align-items-center"
+            role="alert"
+            id="image-alert"
+          >
+            <svg
+              class="bi flex-shrink-0 me-2"
+              style="width: 20px; height: 20px"
+              role="img"
+              aria-label="Danger:"
+            >
+              <use xlink:href="#check-circle-fill" />
+            </svg>
+            <div id="alert-message"></div>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+          </div>
+          <div id="image-upload-sections" class="row py-3 align-items-center">
+            <div
+              class="col-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center"
+            >
+              <button
+                class="add-image position-relative bg-white d-flex flex-column justify-content-center align-items-center p-0 primary-green-border"
+                id="add-image-btn"
+                type="button"
+              >
+                <div
+                  class="d-flex flex-column justify-content-center align-items-center"
+                >
+                  <i class="bi bi-folder-plus primary-green-text fs-3"></i>
+                  <i class="primary-green-text" style="font-size: 13px"
+                    >Add more images</i
+                  >
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      // Check if a file was selected
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
+      <!-- Contact Information Section -->
+      <div class="my-5">
+        <h4 class="text-center primary-green-text my-4">
+          UPDATE LINKS & CONTACT INFORMATION
+        </h4>
+        <div class="shadow bg-light rounded-3 py-lg-3 px-lg-4 row p-3">
+          <div class="col-md-4">
+            <label class="form-label primary-green-text"
+              >Business Phone Number</label
+            >
+            <div class="input-group mb-3">
+              <i
+                class="bi bi-telephone-fill input-group-text primary-green"
+              ></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_phone"
+                maxlength="14"
+                minlength="8"
+                name="business_phone"
+                required
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label primary-green-text">Business Email</label>
+            <div class="input-group mb-3">
+              <i class="bi bi-envelope-fill input-group-text primary-green"></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_email"
+                maxlength="40"
+                minlength="5"
+                name="business_email"
+                required
+                type="email"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label primary-green-text"
+              >Business Website</label
+            >
+            <div class="input-group mb-3">
+              <i class="bi bi-browser-edge input-group-text primary-green"></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_website"
+                maxlength="40"
+                minlength="5"
+                name="business_website_url"
+                type="url"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label primary-green-text">Facebook</label>
+            <div class="input-group mb-3">
+              <i class="bi bi-facebook input-group-text primary-green"></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_facebook_url"
+                name="business_facebook_url"
+                type="url"
+              />
+            </div>
+          </div>
 
-        reader.onload = function (e) {
-          textSection.classList.add("d-none");
-          imagePreview.classList.remove("d-none"); // Show the image
-          imagePreview.src = e.target.result;
-          const img = new Image();
-          img.src = e.target.result;
-          img.onload = () => {
-            const width = img.width;
-            const height = img.height;
-            console.log(`img dimensions: ${width}x ${height}`);
+          <div class="col-md-4">
+            <label class="form-label primary-green-text">LinkedIn</label>
+            <div class="input-group mb-3">
+              <i class="bi bi-linkedin input-group-text primary-green"></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_linkedin_url"
+                name="business_linkedin_url"
+                type="url"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label primary-green-text">Twitter / X</label>
+            <div class="input-group mb-3">
+              <i class="bi bi-twitter input-group-text primary-green"></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_twitter_url"
+                name="business_twitter_url"
+                type="url"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label primary-green-text">WhatsApp</label>
+            <div class="input-group mb-3">
+              <i class="bi bi-whatsapp input-group-text primary-green"></i>
+              <input
+                class="form-control primary-green-border"
+                id="business_whatsapp_url"
+                name="business_whatsapp_url"
+                type="url"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
-            if (width !== ImageDimension || height !== ImageDimension) {
-              showAlert(
-                `
+      <!-- Submit Button -->
+      <div class="my-5 text-center">
+        <button class="btn primary-green px-5 py-2" type="submit">
+          Submit Changes
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  let imageCount = 0;
+  const ImageDimension = 1024;
+  function previewImage(event, elementPosition) {
+    const input = event.target;
+    const textSectionId = `input-text-section-${elementPosition}`;
+    const imagePreviewId = `img-preview-${elementPosition}`;
+    const textSection = document.getElementById(textSectionId);
+    const imagePreview = document.getElementById(imagePreviewId);
+
+    // Check if a file was selected
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        textSection.classList.add("d-none");
+        imagePreview.classList.remove("d-none"); // Show the image
+        imagePreview.src = e.target.result;
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = () => {
+          const width = img.width;
+          const height = img.height;
+          console.log(`img dimensions: ${width}x ${height}`);
+
+          if (width !== ImageDimension || height !== ImageDimension) {
+            showAlert(
+              `
                   <h4 class="m-0">
                     <b>Error on Display image ${elementPosition}:</b>
                   </h4> <br>
@@ -347,39 +443,39 @@
                   <p>Kindly select another image that meets this requirement.</p>
                   
                   `
-              );
-              showImageUploadError('Choose another image', elementPosition);
-              return;
-            }
+            );
+            showImageUploadError("Choose another image", elementPosition);
+            return;
+          }
 
-            showImageUploadError(null, elementPosition, false);
-          };
+          showImageUploadError(null, elementPosition, false);
         };
+      };
 
-        reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  const createImageUploader = () => {
+    if (imageCount >= 1) {
+      const previousInput = imageCount > 1 ? imageCount - 1 : imageCount;
+      const input = document.getElementById(`image-upload-${previousInput}`);
+      if (!input.files[0]) {
+        showAlert(
+          `
+              <h5><b>Kindly upload the current image to add a new one.</b></h5>
+            `
+        );
+        return;
       }
     }
 
-    const createImageUploader = () => {
-      if (imageCount >= 1) {
-        const previousInput = imageCount > 1 ? imageCount - 1 : imageCount
-        const input = document.getElementById(`image-upload-${previousInput}`)
-        if (!input.files[0]) {
-          showAlert(
-            `
-              <h5><b>Kindly upload the current image to add a new one.</b></h5>
-            `
-          );
-          return;
-        }
-      }
-
-      imageCount++;
-      const newImageSection = document.createElement("div");
-      newImageSection.className =
-        "col-6 col-md-4 col-lg-3 mb-3  d-flex flex-column gap-3 justify-content-center align-items-center upload-container";
-      newImageSection.id = `section-upload-${imageCount}`;
-      newImageSection.innerHTML = `
+    imageCount++;
+    const newImageSection = document.createElement("div");
+    newImageSection.className =
+      "col-6 col-md-4 col-lg-3 mb-3  d-flex flex-column gap-3 justify-content-center align-items-center upload-container";
+    newImageSection.id = `section-upload-${imageCount}`;
+    newImageSection.innerHTML = `
                     <label class="upload-image position-relative bg-white d-flex flex-column justify-content-center align-items-center p-0"  for="image-upload-${imageCount}">
                       <button class="cancel-image" id="remove-upload-${imageCount}" type="button">
                           <i class="bi bi-x-circle-fill cancel"></i>
@@ -400,83 +496,80 @@
                     
                `;
 
-      const input = generateInput(imageCount);
-      newImageSection.appendChild(input);
-      const addMoreImagesButton =
-        document.getElementById("add-image-btn").parentElement;
-      document
-        .getElementById("image-upload-sections")
-        .insertBefore(newImageSection, addMoreImagesButton);
-
-      // Add event listener for the remove button
-      document
-        .getElementById(`remove-upload-${imageCount}`)
-        .addEventListener("click", removeUploadElement);
-    };
-    // <input type="file" accept="image/*" class="form-control d-none" id="image-upload-${imageCount}" name="images[]" onchange="${(e)=> previewImage(e, imageCount)}">
-
-    createImageUploader();
-
-    function generateInput(position) {
-      const element = document.createElement("input");
-      element.type = "file";
-      element.accept = "image/*";
-      element.className = "form-control d-none";
-      element.id = `image-upload-${position}`;
-      element.name = `image`;
-      element.required = true;
-      element.onchange = (e) => previewImage(e, position);
-
-      return element;
-    }
-
-    function removeUploadElement(e) {
-      // document.getElementById('jfjf').parentElement
-      if (imageCount > 1) {
-        imageCount--;
-        const parent = e.target.parentElement.parentElement.parentElement;
-        parent.remove();
-      }
-    }
-
-    function showImageUploadError(message, position, error = true) {
-      // const uploadSection = document.getElementById(
-      //   `section-upload-${position}`
-      // );
-      const errorSectionElement = document.getElementById(
-        `image-error-${position}`
-      );
-      const errorMessage = document.getElementById(
-        `error-message-${position}`
-      );
-
-      if (error) {
-        errorSectionElement.classList.remove("d-none");
-        errorMessage.classList.remove("d-none");
-        errorMessage.innerHTML = message
-      } else {
-        errorSectionElement.classList.add("d-none");
-        errorMessage.classList.add("d-none");
-      }
-    }
-    function showAlert(message) {
-      const alert = document.getElementById("image-alert");
-      const alertmessage = alert.querySelector("#alert-message");
-      alertmessage.innerHTML = message;
-      alert.classList.remove("d-none");
-      alert.classList.add("d-flex");
-
-      setInterval(() => {
-        alert.classList.remove("d-flex");
-        alert.classList.add("d-none");
-      }, 30000);
-    }
-
+    const input = generateInput(imageCount);
+    newImageSection.appendChild(input);
+    const addMoreImagesButton =
+      document.getElementById("add-image-btn").parentElement;
     document
-      .getElementById("add-image-btn")
-      .addEventListener("click", () => createImageUploader());
-  </script>
-  <!-- Include Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      .getElementById("image-upload-sections")
+      .insertBefore(newImageSection, addMoreImagesButton);
+
+    // Add event listener for the remove button
+    document
+      .getElementById(`remove-upload-${imageCount}`)
+      .addEventListener("click", removeUploadElement);
+  };
+  // <input type="file" accept="image/*" class="form-control d-none" id="image-upload-${imageCount}" name="images[]" onchange="${(e)=> previewImage(e, imageCount)}">
+
+  createImageUploader();
+
+  function generateInput(position) {
+    const element = document.createElement("input");
+    element.type = "file";
+    element.accept = "image/*";
+    element.className = "form-control d-none";
+    element.id = `image-upload-${position}`;
+    element.name = `image-${position}`;
+    element.required = false;
+    element.onchange = (e) => previewImage(e, position);
+
+    return element;
+  }
+
+  function removeUploadElement(e) {
+    // document.getElementById('jfjf').parentElement
+    if (imageCount > 1) {
+      imageCount--;
+      const parent = e.target.parentElement.parentElement.parentElement;
+      parent.remove();
+    }
+  }
+
+  function showImageUploadError(message, position, error = true) {
+    // const uploadSection = document.getElementById(
+    //   `section-upload-${position}`
+    // );
+    const errorSectionElement = document.getElementById(
+      `image-error-${position}`
+    );
+    const errorMessage = document.getElementById(`error-message-${position}`);
+
+    if (error) {
+      errorSectionElement.classList.remove("d-none");
+      errorMessage.classList.remove("d-none");
+      errorMessage.innerHTML = message;
+    } else {
+      errorSectionElement.classList.add("d-none");
+      errorMessage.classList.add("d-none");
+    }
+  }
+  function showAlert(message) {
+    const alert = document.getElementById("image-alert");
+    const alertmessage = alert.querySelector("#alert-message");
+    alertmessage.innerHTML = message;
+    alert.classList.remove("d-none");
+    alert.classList.add("d-flex");
+
+    setInterval(() => {
+      alert.classList.remove("d-flex");
+      alert.classList.add("d-none");
+    }, 30000);
+  }
+
+  document
+    .getElementById("add-image-btn")
+    .addEventListener("click", () => createImageUploader());
+</script>
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock content %}
- 

@@ -11,6 +11,7 @@ class User(AbstractUser):
     dob = models.DateField(auto_now=False, auto_now_add=False, null=True)
     has_filled_profile = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     random_id = models.CharField(max_length=24, null=True)
     suspend_message = models.CharField(max_length=500, null=True)
     is_suspended = models.BooleanField(default=False)

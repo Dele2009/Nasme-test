@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 <style>
-
   .table-actions {
     display: flex;
     justify-content: space-between;
@@ -32,7 +31,16 @@
   }
 </style>
 {% endblock styles %} {% block content %}
+
+
 <div class="container my-5">
+  {% for message in messages  %}
+  <div class="alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}} {%endif%} alert-dismissible fade show" role="alert">
+   {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+   
+  {% endfor %}
   <div class="row justify-content-center align-items-center">
     <div class="col-lg-12">
       <div class="table-container">
@@ -61,73 +69,41 @@
               </tr>
             </thead>
             <tbody>
+              {% for admin in admins %}
               <tr>
-                {% for admin in admins %}
+
                 <td>{{forloop.counter}}</td>
                 <td>{{admin.first_name}} {{admin.last_name}}</td>
                 <td>{{admin.phone_num}}</td>
                 <td>{{admin.email}}</td>
                 <td class="action-icons">
                   <div class="action-icons-container">
-                    <a href="#" class="text-info" title="edit-admin"
-                      ><i class="bi bi-pencil-square"></i
-                    ></a>
-                    <a href="#" class="text-secondary" title="message-admin"
-                      ><i class="bi bi-chat-left-text-fill"></i
-                    ></a>
-                    <a href="#" class="text-warning" title="view-admin-details"
-                      ><i class="bi bi-eye-fill"></i
-                    ></a>
-                    <a href="#" class="text-dark" title="Suspend-admin"
-                      ><i class="bi bi-person-fill-lock"></i
-                    ></a>
-                    <a href="#" class="text-danger" title="Delete-admin"
-                      ><i class="bi bi-trash-fill"></i
-                    ></a>
+                    <a href="#editMemberModal" data-bs-memberId="{{admin.random_id}}" data-bs-toggle="modal"
+                      data-bs-business='
+                                      {
+                                        "memberName": "{{admin.first_name}} {{admin.last_name}}",
+                                        "memberNum": "{{admin.phone_num}}",
+                                        "memberEmail": "{{admin.email}}",
+                                        "memberPfp" : "{% if admin.profile_pic.url is not None %}{{admin.profile_pic.url}}{% else %}{% endif %}"
+                                      }
+                                    ' class="text-info" title="edit-member"><i class="bi bi-pencil-square"></i></a>
+                    <a href="#MessageMemberModal" data-bs-memberId="{{admin.random_id}}"
+                      data-bs-businessName='{{admin.first_name}}' data-bs-toggle="modal" class="text-secondary"
+                      title="message-member"><i class="bi bi-chat-left-text-fill"></i></a>
+                    <a href="#" class="text-warning" title="view-member-details"><i class="bi bi-eye-fill"></i></a>
+                    <a href="#SuspendMemberModal" data-bs-memberId="{{admin.random_id}}"
+                      data-bs-businessName='{{admin.first_name}}' class="text-dark" data-bs-toggle="modal"
+                      title="Suspend-member"><i class="bi bi-person-fill-lock"></i></a>
+                    <a href="#deleteMembermodal" data-bs-memberId="{{admin.random_id}}" data-bs-toggle="modal"
+                      class="text-danger" title="Delete-member"><i class="bi bi-trash-fill"></i></a>
                   </div>
                 </td>
               </tr>
               {% endfor %}
-              <!-- <tr>
-                                             <td>None</td>
-                                             <td>09023983884</td>
-                                             <td>None</td>
-                                             <td>None</td>
-                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
-                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
-                                             <td class="action-icons">
-                                                  <div class="action-icons-container">
-                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
-                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
-                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
-                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
-                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
-                                                  </div>
-                                             </td>
-                                        </tr>
-                                        <tr>
-                                             <td>TOBI WEBTONIC</td>
-                                             <td>12345678912</td>
-                                             <td>tobbswiththestuffl@tobbs.com</td>
-                                             <td>ICT, Creative Industry, Printing Press</td>
-                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
-                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
-                                             <td class="action-icons">
-                                                  <div class="action-icons-container">
-                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
-                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
-                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
-                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
-                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
-                                                  </div>
-                                             </td>
-                                        </tr> -->
             </tbody>
           </table>
         </div>
-        <div
-          class="d-flex justify-content-center gap-4 align-items-center mt-4"
-        >
+        <div class="d-flex justify-content-center gap-4 align-items-center mt-4">
           <i class="bi bi-arrow-left pagination-arrow"></i>
           <div>
             <button class="btn-pagination">1</button>
@@ -138,4 +114,269 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- Messageimg modal -->
+<div class="modal fade" id="MessageMemberModal" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="member_id" id="memberId">
+          <div class="mb-3">
+            <label for="business-name" class="col-form-label">Member:</label>
+            <input type="text" class="form-control" id="business-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" name="member_message" id="message-text"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="submit_member_message" class="btn btn-custom">
+              <i class="bi bi-send-fill me-2"></i>
+              Send message
+            </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- Suspention modal -->
+<div class="modal fade" id="SuspendMemberModal" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Member suspension request</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="member_id" id="memberId">
+          <div class="mb-3">
+            <label class="col-form-label">Requesting to suspend
+              <span id="business-name"></span>
+            </label>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Please Provide reason of suspension</label>
+            <textarea class="form-control" id="message-text" name="suspend_message"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="suspend_member" class="btn btn-custom">
+              <i class="bi bi-person-fill-slash me-2"></i>
+              Suspend member
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Member Details Modal -->
+<div class="modal fade" id="editMemberModal" tabindex="-1" aria-labelledby="editMemberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 shadow-sm">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="editMemberModalLabel">Edit Member Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" id="memberId" name="member_id">
+
+          <!-- Profile Image and Upload -->
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="d-flex flex-column align-items-start mb-3">
+                <img id="memberPfp" src="" class="object-fit-cover border rounded" style="height: 200px; width: 200px;"
+                  alt="Profile Picture">
+                <div class="ms-3">
+                  <label class="form-label d-block fw-semibold text-secondary">Update Profile Picture</label>
+                  <i id="imgUploadError"></i>
+                  <input class="form-control" type="file" id="profilePicture" style="max-width: 200px;"
+                    name="business_image">
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Fields -->
+            <div class="col-lg-7">
+              <div class="mb-3">
+                <label for="businessName" class="form-label text-secondary">Business Name</label>
+                <input type="text" class="form-control rounded-3 py-2" id="businessName" name="business_name">
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label text-secondary">Phone</label>
+                <input type="text" class="form-control rounded-3 py-2" id="phone" name="phone_num">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label text-secondary">Email</label>
+                <input type="email" class="form-control rounded-3 py-2" id="email" name="email">
+              </div>
+              <!-- <div class="mb-3">
+                <label for="password" class="form-label text-secondary">Password</label>
+                <input type="password" class="form-control rounded-3 py-2" id="password" value="12345678">
+              </div> -->
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-light text-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-custom px-4" name="save_edit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteMembermodal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+          Are you sure you want to Proceed ?
+          <input type="hidden" name="member_id" id="memberId" />
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-custom" href="#" name="delete_member">
+            Yes, Delete
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const exampleModal = document.querySelectorAll('.modal')
+  if (exampleModal) {
+    exampleModal.forEach(modal => {
+      modal.addEventListener('show.bs.modal', event => {
+        const Modal = event.target
+        // Button that triggered the modal
+        const button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        const memberId = button.getAttribute('data-bs-memberId')
+        const business = button.getAttribute('data-bs-businessName')
+
+        Modal.querySelector('#memberId').value = memberId
+
+        // Update the modal's content.
+        if (Modal.id === 'MessageMemberModal') {
+          const modalTitle = Modal.querySelector('.modal-title')
+          const modalBodyInput = Modal.querySelector('.modal-body input#business-name')
+
+          modalTitle.textContent = `New message to ${business}`
+          modalBodyInput.value = business
+        }
+        else if (Modal.id === 'SuspendMemberModal') {
+          const userName = Modal.querySelector('#business-name')
+          userName.innerHTML = `${business}`
+        }
+        else if (Modal.id === 'editMemberModal') {
+          const businessData = button.getAttribute('data-bs-business')
+          console.log(businessData)
+          const business = JSON.parse(businessData)
+          console.log(business)
+
+
+
+          const Name = Modal.querySelector('.modal-body input#businessName')
+          const Phone = Modal.querySelector('.modal-body input#phone')
+          const Email = Modal.querySelector('.modal-body input#email')
+          const ImgProfile = Modal.querySelector('.modal-body img#memberPfp')
+          // const Password = Modal.querySelector('.modal-body input#password')
+
+          Name.value = `${business.memberName}`
+          Phone.value = `${business.memberNum}`
+          Email.value = `${business.memberEmail}`
+          ImgProfile.src = `${business.memberPfp}`
+          // Password.value = `${business.first_name} ${business.last_name}`
+          // userName.innerHTML = `${business}`
+        }
+      })
+    })
+
+  }
+
+
+  document.getElementById('profilePicture').addEventListener('change', function (event) {
+    const file = event.target.files[0]; // Get the file from input
+
+    // Clear any previous error messages and hide the image preview
+    const errorMessage = document.getElementById('imgUploadError');
+    const imagePreview = document.getElementById('memberPfp');
+    errorMessage.textContent = '';
+    // imagePreview.style.display = 'none';
+
+    if (!file) {
+      errorMessage.textContent = 'Please select a file.';
+      return;
+    }
+
+    // Check file size (2MB = 2 * 1024 * 1024 bytes)
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      errorMessage.textContent = 'File size must be less than 2MB.';
+      return;
+    }
+
+    // Create an image to check dimensions
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = function () {
+      // Check image dimensions (1024 x 1024)
+      // if (img.width !== 1024 || img.height !== 1024) {
+      //     errorMessage.textContent = 'Image dimensions must be 1024x1024 pixels.';
+      //     URL.revokeObjectURL(objectUrl); // Clean up the object URL
+      //     return;
+      // }
+
+      // If file passes validation, show the image preview
+      imagePreview.src = objectUrl;
+      // imagePreview.style.display = 'block'; // Show the image preview
+    };
+
+    img.onerror = function () {
+      errorMessage.textContent = 'The selected file is not a valid image.';
+      URL.revokeObjectURL(objectUrl); // Clean up the object URL
+    };
+
+    img.src = objectUrl; // Load the image to trigger the onload event
+  });
+  // NIGERIA ASSOCIATION OF SMALL & MEDIUM ENTERPRISES
+</script>
 {% endblock content %}
