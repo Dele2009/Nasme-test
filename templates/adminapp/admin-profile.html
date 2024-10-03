@@ -1,0 +1,352 @@
+{% extends 'partials/base.html' %} {% load static %} {% block styles %}
+<style>
+  .rounded {
+    border-radius: 5px !important;
+  }
+
+  .py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .px-4 {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+  }
+
+  .file-upload .square {
+    height: 150px;
+    width: 150px;
+    margin: auto;
+    vertical-align: middle;
+    border: 1px solid #e5dfe4;
+    background-color: #fff;
+    border-radius: 50%;
+  }
+
+  .text-secondary {
+    --bs-text-opacity: 1;
+    color: rgba(208, 212, 217, 0.5) !important;
+  }
+
+  .btn-primary-soft {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .btn-danger-soft {
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+  }
+
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #29292e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e5dfe4;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    -webkit-transition: border-color 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+  }
+
+  .bg-secondary-soft {
+    background-color: #f8f9fb !important;
+  }
+</style>
+{% endblock styles %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <!-- Page title -->
+      <div class="my-5">
+        <h3>My Profile</h3>
+        <hr />
+      </div>
+      <!-- Form START -->
+      <form class="file-upload">
+        <div class="row mb-5 gx-5">
+          <!-- Upload profile -->
+          <div class="col-xxl-4">
+            <div class="bg-secondary-soft px-4 py-5 rounded">
+              <div class="row g-3">
+                <h4 class="mb-4 mt-0">Upload your profile photo</h4>
+                <div class="text-center">
+                  <!-- Image upload -->
+                  <div class="square position-relative display-2 mb-3">
+                    <img
+                      src="{% if current_admin.profile_pic.url is not None %}{{current_admin.profile_pic.url}}{% else %}{{'https://static.vecteezy.com/system/resources/previews/049/600/131/non_2x/a-silhouette-of-a-man-s-face-in-a-circle-free-vector.jpg'}}{% endif %}"
+                      class="img-fluid rounded-circle"
+                      style="width: 150px; height: 150px"
+                    />
+                  </div>
+                  <!-- Content -->
+                  <p class="text-muted mt-3 mb-0">
+                    <span class="me-1">Note:</span>Minimum size 300px x 300px
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact detail -->
+          <div class="col-xxl-8 mb-5 mb-xxl-0">
+            <div class="bg-secondary-soft px-4 py-5 rounded">
+              <div class="row g-3">
+                <h4 class="mb-4 mt-0">Contact detail</h4>
+
+                <!-- First Name -->
+                <div class="col-md-6">
+                  <label class="form-label">First Name</label>
+                  <p>{{current_admin.first_name}}</p>
+                </div>
+                <!-- Last Name -->
+                <div class="col-md-6">
+                  <label class="form-label">Last Name</label>
+                  <p>{{current_admin.last_name}}</p>
+                </div>
+                <!-- Phone number -->
+                <div class="col-md-6">
+                  <label class="form-label">Phone numberAA</label>
+                  <p>{{current_admin.phone_num|default:"NO VALUE"}}</p>
+                </div>
+                <!-- Email -->
+                <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Email</label>
+                  <p>{{current_admin.email}}</p>
+                </div>
+                <!-- Organization -->
+                <div class="col-md-6">
+                  <label class="form-label">Organization</label>
+                  <p>NASME Inc.</p>
+                </div>
+                <!-- Joined Date -->
+                <div class="col-md-6">
+                  <label class="form-label">Joined Date</label>
+                  <p>{{current_admin.created_at}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- button -->
+        <div class="gap-3 d-md-flex justify-content-md-end text-center">
+          <button type="button" class="btn btn-danger btn-lg">
+            Delete profile
+          </button>
+
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary btn-lg"
+            data-bs-toggle="modal"
+            data-bs-target="#editProfileModal"
+          >
+            Update profile
+          </button>
+        </div>
+      </form>
+      <!-- Form END -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="editProfileModal"
+  tabindex="-1"
+  aria-labelledby="editProfileModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form START -->
+        <form class="file-upload" enctype="multipart/form-data" method="POST">
+          {%csrf_token %}
+          <div class="row mb-5 gx-5">
+            <!-- Upload profile -->
+            <div class="col-xxl-4">
+              <div class="px-4 py-5 rounded">
+                <div class="row g-3">
+                  <h4 class="mb-4 mt-0">Upload your profile photo</h4>
+                  <div class="text-center">
+                    <!-- Image upload -->
+                    <div class="square position-relative display-2 mb-3">
+                      <img
+                        src="{% if current_admin.profile_pic.url is not None %}{{current_admin.profile_pic.url}}{% else %}{{'https://static.vecteezy.com/system/resources/previews/049/600/131/non_2x/a-silhouette-of-a-man-s-face-in-a-circle-free-vector.jpg'}}{% endif %}"
+                        alt="Profile Picture"
+                        class="img-fluid rounded-circle"
+                        style="width: 150px; height: 150px"
+                        id="upload_pic"
+                      />
+                    </div>
+                    <i style="color: red" id="image_error"></i>
+                    <!-- Button -->
+                    <input
+                      type="file"
+                      id="admin_profile_pic"
+                      name="file"
+                      hidden=""
+                    />
+                    <label
+                      class="btn btn-primary-soft btn-block"
+                      for="admin_profile_pic"
+                      >Upload</label
+                    >
+
+                    <!-- Content -->
+                    <p class="text-muted mt-3 mb-0">
+                      <span class="me-1">Note:</span>Minimum size 1024 x 1024
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact detail -->
+            <div class="col-xxl-8 mb-5 mb-xxl-0">
+              <div class="px-4 py-5 rounded">
+                <div class="row g-3">
+                  <h4 class="mb-4 mt-0">Contact details</h4>
+
+                  <!-- First Name -->
+                  <div class="col-md-6">
+                    <label class="form-label">First Name *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="fname"
+                      placeholder="Enter your first name"
+                      aria-label="First name"
+                      value="{{current_admin.first_name}}"
+                    />
+                  </div>
+                  <!-- Last Name -->
+                  <div class="col-md-6">
+                    <label class="form-label">Last Name *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter your last name"
+                      aria-label="Last name"
+                      name="lname"
+                      value="{{current_admin.last_name}}"
+                    />
+                  </div>
+                  <!-- Phone number -->
+                  <div class="col-md-6">
+                    <label class="form-label">Phone number *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter your phone number"
+                      aria-label="Phone number"
+                      name="phone"
+                      value="{{current_admin.phone_num|default:'----'}}"
+                    />
+                  </div>
+                  <!-- Email -->
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Email *</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="inputEmail4"
+                      name="email"
+                      placeholder="Enter your email"
+                      value="{{current_admin.email}}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="gap-3 d-md-flex justify-content-md-end text-center">
+            <button type="submit" class="btn btn-custom btn-lg">
+              Save changes
+            </button>
+          </div>
+        </form>
+        <!-- Form END -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("admin_profile_pic")
+    .addEventListener("change", function (event) {
+      const file = event.target.files[0]; // Get the file from input
+
+      // Clear any previous error messages and hide the image preview
+      const errorMessage = document.getElementById("image_error");
+      const imagePreview = document.getElementById("upload_pic");
+      errorMessage.textContent = "";
+      // imagePreview.style.display = 'none';
+
+      if (!file) {
+        errorMessage.textContent = "Please select a file.";
+        return;
+      }
+
+      // Check file size (2MB = 2 * 1024 * 1024 bytes)
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size > maxSize) {
+        errorMessage.textContent = "File size must be less than 2MB.";
+        return;
+      }
+
+      // Create an image to check dimensions
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = function () {
+        // Check image dimensions (1024 x 1024)
+        // if (img.width !== 1024 || img.height !== 1024) {
+        //     errorMessage.textContent = 'Image dimensions must be 1024x1024 pixels.';
+        //     URL.revokeObjectURL(objectUrl); // Clean up the object URL
+        //     return;
+        // }
+
+        // If file passes validation, show the image preview
+        imagePreview.src = objectUrl;
+        // imagePreview.style.display = 'block'; // Show the image preview
+      };
+
+      img.onerror = function () {
+        errorMessage.textContent = "The selected file is not a valid image.";
+        URL.revokeObjectURL(objectUrl); // Clean up the object URL
+      };
+
+      img.src = objectUrl; // Load the image to trigger the onload event
+    });
+</script>
+{% endblock content %}

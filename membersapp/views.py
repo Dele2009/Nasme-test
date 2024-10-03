@@ -19,15 +19,44 @@ def member_dashboard(request):
 
 # @login_required
 def member_account(request):
+    context = {
+        "title": 'Business details'
+    }
     return render(request, "")
 
 # @login_required
 def business_profile_edit(request):
-    return render(request, "membersapp/edit-profile.html")
+    if request.method == 'POST':
+        # Business images
+        # password = request.FILES.get('password')
+        print(request.POST)
+        print(request.FILES)
+        # # Business Data
+        # password = request.POST.get('password')
+        # business_name = request.POST.get('business_name')
+        # business_address = request.POST.get('business_address')
+        # business_about = request.POST.get('business_about')
+        # business_services = request.POST.get('business_services')
+        # business_phone = request.POST.get('business_phone')
+        # business_email = request.POST.get('business_email')
+        # business_wesite_url = request.POST.get('business_wesite_url')
+        # business_facebook_url = request.POST.get('business_facebook_url')
+        # business_linkedin_url = request.POST.get('business_linkedin_url')
+        # business_twitter_url = request.POST.get('business_twitter_url')
+        # business_whatsapp_url = request.POST.get('business_whatsapp_url')
+
+
+    context = {
+        "title": 'Business details'
+    }
+    return render(request, "membersapp/edit-profile.html", context)
 
 # @login_required
 def transaction_history(request):
-    return render(request, "membersapp/under-construction.html")
+    context = {
+        "title": 'Transactions'
+    }
+    return render(request, "membersapp/under-construction.html", context)
 
 # @login_required
 def my_dues(request):
@@ -36,5 +65,5 @@ def my_dues(request):
 # @login_required
 def member_logout(request):
     logout(request)
-    messages.error(request, 'Logged out successfully')
+    messages.success(request, 'Logged out successfully')
     return redirect()

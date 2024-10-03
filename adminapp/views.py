@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import *
-from django.contrib.auth.models import  User
+from django.urls import reverse
+# from django.contrib.auth.models import  User
+from django.contrib.auth import get_user_model
 from mainapp.models import *
 from django.db.utils import IntegrityError
 import csv
@@ -13,6 +15,8 @@ from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
 
+
+User = get_user_model()
 
 
 def generate_random_string():
@@ -77,14 +81,37 @@ def admin_dashboard(request):
     return render(request, "adminapp/admin-dashboard.html", context)
 
 #@login_required
-def admin_profile(request, id):
+def admin_profile(request):
     # To handle login required
     if request.user.is_authenticated == False and request.user.is_staff == False:
         return redirect('admin-login')
     
-    current_admin = User.objects.get(random_id = id)
-    
-    return render(request, "adminapp/under-construction.html")
+    if request.method == 'POST':
+        image = request.FILES.get('file')
+        
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+
+        user = get_object_or_404(User, id = request.user.id)
+        if image and not user.profile_pic:
+            user.profile_pic = image
+        user.first_name = fname
+        user.last_name = lname
+        user.phone_num = phone
+        user.email = email
+        user.save()
+        
+        messages.success(request, message='Your profile has been updated successfully.')
+        return redirect(request.path)
+        
+
+    current_admin = request.user
+    context = {
+        'current_admin': current_admin
+    }
+    return render(request, "adminapp/admin-profile.html", context)
 
 # @login_required
 def manage_admin(request):
@@ -109,8 +136,8 @@ def register_admin(request):
             email = request.POST.get('email')
             random_id = generate_random_string()
             new_admin = User.objects.create(
-                            first_name = '-----',
-                            last_name = '-----',
+                            # first_name = '-----',
+                            # last_name = '-----',
                             username = email,
                             email = email,
                             random_id = random_id
@@ -122,6 +149,8 @@ def register_admin(request):
                 new_admin.save()
             else:
                 new_admin.save()
+            messages.success(request, 'New admin successfully added.')
+            return redirect(reverse('manage-admin'))
     except IntegrityError:
             messages.error(request, 'Email already exists')
     return render(request, "adminapp/add-admin.html")
