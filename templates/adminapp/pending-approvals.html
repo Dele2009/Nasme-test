@@ -54,8 +54,8 @@
               {% for user in users %}
               <tr>
                 <td class="text-center">
-                  {% if user.is_staff == False %}
-                      {% if user.business is not None %}
+                  {% if not user.is_staff %}
+                      {% if user.business %}
                           {{user.business.name}}
                       {% else %}
                           {{user.username}}

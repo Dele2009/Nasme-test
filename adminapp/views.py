@@ -149,10 +149,10 @@ def register_member(request):
             new_member.set_password('superadmin')
             
             new_member.save()
-            new_member = User.objects.get(username = phone_number)
-            new_business = Business(owner= new_member, 
-                                    name = '-----',)
-            new_business.save()
+            # new_member = User.objects.get(username = phone_number)
+            # new_business = Business(owner= new_member, 
+            #                         name = '-----',)
+            # new_business.save()
         except IntegrityError:
             messages.error(request, 'Phone number already exists')
 
