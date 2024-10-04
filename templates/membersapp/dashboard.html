@@ -93,7 +93,7 @@
  {% block content %}
 <div class="container-fluid pt-5 w-100">
        <div class="greeting-section px-5">
-    <h1>Welcome back, Member!</h1>
+    <h1>Welcome back, {% if member.first_name != '-----' %}{{member.first_name}}{% else %}Member{% endif %}!</h1>
     <p>Here's a summary of your current activities and status</p>
   </div>
 
@@ -116,7 +116,7 @@
   <!-- Cards Section -->
   <div class="dashboard">
     
-    <a href="{% url 'edit-profile' %}" class="rounded myCard">
+    <a href="edit-profile/{{member.random_id}}/" class="rounded myCard">
       <i class="bi bi-person-fill"></i>
       <div class="text-center my-2">
         <p>Edit Profile</p>
@@ -138,18 +138,6 @@
       <i class="bi bi-stack"></i>
       <div class="text-center my-2">
         <p>Transaction Log</p>
-      </div>
-    </a>
-    <a href="{% url 'add-unit' %}" class="rounded myCard">
-      <i class="bi bi-layers-fill"></i>
-      <div class="text-center my-2">
-        <p>Add New Unit</p>
-      </div>
-    </a>
-    <a href="{% url 'register-member' %}" class="rounded myCard">
-      <i class="bi bi-person-fill"></i>
-      <div class="text-center my-2">
-        <p>Add New Member</p>
       </div>
     </a>
     

@@ -158,7 +158,7 @@
           <!-- Left Side (Business Logo and Other Info) -->
           <div class="col-md-6">
             <img
-              src="https://via.placeholder.com/150"
+              src="{{member.profile_pic.url}}"
               class="rounded-5 shadow-sm w-50"
               alt="Placeholder Image"
             />
@@ -178,7 +178,7 @@
                 />
               </div>
 
-              <div class="mb-3">
+              {% comment %} <div class="mb-3">
                 <label class="primary-green-text" for="update_password"
                   >Update Password</label
                 >
@@ -191,7 +191,7 @@
                   required
                   type="password"
                 />
-              </div>
+              </div> {% endcomment %}
             </div>
           </div>
 
@@ -209,6 +209,7 @@
                 name="business_name"
                 required
                 type="text"
+                {% if member.business %}value="{{member.business.name}}"{% endif %}
               />
             </div>
             <div class="mb-3">
@@ -223,6 +224,7 @@
                 name="business_address"
                 required
                 type="text"
+                value="{{business.address}}"
               />
             </div>
             <div class="mb-3">
@@ -231,7 +233,7 @@
                 class="form-control primary-green-border"
                 id="business_about"
                 name="business_about"
-              ></textarea>
+              >{{business.about}}</textarea>
             </div>
             <div class="mb-3">
               <label class="primary-green-text">Services Rendered</label>
@@ -239,7 +241,7 @@
                 class="form-control primary-green-border"
                 id="business_services"
                 name="business_services"
-              ></textarea>
+              >{{business.services}}</textarea>
             </div>
           </div>
         </div>
@@ -312,6 +314,7 @@
                 name="business_phone"
                 required
                 type="text"
+                value="{{business.phone_num}}"
               />
             </div>
           </div>
@@ -327,6 +330,7 @@
                 name="business_email"
                 required
                 type="email"
+                value="{{business.email}}"
               />
             </div>
           </div>
@@ -343,6 +347,7 @@
                 minlength="5"
                 name="business_website_url"
                 type="url"
+                value="{{socials.website}}"
               />
             </div>
           </div>
@@ -355,6 +360,7 @@
                 id="business_facebook_url"
                 name="business_facebook_url"
                 type="url"
+                value="{{socials.facebook}}"
               />
             </div>
           </div>
@@ -368,6 +374,7 @@
                 id="business_linkedin_url"
                 name="business_linkedin_url"
                 type="url"
+                value="{{socials.linkedln}}"
               />
             </div>
           </div>
@@ -380,6 +387,7 @@
                 id="business_twitter_url"
                 name="business_twitter_url"
                 type="url"
+                value="{{socials.twitter}}"
               />
             </div>
           </div>
@@ -392,6 +400,7 @@
                 id="business_whatsapp_url"
                 name="business_whatsapp_url"
                 type="url"
+                value="{{socials.whatsapp}}"
               />
             </div>
           </div>

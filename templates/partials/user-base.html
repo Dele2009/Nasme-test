@@ -23,7 +23,7 @@
                     <button class="btn ms-3" type="button" id="togglerLg" title="Toggler">
                          <i class="fs-4 bi bi-list text-light"></i>
                     </button>
-                    <a style="width: 60px; height: 60px;" class="rounded-pill bg-white p-2" id="navBrand" href="/">
+                    <a style="width: 60px; height: 60px;" class="rounded-pill bg-white p-2" id="navBrand" href="/member/">
                          <img src="/static/web_images/nasme-removebg-preview.png" alt="Logo" class="w-100 h-100">
                     </a>
                </div>
@@ -55,7 +55,7 @@
                <ul class="px-0 mb-0">
                     <li class="log">
                          <a data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard"
-                              href="{% url 'dashboard' %}" class="d-flex align-items-center">
+                              href="{% url 'member-dashboard' %}" class="d-flex align-items-center">
                               <i class="bi bi-house-check"></i>
                               <span class="nav-item ms-3">Dashboard</span>
                          </a>
@@ -69,7 +69,7 @@
                     </li>
                     <li class="log">
                          <a data-bs-toggle="tooltip" data-bs-placement="right" title="Edit Profile"
-                              href="{% url 'edit-profile' %}" class="d-flex align-items-center">
+                              href="edit-profile/{{member.random_id}}/" class="d-flex align-items-center">
                               <i class="bi bi-pencil-square"></i>
                               <span class="nav-item ms-3">Edit Profile</span>
                          </a>
@@ -116,7 +116,7 @@
                     <div class="modal-body">Ready to wrap up your session? Confirm your logout.</div>
                     <div class="modal-footer">
                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                         <a href="/user-logout" class="btn btn-danger">Logout</a>
+                         <a href="{% url 'member-logout' %}" class="btn btn-danger">Logout</a>
                     </div>
                </div>
           </div>

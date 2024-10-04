@@ -175,7 +175,7 @@ def register_member(request):
                             random_id = random_id,
                             is_active = False
                         )
-            new_member.set_password('superadmin')
+            new_member.set_password('12345678')
             
             new_member.save()
             # new_member = User.objects.get(username = phone_number)
@@ -308,6 +308,7 @@ def manage_member(request):
             message.save()
             
     members = User.objects.filter(is_staff = False)
+    members = members.filter(is_active = True)
     businesses = Business.objects.filter(owner__is_active = True)
 
     context = {

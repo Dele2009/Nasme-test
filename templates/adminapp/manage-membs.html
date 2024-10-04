@@ -72,13 +72,13 @@
               </tr>
             </thead>
             <tbody>
-              {% for business in businesses %}
+              {% for member in members %}
               <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{business.name}}</td>
-                <td>{{business.owner.phone_num}}</td>
-                <td>{{business.owner.email}}</td>
-                <td>{{business.unit}}</td>
+                <td>{% if member.business %}{{member.business.name}}{% else %}{{member.username}}{% endif %}</td>
+                <td>{{member.phone_num}}</td>
+                <td>{{member.email}}</td>
+                <td>{% if member.business %}{{member.business.unit}}{% else %}N/A{% endif %}</td>
                 <td>
                   2023 Dues<br /><a href="#" class="text-success">See More</a>
                 </td>

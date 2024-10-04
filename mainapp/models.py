@@ -36,11 +36,13 @@ class Unit(models.Model):
 
 class Business(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE,)
-    unit = models.OneToOneField(Unit, on_delete=models.CASCADE, null=True)
+    unit = models.OneToOneField(Unit, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200)
     address  = models.CharField(max_length=100)
     about = models.TextField()
     services = models.CharField(max_length=500, help_text='Add services seperated by comma "," ')
+    phone_num = models.CharField(max_length=20, null=True)
+    email = models.EmailField(max_length=254, null=True)
 
     class Meta:
         verbose_name = ('Business')
@@ -48,28 +50,26 @@ class Business(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
-   
-class BusinessImages(models.Model):
-    owner = models.ForeignKey(Business, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images', height_field=None, width_field=None, max_length=None)
-
-    class Meta:
-        verbose_name = ('Business Image')
-        verbose_name_plural = ('Business Images')
-
-
+  
 class Socials(models.Model):
     owner = models.OneToOneField(Business, on_delete=models.CASCADE)
     facebook = models.URLField(max_length=200, blank=True, null=True)
     website = models.URLField(max_length=200, blank=True, null=True)
     twitter = models.URLField(max_length=200, blank=True, null=True)
-    linkedin = models.URLField(max_length=200, blank=True, null=True)
+    linkedln = models.URLField(max_length=200, blank=True, null=True)
     whatsapp = models.URLField(max_length=200, blank=True, null=True)
 
     class Meta:
         verbose_name = ('Social')
         verbose_name_plural = ('Socials')
+
+class BusinessImages(models.Model):
+    owner = models.ForeignKey(Business, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='business_images', height_field=None, width_field=None, max_length=None)
+
+    class Meta:
+        verbose_name = ('Business Image')
+        verbose_name_plural = ('Business Images')
 
 
 
