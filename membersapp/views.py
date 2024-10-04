@@ -11,6 +11,11 @@ from django.core.files.base import ContentFile
 # Create your views here.
 
 def member_login(request):
+    match request.user:
+        case _ if request.user.is_authenticated == True:
+            return redirect('member-dashboard')
+        case _ if request.user.is_staff == True:
+            return redirect('member-dashboard')
     #Login form
     if request.method == 'POST':
         phone_num = request.POST.get('phone_num')
@@ -29,6 +34,11 @@ def member_login(request):
 
 # @login_required
 def member_dashboard(request):
+    match request.user:
+        case _ if request.user.is_authenticated == False:
+            return redirect('member-login')
+        case _ if request.user.is_staff == True:
+            return redirect('member-login')
     current_member = User.objects.get(username = request.user)
 
     context = {
@@ -38,13 +48,25 @@ def member_dashboard(request):
 
 # @login_required
 def member_account(request):
+    match request.user:
+        case _ if request.user.is_authenticated == False:
+            return redirect('member-login')
+        case _ if request.user.is_staff == True:
+            return redirect('member-login')
+         
     context = {
-        "title": 'Business details'
+
     }
     return render(request, "")
 
 # @login_required
 def business_profile_edit(request,id):
+    match request.user:
+        case _ if request.user.is_authenticated == False:
+            return redirect('member-login')
+        case _ if request.user.is_staff == True:
+            return redirect('member-login')
+         
     current_member = User.objects.get(random_id = id)
     if current_member.business:
             business = Business.objects.get(owner = current_member)
@@ -52,7 +74,7 @@ def business_profile_edit(request,id):
         business = Business(owner = current_member)
         business.save()
         business = Business.objects.get(owner = current_member)
-        
+
     if business.socials:
         socials = Socials.objects.get(owner = business)
     else:
@@ -116,18 +138,29 @@ def business_profile_edit(request,id):
         "member": current_member,
         "business" : business,
         "socials" : socials,
+        "business_images" : business_images,
     }
     return render(request, "membersapp/edit-profile.html", context)
 
 # @login_required
 def transaction_history(request):
+    match request.user:
+        case _ if request.user.is_authenticated == False:
+            return redirect('member-login')
+        case _ if request.user.is_staff == True:
+            return redirect('member-login')
     context = {
-        "title": 'Transactions'
+
     }
     return render(request, "membersapp/under-construction.html", context)
 
 # @login_required
 def my_dues(request):
+    match request.user:
+        case _ if request.user.is_authenticated == False:
+            return redirect('member-login')
+        case _ if request.user.is_staff == True:
+            return redirect('member-login')
     return render(request, "membersapp/under-construction.html")
 
 # @login_required
