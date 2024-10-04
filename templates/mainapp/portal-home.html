@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Business Members</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+
+    <style>
+      /* Modern Look */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+        color: #212529;
+      }
+
+      .navbar {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+      }
+
+      .navbar-brand img {
+        width: 100px;
+      }
+
+      /* Simplified search form */
+      .search-icon {
+        background-color: #e9ecef;
+      }
+
+      /* Modern Table Design */
+      table {
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        width: 100%;
+      }
+
+      table th,
+      table td {
+        padding: 1rem;
+        text-align: left;
+        vertical-align: middle;
+      }
+
+      table th {
+        background-color: #343a40;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      table td {
+        border-bottom: 1px solid #f1f1f1;
+      }
+
+      table tbody tr:hover {
+        background-color: #e9f7ef;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Refined Footer */
+      footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 2rem 0;
+      }
+
+      footer h6 {
+        font-weight: bold;
+        letter-spacing: 0.05em;
+        color: #f8f9fa;
+      }
+
+      footer p {
+        font-size: 0.875rem;
+      }
+
+      footer a {
+        color: #f8f9fa;
+      }
+
+      /* Buttons */
+      .btn-outline-light {
+        border-color: #f8f9fa;
+        color: #f8f9fa;
+      }
+
+      .btn-outline-light:hover {
+        background-color: #f8f9fa;
+        color: #212529;
+      }
+
+      /* Responsiveness */
+      @media (max-width: 991px) {
+        .dropdown-menu {
+          background-color: #e9ecef;
+        }
+      }
+
+      /* Hover effects */
+      .nav-link:hover {
+        color: #09d209;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="../../static/images/FAV.jpg" alt="Logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="https://nasmeoyo.org"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Data</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://nasmeoyo.org/index.php/about-us/"
+                >About Us</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://nasmeoyo.org/index.php/blog"
+                >Unit & Cluster</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Membership
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://nasmeoyo.org/index.php/membershiptypes"
+                    >Membership Types</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://nasmeoyo.org/index.php/membershipbenefits"
+                    >Membership Benefits</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://nasmeoyo.org/index.php/membershipregisteration"
+                    >Membership Registration</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Membership Portal
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="/business-members"
+                    >Current Member's List</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/login">Member's Login</a>
+                </li>
+                <li><a class="dropdown-item" href="/admin/">Admin Login</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://nasmeoyo.org/index.php/contact-us"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Search and Table Section -->
+    <div class="container my-5">
+      <div class="d-flex justify-content-between mb-3">
+        <form class="d-flex w-50">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search Members"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <div>
+          <button
+            class="btn btn-success dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Sort by Cluster
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+              <a class="dropdown-item" href="#">ICT and Creative Industry</a>
+            </li>
+            <li><a class="dropdown-item" href="#">Agribusiness</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Modern Table -->
+      <table class="table table-hover shadow-sm">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Business Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Cluster</th>
+            <th scope="col">More Info</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VALUEMAX CODERS' HUB</td>
+            <td>07032060088</td>
+            <td>info@valuemaxonline.com</td>
+            <td>ICT and Creative Industry</td>
+            <td><a href="#" class="text-decoration-none">See More</a></td>
+          </tr>
+          <tr>
+            <td>TOBI WEBTONIC</td>
+            <td>12345678912</td>
+            <td>tobbs@tobbs.com</td>
+            <td>Agribusiness</td>
+            <td><a href="#" class="text-decoration-none">See More</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="container">
+        <h6 class="mb-3">NASME OYO CHAPTER</h6>
+        <p>Promoting the development of MSMEs in Nigeria.</p>
+        <a href="https://nasmeoyo.org" class="btn btn-outline-light"
+          >Visit Our Website</a
+        >
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

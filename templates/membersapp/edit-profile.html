@@ -141,7 +141,7 @@
     />
   </symbol>
 </svg>
-
+<span id="data-business-images" data-bs-images="{{business_images}}"></span>
 <div class="container my-5">
   <form
     method="POST"
@@ -178,7 +178,8 @@
                 />
               </div>
 
-              {% comment %} <div class="mb-3">
+              {% comment %}
+              <div class="mb-3">
                 <label class="primary-green-text" for="update_password"
                   >Update Password</label
                 >
@@ -191,7 +192,8 @@
                   required
                   type="password"
                 />
-              </div> {% endcomment %}
+              </div>
+              {% endcomment %}
             </div>
           </div>
 
@@ -209,7 +211,13 @@
                 name="business_name"
                 required
                 type="text"
-                {% if member.business %}value="{{member.business.name}}"{% endif %}
+                {%
+                if
+                member.business
+                %}value="{{member.business.name}}"
+                {%
+                endif
+                %}
               />
             </div>
             <div class="mb-3">
@@ -233,7 +241,9 @@
                 class="form-control primary-green-border"
                 id="business_about"
                 name="business_about"
-              >{{business.about}}</textarea>
+              >
+{{business.about}}</textarea
+              >
             </div>
             <div class="mb-3">
               <label class="primary-green-text">Services Rendered</label>
@@ -241,7 +251,9 @@
                 class="form-control primary-green-border"
                 id="business_services"
                 name="business_services"
-              >{{business.services}}</textarea>
+              >
+{{business.services}}</textarea
+              >
             </div>
           </div>
         </div>
@@ -520,7 +532,45 @@
   };
   // <input type="file" accept="image/*" class="form-control d-none" id="image-upload-${imageCount}" name="images[]" onchange="${(e)=> previewImage(e, imageCount)}">
 
-  createImageUploader();
+  const businessImgData =
+    "{% for image in business_images %}{{image.url}}{% endfor %}";
+  console.log("businessImages =>", businessImgData);
+  const tsp = document
+    .getElementById("data-business-images")
+    .getAttribute("data-bs-images");
+  console.log("span----businessImages =>", businessImgData);
+  const businessImages = JSON.parse(businessImgData);
+  if (businessImages.length > 0) {
+    for (let i = 0; i < businessImages.length; i++) {
+      const newBusinessImageSection = document.createElement("div");
+      newBusinessImageSection.className =
+        "col-6 col-md-4 col-lg-3 mb-3  d-flex flex-column gap-3 justify-content-center align-items-center upload-container";
+      newBusinessImageSection.id = `business-image-${i + 1}`;
+      newBusinessImageSection.innerHTML = `
+                    <label class="upload-image position-relative bg-white d-flex flex-column justify-content-center align-items-center p-0"  for="image-upload-${imageCount}">
+                      <button class="cancel-image" id="remove-business-image-${
+                        i + 1
+                      }" type="button">
+                          <i class="bi bi-x-circle-fill cancel"></i>
+                      </button>
+                      
+                      <img id="business-image-preview-${
+                        i + 1
+                      }" class="img-fluid m-0 rounded-3 uploaded-img" src="https://via.placeholder.com/150" alt="Upload-Preview-${imageCount}">
+                     
+                    </label>
+                    
+                    
+               `;
+      const addMoreImagesButton =
+        document.getElementById("add-image-btn").parentElement;
+      document
+        .getElementById("image-upload-sections")
+        .insertBefore(newBusinessImageSection, addMoreImagesButton);
+    }
+  } else {
+    createImageUploader();
+  }
 
   function generateInput(position) {
     const element = document.createElement("input");

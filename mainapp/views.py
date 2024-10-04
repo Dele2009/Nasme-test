@@ -2,6 +2,6 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
-def dashboard(request):
+def home_portal(request):
 
-    return render(request, "")
+    return render(request, "mainapp/portal-home.html")
