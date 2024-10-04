@@ -21,7 +21,7 @@ class Message(models.Model):
     message = models.CharField(max_length=500)
 
     def __str__(self) -> str:
-        return f'Message for: {self.owner}'
+        return f'Message for: {self.owner.username}'
 
 # class Profile(models.Model):
 #     profile_owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -63,6 +63,9 @@ class Socials(models.Model):
         verbose_name = ('Social')
         verbose_name_plural = ('Socials')
 
+    def __str__(self) -> str:
+        return self.owner.name
+
 class BusinessImages(models.Model):
     owner = models.ForeignKey(Business, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='business_images', height_field=None, width_field=None, max_length=None)
@@ -70,7 +73,9 @@ class BusinessImages(models.Model):
     class Meta:
         verbose_name = ('Business Image')
         verbose_name_plural = ('Business Images')
-
+    
+    def __str__(self) -> str:
+        return self.owner.name
 
 
 #   USER_UPDATE_APPROVED = 'True'

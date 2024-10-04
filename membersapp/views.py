@@ -87,8 +87,11 @@ def business_profile_edit(request,id):
     else:
         business_images = BusinessImages(owner=business)
         business_images.save()
-        business_images = [business_images]
+        business_images = BusinessImages.objects.get(owner = business)
 
+    images = []
+    for image in business_images:
+        images.append(image.image.url)
 
     if request.method == 'POST':
         image_file = request.FILES.get('business_photo')
@@ -138,7 +141,7 @@ def business_profile_edit(request,id):
         "member": current_member,
         "business" : business,
         "socials" : socials,
-        "business_images" : business_images,
+        "business_images" : images,
     }
     return render(request, "membersapp/edit-profile.html", context)
 
