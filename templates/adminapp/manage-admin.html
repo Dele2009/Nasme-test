@@ -81,7 +81,8 @@
                     <a href="#editMemberModal" data-bs-memberId="{{admin.random_id}}" data-bs-toggle="modal"
                       data-bs-business='
                                       {
-                                        "memberName": "{{admin.first_name}} {{admin.last_name}}",
+                                        "memberFirstname": "{{admin.first_name}}",
+                                        "memberLastname": "{{admin.last_name}}",
                                         "memberNum": "{{admin.phone_num}}",
                                         "memberEmail": "{{admin.email}}",
                                         "memberPfp" : "{% if admin.profile_pic.url is not None %}{{admin.profile_pic.url}}{% else %}{% endif %}"
@@ -219,8 +220,12 @@
             <!-- Input Fields -->
             <div class="col-lg-7">
               <div class="mb-3">
-                <label for="businessName" class="form-label text-secondary">Business Name</label>
-                <input type="text" class="form-control rounded-3 py-2" id="businessName" name="business_name">
+                <label for="businessName" class="form-label text-secondary">First Name</label>
+                <input type="text" class="form-control rounded-3 py-2" id="businessName" name="first_name">
+              </div>
+              <div class="mb-3">
+                <label for="businessName" class="form-label text-secondary">Last Name</label>
+                <input type="text" class="form-control rounded-3 py-2" id="businessName" name="last_name">
               </div>
               <div class="mb-3">
                 <label for="phone" class="form-label text-secondary">Phone</label>
@@ -234,10 +239,6 @@
                 <label for="password" class="form-label text-secondary">Password</label>
                 <input type="password" class="form-control rounded-3 py-2" id="password" value="12345678">
               </div> -->
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-              </select>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
@@ -313,13 +314,14 @@
 
 
 
-          const Name = Modal.querySelector('.modal-body input#businessName')
+          const firstName = Modal.querySelector('.modal-body input#businessfirstName')
+          const lastName = Modal.querySelector('.modal-body input#businesslastName')
           const Phone = Modal.querySelector('.modal-body input#phone')
           const Email = Modal.querySelector('.modal-body input#email')
           const ImgProfile = Modal.querySelector('.modal-body img#memberPfp')
           // const Password = Modal.querySelector('.modal-body input#password')
 
-          Name.value = `${business.memberName}`
+          firstName.value = `${business.memberName}`
           Phone.value = `${business.memberNum}`
           Email.value = `${business.memberEmail}`
           ImgProfile.src = `${business.memberPfp}`

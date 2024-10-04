@@ -132,8 +132,65 @@ def manage_admin(request):
             return redirect('admin-login')
         case _ if request.user.is_staff == False:
             return redirect('admin-login')
+        
+    if request.method == 'POST':
+        if 'save_edit' in request.POST:
+            admin_id = request.POST.get('member_id')
+            admin = User.objects.get(random_id = admin_id)
+
+            new_fname = request.POST.get('first_name')
+            new_lname = request.POST.get('last_name')
+            new_number = request.POST.get('phone_num')
+            new_email = request.POST.get('email')
+            image_file = request.FILES.get('business_image')
+
+            if image_file:
+                img = Image.open(image_file)
+                img = img.resize((1024, 1024), Image.Resampling.LANCZOS)
+                if img.mode == 'RGBA':
+                    # Convert the image to RGB before saving as JPEG
+                    img = img.convert('RGB')
+                img_io = BytesIO()
+                img.save(img_io, format='JPEG')
+                img_content = ContentFile(img_io.getvalue(), name=image_file.name)
+                admin.profile_pic.delete()
+                admin.profile_pic = img_content
+
+            admin.first_name = new_fname
+            admin.last_name = new_lname
+            admin.phone_num = new_number
+            admin.username = new_number
+            admin.email = new_email
+            admin.save()
+        
+        elif 'delete_member' in request.POST:
+            admin_id = request.POST.get('member_id')
+            admin = User.objects.get(random_id = admin_id)
+            admin.profile_pic.delete()
+            admin.delete()
+        
+        elif 'suspend_member' in request.POST:
+            admin_id = request.POST.get('member_id')
+            suspend_message = request.POST.get('suspend_message')
+
+            admin = User.objects.get(random_id = admin_id)
+            admin.suspend_message = suspend_message
+            admin.is_active = False
+            admin.is_suspended = True
+            admin.save()
+
+        elif 'submit_member_message' in request.POST:
+            admin_id = request.POST.get('member_id')
+            admin_message = request.POST.get('member_message')
+
+            admin = User.objects.get(random_id = admin_id)
+
+            message = Message(owner = admin, 
+                              message = admin_message)
+            message.save()
 
     all_admins = User.objects.filter(is_staff = True)
+    all_admins = all_admins.filter(is_active = True)
     context = {
         'admins' : all_admins
     }
