@@ -90,10 +90,10 @@
                     <a href="#editMemberModal" data-bs-memberId="{{business.owner.random_id}}" data-bs-toggle="modal"
                       data-bs-business='
                       {
-                        "memberName": "{{business.name}}",
-                        "memberNum": "{{business.owner.phone_num}}",
-                        "memberEmail": "{{business.owner.email}}",
-                        "memberPfp" : "{% if business.owner.profile_pic.url is not None %}{{business.owner.profile_pic.url}}{% else %}{% endif %}"
+                        "memberName": "{{member.business.name}}",
+                        "memberNum": "{{member.business.phone_num}}",
+                        "memberEmail": "{{member.business.email}}",
+                        "memberPfp" : "{% if member.profile_pic.url is not None %}{{member.profile_pic.url}}{% else %}{% endif %}"
                       }
                     ' class="text-info" title="edit-member"><i class="bi bi-pencil-square"></i></a>
                     <a href="#MessageMemberModal" data-bs-memberId="{{business.owner.random_id}}"
