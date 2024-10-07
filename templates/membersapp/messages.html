@@ -1,4 +1,26 @@
-{% extends 'partials/user-base.html' %} {% load static %} {% block styles %}
+{% extends 'partials/user-base.html' %} {% load static %} {% block extraheadjs%}
+<script
+  src="https://cdn.tiny.cloud/1/s2wmyj0a6srmak9w1bbon5fxe4jkht4w3m939ojiva9ciw54/tinymce/7/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
+<script>
+  tinymce.init({
+    selector: "textarea",
+    plugins:
+      "lists link image preview code fullscreen anchor autolink emoticons searchreplace table visualblocks wordcount",
+    toolbar:
+      "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview fullscreen",
+    height: 250,
+    menubar: false,
+    branding: false,
+    setup: function (editor) {
+      editor.on("change", function () {
+        tinymce.triggerSave(); // Ensure that the TinyMCE content gets submitted on form submission
+      });
+    },
+  });
+</script>
+{% endblock extraheadjs %} {% block styles %}
 <style>
   .container {
     margin-top: 50px;
@@ -73,33 +95,24 @@
     <div class="col-md-4">
       <div class="message-list">
         <!-- Example Message Item with Warning Icon -->
-        <div class="message-item" onclick="viewMessage(1)">
+        {% for message in messages %}
+        <div data-bs-message='{
+          "messageTitle" : "{{message.title}}",
+          "messageContent" : "{{message.message}}",
+          "messageType" : "{{message.message_type}}"
+        }' class="message-item" onclick="viewMessage(1)">
           <i
-            class="message-icon text-warning bi bi-exclamation-triangle-fill"
+            class="message-icon  bi {% if message.message_type == 'i' %}text-info bi-info-circle-fill{% elif message.message_type == 'w' %}text-warning bi-exclamation-triangle-fill{% elif message.message_type == 'e' %}text-danger bi-x-circle-fill{% endif %}"
           ></i>
           <div>
-            <h5 class="message-title">Warning Message</h5>
+            <h5 class="message-title">{{message.title}}</h5>
             <p>Warning details go here...</p>
           </div>
         </div>
+        {% endfor %}
+        
 
-        <!-- Example Message Item with Info Icon -->
-        <div class="message-item" onclick="viewMessage(2)">
-          <i class="message-icon text-info bi bi-info-circle-fill"></i>
-          <div>
-            <h5 class="message-title">Info Message</h5>
-            <p>Info details go here...</p>
-          </div>
-        </div>
-
-        <!-- Example Message Item with Error Icon -->
-        <div class="message-item" onclick="viewMessage(3)">
-          <i class="message-icon text-danger bi bi-x-circle-fill"></i>
-          <div>
-            <h5 class="message-title">Error Message</h5>
-            <p>Error details go here...</p>
-          </div>
-        </div>
+       
 
         <!-- Add more messages as needed -->
       </div>

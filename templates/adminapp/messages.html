@@ -95,33 +95,20 @@
     <div class="col-md-4">
       <div class="message-list">
         <!-- Example Message Item with Warning Icon -->
+        {% for message in messages %}
         <div class="message-item" onclick="viewMessage(1)">
           <i
             class="message-icon text-warning bi bi-exclamation-triangle-fill"
           ></i>
           <div>
-            <h5 class="message-title">Warning Message</h5>
+            <h5 class="message-title">{{message.title}}</h5>
             <p>Warning details go here...</p>
           </div>
         </div>
+        {% endfor %}
+        
 
-        <!-- Example Message Item with Info Icon -->
-        <div class="message-item" onclick="viewMessage(2)">
-          <i class="message-icon text-info bi bi-info-circle-fill"></i>
-          <div>
-            <h5 class="message-title">Info Message</h5>
-            <p>Info details go here...</p>
-          </div>
-        </div>
-
-        <!-- Example Message Item with Error Icon -->
-        <div class="message-item" onclick="viewMessage(3)">
-          <i class="message-icon text-danger bi bi-x-circle-fill"></i>
-          <div>
-            <h5 class="message-title">Error Message</h5>
-            <p>Error details go here...</p>
-          </div>
-        </div>
+       
 
         <!-- Add more messages as needed -->
       </div>

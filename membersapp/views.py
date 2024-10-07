@@ -149,8 +149,19 @@ def business_profile_edit(request,id):
 
 #@login_required
 def get_messages_or_alerts(request):
+    match request.user:
+        case _ if request.user.is_authenticated == False:
+            return redirect('member-login')
+        case _ if request.user.is_staff == True:
+            return redirect('member-login')
+        
+    messages = Message.objects.filter(owner = request.user)
 
-    return render(request, 'membersapp/messages.html')
+    context = {
+        'messages' : messages.reverse(),
+    }
+
+    return render(request, 'membersapp/messages.html', context)
 
 
 # @login_required

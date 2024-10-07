@@ -544,24 +544,29 @@ def unit_message(request):
     if request.method == 'POST':
         message_title = request.POST.get('title')
         message_body = request.POST.get('message')
-        message_type = request.POST.get('')
+        message_type = request.POST.get('messageType')
+        business = Business.objects.all()
 
         # To send message to all units
         if 'sendAll' in request.POST:
             units = Unit.objects.all()
 
             for unit in units:
-                for member in unit:
-                    message = Message(owner = member, 
+                businesses = business.filter(unit = unit)
+                for business_owner in businesses:
+                    message = Message(owner = business_owner.owner, 
                                     title = message_title, 
                                     message = message_body,
                                     message_type = message_type)
                     message.save()
+                
+                    
         else:
-            unit_id = request.POST.get('')
+            unit_id = request.POST.get('unit')
             unit = Unit.objects.get(id = unit_id)
-            for member in unit:
-                message = Message(owner = member, 
+            businesses = business.filter(unit = unit)
+            for business_owner in businesses:
+                message = Message(owner = business_owner.owner, 
                                   title = message_title, 
                                   message = message_body,
                                   message_type = message_type)
