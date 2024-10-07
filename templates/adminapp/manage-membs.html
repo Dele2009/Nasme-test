@@ -275,10 +275,15 @@
                 <label for="password" class="form-label text-secondary">Password</label>
                 <input type="password" class="form-control rounded-3 py-2" id="password" value="12345678">
               </div> -->
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-              </select>
+              <div class="mb-3">
+                <label for="unit" class="form-label text-secondary">Assign to a new unit.</label>
+                <select id="unit" class="form-select" aria-label="Default select example">
+                  <option selected>----Select a unit.---- </option>
+                  {% for unit in units %}
+                  <option value="1">{{unit.unit_name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">

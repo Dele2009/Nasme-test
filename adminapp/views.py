@@ -30,10 +30,10 @@ def admin_login(request):
     # If user is already logged in
     match request.user:
         case _ if request.user.is_staff == True:
-            messages.warning(request, 'User is already logged in...')
+            #messages.warning(request, 'User is already logged in...')
             return redirect('admin-dashboard')
         case _ if request.user.is_authenticated == True:
-            messages.warning(request, 'User is already logged in...')
+            #messages.warning(request, 'User is already logged in...')
             return redirect('admin-dashboard')
     
 
@@ -114,7 +114,7 @@ def admin_profile(request):
         user.email = email
         user.save()
         
-        messages.success(request, message='Your profile has been updated successfully.')
+        #messages.success(request, message='Your profile has been updated successfully.')
         return redirect(request.path)
         
 
@@ -223,7 +223,7 @@ def register_admin(request):
                 new_admin.save()
             else:
                 new_admin.save()
-            messages.success(request, 'New admin successfully added.')
+            #messages.success(request, 'New admin successfully added.')
             return redirect(reverse('manage-admin'))
     except IntegrityError:
             messages.error(request, 'Email already exists')
@@ -397,10 +397,12 @@ def manage_member(request):
     members = User.objects.filter(is_staff = False)
     members = members.filter(is_active = True)
     businesses = Business.objects.filter(owner__is_active = True)
+    units = Unit.objects.all()
 
     context = {
         'members' : members,
         'businesses' : businesses,
+        'units' : units,
     }
     return render(request, "adminapp/manage-membs.html",context)
 
@@ -459,7 +461,7 @@ def add_unit(request,):
         if unit is not None and len(unit.strip()) > 5:
             new_unit = Unit(unit_name = unit)
             new_unit.save()
-            messages.success(request, 'Unit created successfully')
+            #messages.success(request, 'Unit created successfully')
         else:
             messages.warning(request, 'Invalid input, Length of unit name should be greater than 5 chahracters')
     return render(request,'adminapp/add-unit.html')
