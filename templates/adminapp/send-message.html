@@ -1,4 +1,26 @@
-{% extends 'partials/base.html' %} {% load static %} {% block styles %}
+{% extends 'partials/base.html' %} {% load static %} {% block extraheadjs%}
+<script
+  src="https://cdn.tiny.cloud/1/s2wmyj0a6srmak9w1bbon5fxe4jkht4w3m939ojiva9ciw54/tinymce/7/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
+<script>
+  tinymce.init({
+    selector: "textarea",
+    plugins:
+      "lists link image preview code fullscreen anchor autolink emoticons searchreplace table visualblocks wordcount",
+    toolbar:
+      "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview fullscreen",
+    height: 250,
+    menubar: false,
+    branding: false,
+    setup: function (editor) {
+      editor.on("change", function () {
+        tinymce.triggerSave(); // Ensure that the TinyMCE content gets submitted on form submission
+      });
+    },
+  });
+</script>
+{% endblock extraheadjs %} {% block styles %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 <style>
   /* Unique Styles for Send Message Page */
@@ -152,13 +174,11 @@
             />
           </div>
           <div class="form-group">
-            <label for="message">Message</label>
+            <label>Message</label>
             <textarea
               id="message"
               name="message"
               class="form-control-sec"
-              rows="5"
-              placeholder="Write your message here"
             ></textarea>
           </div>
           <div class="form-group">

@@ -87,12 +87,11 @@ def business_profile_edit(request,id):
     else:
         business_images = BusinessImages(owner=business)
         business_images.save()
-        business_images = BusinessImages.objects.get(owner= business)
+        business_images = BusinessImages.objects.get(owner = business)
 
     images = []
     for image in business_images:
-        print(type(image))
-        images.append(image)
+        images.append(image.image.url)
 
     if request.method == 'POST':
         image_file = request.FILES.get('business_photo')
@@ -142,10 +141,17 @@ def business_profile_edit(request,id):
         "member": current_member,
         "business" : business,
         "socials" : socials,
-        "business_images" : images,
+        "business_images" : business_images,
     }
     print(images)
     return render(request, "membersapp/edit-profile.html", context)
+
+
+#@login_required
+def get_messages_or_alerts(request):
+
+    return render(request, 'membersapp/messages.html')
+
 
 # @login_required
 def transaction_history(request):

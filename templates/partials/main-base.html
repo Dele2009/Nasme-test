@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PORTAL | NASME OYO</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+
+    <style>
+      /* Modern Look */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+        color: #212529;
+      }
+
+      /* Navbar custom styles */
+      .custom-navbar {
+        background-color: #27cc2f; /* Bright green */
+        color: white;
+      }
+
+      .custom-navbar .contact-info i {
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .custom-navbar .contact-info span {
+        font-size: 1rem;
+      }
+
+      .custom-navbar .search-box {
+        position: relative;
+      }
+
+      .custom-navbar .custom-search-input {
+        padding: 5px 40px 5px 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        width: 250px;
+      }
+
+      .custom-navbar .search-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.3rem;
+        color: #2e7d32;
+      }
+
+      .custom-navbar .icon-links a {
+        font-size: 1.7rem;
+        color: white;
+        transition: transform 0.3s ease;
+      }
+
+      .custom-navbar .icon-links a:hover {
+        transform: scale(1.2);
+      }
+
+      .custom-navbar .custom-icon {
+        font-size: 1.6rem;
+        color: white;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .custom-navbar .contact-info {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .custom-navbar .search-box {
+          margin-bottom: 10px;
+        }
+
+        .custom-navbar .custom-search-input {
+          width: 200px;
+        }
+
+        .custom-navbar .icon-links {
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .custom-navbar .custom-search-input {
+          width: 180px;
+        }
+
+        .custom-navbar .icon-links a {
+          font-size: 1.5rem;
+        }
+      }
+
+      .navbar {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+      }
+
+      .navbar-brand img {
+        width: 100px;
+      }
+
+      /* Footer Section */
+      .custom-footer {
+        background-color: #333; /* Dark gray */
+        color: #ddd;
+        padding: 40px 0;
+      }
+
+      .custom-footer h4 {
+        font-size: 1.5rem;
+        color: #ffffff;
+      }
+
+      .custom-footer p,
+      .custom-footer address {
+        font-size: 1rem;
+        color: #ddd;
+        line-height: 1.8;
+      }
+
+      .custom-footer a.footer-link {
+        color: #a5d6a7;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .custom-footer a.footer-link:hover {
+        color: #43a047;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .custom-footer .col-md-6,
+        .custom-footer .col-md-12 {
+          text-align: center;
+        }
+      }
+
+      /* Buttons */
+      .btn-outline-light {
+        border-color: #f8f9fa;
+        color: #f8f9fa;
+      }
+
+      .btn-outline-light:hover {
+        background-color: #f8f9fa;
+        color: #212529;
+      }
+
+      /* Responsiveness */
+      @media (max-width: 991px) {
+        .dropdown-menu {
+          background-color: #e9ecef;
+        }
+      }
+
+      /* Hover effects */
+      .nav-link:hover {
+        color: #09d209;
+      }
+    </style>
+
+    {% block styles %}{% endblock styles %}
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+      <div class="container-fluid">
+        <!-- Contact Information -->
+        <div class="d-flex align-items-center contact-info">
+          <span class="me-4"
+            ><i class="bi bi-telephone-fill me-2"></i>+2348160831342 or
+            +2348032428096</span
+          >
+          <span><i class="bi bi-envelope-fill me-2"></i>info@nasmeoyo.org</span>
+        </div>
+
+        <!-- Toggler for mobile view -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Search and social icons -->
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <div class="ms-auto d-flex align-items-center">
+            <div class="search-box me-4">
+              <input
+                type="text"
+                class="custom-search-input"
+                placeholder="Search"
+              />
+              <i class="bi bi-search search-icon"></i>
+            </div>
+            <div class="icon-links d-flex">
+              <a href="#" class="me-3"
+                ><i class="bi bi-folder custom-icon"></i
+              ></a>
+              <a href="#"><i class="bi bi-facebook custom-icon"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="../../static/images/FAV.jpg" alt="Logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="https://nasmeoyo.org"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Data</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://nasmeoyo.org/index.php/about-us/"
+                >About Us</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://nasmeoyo.org/index.php/blog"
+                >Unit & Cluster</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Membership
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://nasmeoyo.org/index.php/membershiptypes"
+                    >Membership Types</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://nasmeoyo.org/index.php/membershipbenefits"
+                    >Membership Benefits</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://nasmeoyo.org/index.php/membershipregisteration"
+                    >Membership Registration</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Membership Portal
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="/">Current Member's List</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="member/member-login"
+                    >Member's Login</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="testadmin/admin-login"
+                    >Admin Login</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://nasmeoyo.org/index.php/contact-us"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% block content %}{% endblock content %}
+    <!-- Footer -->
+    <footer class="custom-footer">
+      <div class="container">
+        <div class="row">
+          <!-- First Column: NasmeOyo Info -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h4>NasmeOyo</h4>
+            <p>
+              The Nigeria association of small and medium enterprises (nasme)
+              was registered in 1996 as a business membership organisation
+              (BMO), to co-operate and foster the promotion of micro, small, and
+              medium enterprises (MSMEs) in Nigeria. NASME is the only leading
+              Nigerian private sector.
+            </p>
+          </div>
+
+          <!-- Second Column: Latest Post -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h4>Lastest Post</h4>
+            <p>
+              <a href="#" class="footer-link"
+                >WELCOME TO NASME NEWS AND UPDATES</a
+              >
+            </p>
+            <p>October 15, 2020</p>
+          </div>
+
+          <!-- Third Column: Contact Information -->
+          <div class="col-lg-4 col-md-12 mb-4">
+            <h4>Contact Information</h4>
+            <address>
+              NASME Oyo State Chapter<br />
+              Block C, Suits 5 & 6, Oyo State Permanent Trade Fair Complex
+              (EXPOYO),<br />
+              Sango – U.I Road, Ibadan, Oyo State, Nigeria.<br />
+              Tel: +2348160831342 or +2348032428096<br />
+              <a href="mailto:info@nasmeoyo.org" class="footer-link"
+                >info@nasmeoyo.org</a
+              ><br /><br />
+              Meeting Day: Last Thursday of Every Month<br />
+              Time: 2pm Prompt<br />
+              Cooperative Meeting: 1pm (Same Day)
+            </address>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

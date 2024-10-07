@@ -576,6 +576,12 @@ def financial_report(request):
     return render(request, 'adminapp/under-construction.html')
 
 #@login_required
+def get_messages_or_alerts(request):
+
+    return render(request, 'adminapp/messages.html')
+
+
+#@login_required
 def under_construction(request):
     # To handle login required
     match request.user:
