@@ -39,9 +39,9 @@
                          <i class="fs-4 bi bi-person-fill-gear text-light dropdown-toggle"
                               data-bs-toggle="dropdown"></i>
                          <ul class="dropdown-menu mt-3 border-0 rounded-bottom-2 me-2 bg-light">
-                              <li><a class="dropdown-item" href="/edit-business-profile">Edit Profile</a></li>
+                              <li><a class="dropdown-item" href="/edit-profile/{{member.random_id}}">Edit Profile</a></li>
                               <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal"
-                                        href="#">Logout</a></li>
+                                        href="{% url 'member-logout' %}">Logout</a></li>
                          </ul>
                     </button>
                </div>
