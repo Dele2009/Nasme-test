@@ -127,6 +127,53 @@
   .status-pending {
     color: #ff7043;
   }
+
+  .message-type-container {
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: 50px; */
+  }
+
+  .message-type-option {
+    width: 25%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    /* text-align: center; */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* flex-direction: column; */
+  }
+
+  /* .message-type-option:hover {
+    transform: translateY(-5px);
+  } */
+
+  .message-type-option:has(input[type="radio"]:checked) {
+    border-color: #2e7d32;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.5);
+  }
+
+  .message-type-icon {
+    font-size: 20px;
+    /* margin-bottom: 15px; */
+  }
+
+  .message-type-title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+  }
+
+  /* Hide actual radio buttons */
+  input[type="radio"] {
+    display: none;
+  }
 </style>
 
 {% endblock styles %} {% block content %}
@@ -170,8 +217,62 @@
               id="title"
               name="title"
               class="form-control-sec"
+              required
               placeholder="Enter the message title"
             />
+          </div>
+          <div class="form-group">
+            <label>Message type</label>
+            <div class="message-type-container">
+              <!-- Warning Section -->
+              <label
+                for="warning"
+                class="message-type-option"
+                id="warning-option"
+              >
+                <i
+                  class="message-type-icon text-warning bi bi-exclamation-triangle-fill"
+                ></i>
+                <span class="message-type-title">Warning</span>
+                <input
+                  type="radio"
+                  name="messageType"
+                  id="warning"
+                  value="warning"
+                  required
+                />
+              </label>
+
+              <!-- Info Section -->
+              <label for="info" class="message-type-option" id="info-option">
+                <i
+                  class="message-type-icon text-info bi bi-info-circle-fill"
+                ></i>
+                <span class="message-type-title">Info</span>
+                <input
+                  type="radio"
+                  name="messageType"
+                  id="info"
+                  value="info"
+                  required
+                />
+              </label>
+
+              <!-- Error Section -->
+              <label for="error" class="message-type-option" id="error-option">
+                <i
+                  class="message-type-icon text-danger bi bi-x-circle-fill"
+                ></i>
+                <span class="message-type-title">Error</span>
+                <input
+                  type="radio"
+                  name="messageType"
+                  id="error"
+                  value="error"
+                  required
+                />
+              </label>
+            </div>
           </div>
           <div class="form-group">
             <label>Message</label>
@@ -179,8 +280,10 @@
               id="message"
               name="message"
               class="form-control-sec"
+              required
             ></textarea>
           </div>
+
           <div class="form-group">
             <label for="unit">Unit</label>
             <select id="unit" name="unit" class="form-control-sec" value="">
