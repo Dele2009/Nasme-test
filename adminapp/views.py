@@ -542,13 +542,30 @@ def unit_message(request):
     
     # To send message to a unit
     if request.method == 'POST':
+        message_title = request.POST.get('title')
+        message_body = request.POST.get('message')
+        message_type = request.POST.get('')
 
         # To send message to all units
         if 'sendAll' in request.POST:
-            pass
+            units = Unit.objects.all()
 
+            for unit in units:
+                for member in unit:
+                    message = Message(owner = member, 
+                                    title = message_title, 
+                                    message = message_body,
+                                    message_type = message_type)
+                    message.save()
         else:
-            pass
+            unit_id = request.POST.get('')
+            unit = Unit.objects.get(id = unit_id)
+            for member in unit:
+                message = Message(owner = member, 
+                                  title = message_title, 
+                                  message = message_body,
+                                  message_type = message_type)
+                message.save()
 
     context = {
         'units' : Unit.objects.all()
@@ -576,6 +593,12 @@ def financial_report(request):
             return redirect('admin-login')
     
     return render(request, 'adminapp/under-construction.html')
+
+#@login_required
+def get_messages_or_alerts(request):
+
+    return render(request, 'adminapp/messages.html')
+
 
 #@login_required
 def under_construction(request):

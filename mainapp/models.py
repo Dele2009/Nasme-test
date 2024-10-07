@@ -18,7 +18,10 @@ class User(AbstractUser):
 
 class Message(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    MESSAGE_CHOICE = [('i','info'), ('w','warning'), ('e','error')]
+    title = models.CharField(max_length=200, null=True)
     message = models.CharField(max_length=500)
+    message_type = models.CharField(max_length=10, choices=MESSAGE_CHOICE, null=True)
 
     def __str__(self) -> str:
         return f'Message for: {self.owner.username}'

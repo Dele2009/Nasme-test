@@ -141,9 +141,17 @@ def business_profile_edit(request,id):
         "member": current_member,
         "business" : business,
         "socials" : socials,
-        "business_images" : images,
+        "business_images" : business_images,
     }
+    print(images)
     return render(request, "membersapp/edit-profile.html", context)
+
+
+#@login_required
+def get_messages_or_alerts(request):
+
+    return render(request, 'membersapp/messages.html')
+
 
 # @login_required
 def transaction_history(request):

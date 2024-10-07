@@ -1,0 +1,223 @@
+<!-- Search and Table Section -->
+{% extends 'partials/main-base.html' %} {% load static %} {% block styles %}
+<style>
+  .primary-green {
+    background-color: #2e7d32;
+    color: white;
+  }
+
+  .primary-green:hover {
+    background-color: #27662a;
+  }
+
+  .primary-green-text {
+    color: #2e7d32;
+  }
+
+  .primary-green-border {
+    border-color: #2e7d32;
+  }
+
+  .upload-image {
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px dashed #2e7d32;
+    width: 200px;
+    height: 200px;
+  }
+
+  .add-image {
+    cursor: pointer;
+    border-radius: 10px;
+    border: 3px solid #2e7d32;
+    width: 130px;
+    height: 130px;
+  }
+
+  .bi-cloud-upload {
+    transition: 0.7s 0s ease;
+  }
+
+  .cancel-image {
+    position: absolute;
+    z-index: 700;
+
+    top: -10px;
+    right: -10px;
+    border: none;
+    background: transparent;
+    transition: 0.7s 0s ease;
+    color: #ff1313;
+  }
+
+  .uploaded-img {
+    z-index: 100 !important;
+  }
+
+  .upload-image:hover .bi-cloud-upload {
+    transform: scale(1.3);
+  }
+
+  .cancel-image:hover {
+    transform: scale(1.3);
+  }
+
+  .cancel {
+    font-size: 20px;
+  }
+
+  .alert {
+    z-index: 99999 !important;
+  }
+
+  .image-error {
+    background-color: #ff1313b0;
+    border-radius: 10px;
+    color: white;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .alert-danger {
+    background-color: #ff1313b0;
+    border-radius: 10px;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .upload-image {
+      width: 140px;
+      height: 140px;
+    }
+
+    .cancel {
+      font-size: 17px;
+    }
+  }
+</style>
+{% endblock styles %} {% block content %}
+<div class="container my-5">
+  <div class="col-lg-10 m-auto">
+    <!-- Business Info Section -->
+    <div class="row justify-content-center py-5 my-5">
+      <h4 class="text-center primary-green-text">BUSINESS INFO</h4>
+      <div class="row shadow bg-light rounded-3 py-3 px-4">
+        <!-- Left Side (Business Logo and Other Info) -->
+        <div class="col-md-6 text-center">
+          <img
+            src="https://via.placeholder.com/150"
+            class="rounded-5 shadow-sm w-50"
+            alt="Business Logo"
+          />
+        </div>
+
+        <!-- Right Side (Business Name and Details) -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <i class="bi bi-shop primary-green-text me-2"></i>
+            <label class="primary-green-text">Business Name</label>
+            <p class="form-control-static">Placeholder Business Name</p>
+          </div>
+          <div class="mb-3">
+            <i class="bi bi-geo-alt-fill primary-green-text me-2"></i>
+            <label class="primary-green-text">Business Location</label>
+            <p class="form-control-static">123 Placeholder Street, City</p>
+          </div>
+          <div class="mb-3">
+            <i class="bi bi-info-circle primary-green-text me-2"></i>
+            <label class="primary-green-text">About Your Business</label>
+            <p class="form-control-static">
+              We provide the best placeholder services for all your placeholder
+              needs.
+            </p>
+          </div>
+          <div class="mb-3">
+            <i class="bi bi-briefcase primary-green-text me-2"></i>
+            <label class="primary-green-text">Services Rendered</label>
+            <p class="form-control-static">
+              Placeholder Consulting, Placeholder Marketing, Placeholder
+              Development
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Images Section -->
+    <div class="my-4">
+      <h3 class="text-center primary-green-text">Products & Service Images</h3>
+      <div class="shadow bg-light rounded-3 py-3 px-4">
+        <div class="row py-3 align-items-center">
+          <!-- Display product images -->
+          <div
+            class="col-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center"
+          >
+            <img
+              src="https://via.placeholder.com/200"
+              class="img-fluid rounded-3"
+              alt="Product Image 1"
+            />
+          </div>
+          <div
+            class="col-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center"
+          >
+            <img
+              src="https://via.placeholder.com/200"
+              class="img-fluid rounded-3"
+              alt="Product Image 2"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="my-5">
+      <h4 class="text-center primary-green-text my-4">
+        LINKS & CONTACT INFORMATION
+      </h4>
+      <div class="shadow bg-light rounded-3 py-lg-3 px-lg-4 row p-3">
+        <div class="col-md-4">
+          <i class="bi bi-telephone-fill primary-green-text me-2"></i>
+          <label class="primary-green-text">Business Phone Number</label>
+          <p class="form-control-static">+123 456 7890</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-envelope-fill primary-green-text me-2"></i>
+          <label class="primary-green-text">Business Email</label>
+          <p class="form-control-static">email@placeholder.com</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-browser-edge primary-green-text me-2"></i>
+          <label class="primary-green-text">Business Website</label>
+          <p class="form-control-static">www.placeholderbusiness.com</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-facebook primary-green-text me-2"></i>
+          <label class="primary-green-text">Facebook</label>
+          <p class="form-control-static">facebook.com/placeholder</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-linkedin primary-green-text me-2"></i>
+          <label class="primary-green-text">LinkedIn</label>
+          <p class="form-control-static">linkedin.com/in/placeholder</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-twitter primary-green-text me-2"></i>
+          <label class="primary-green-text">Twitter / X</label>
+          <p class="form-control-static">@PlaceholderBiz</p>
+        </div>
+        <div class="col-md-4">
+          <i class="bi bi-whatsapp primary-green-text me-2"></i>
+          <label class="primary-green-text">WhatsApp</label>
+          <p class="form-control-static">+123 456 7890</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

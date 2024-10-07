@@ -1,0 +1,159 @@
+{% extends 'partials/user-base.html' %} {% load static %} {% block styles %}
+<style>
+  .container {
+    margin-top: 50px;
+  }
+
+  .message-list,
+  .message-view {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 500px;
+    overflow-y: auto;
+  }
+
+  .message-item {
+    padding: 20px;
+    border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+  }
+
+  .message-item:hover {
+    background-color: #e0f3df;
+  }
+
+  .message-icon {
+    margin-right: 10px;
+    font-size: 24px;
+  }
+
+  .message-title {
+    font-weight: bold;
+  }
+
+  .message-view-header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .message-content {
+    padding: 20px;
+    height: 430px;
+    overflow-y: auto;
+  }
+
+  .message-empty {
+    color: #888;
+    text-align: center;
+    margin-top: 200px;
+  }
+
+  .message-icon {
+    margin-right: 10px;
+  }
+
+  .message-type-icon {
+    font-size: 30px;
+    margin-right: 10px;
+  }
+</style>
+{% endblock styles %} {% block content %}
+<div class="container">
+  <div class="row">
+    <!-- Messages List Section -->
+    <div class="col-md-4">
+      <div class="message-list">
+        <!-- Example Message Item with Warning Icon -->
+        <div class="message-item" onclick="viewMessage(1)">
+          <i
+            class="message-icon text-warning bi bi-exclamation-triangle-fill"
+          ></i>
+          <div>
+            <h5 class="message-title">Warning Message</h5>
+            <p>Warning details go here...</p>
+          </div>
+        </div>
+
+        <!-- Example Message Item with Info Icon -->
+        <div class="message-item" onclick="viewMessage(2)">
+          <i class="message-icon text-info bi bi-info-circle-fill"></i>
+          <div>
+            <h5 class="message-title">Info Message</h5>
+            <p>Info details go here...</p>
+          </div>
+        </div>
+
+        <!-- Example Message Item with Error Icon -->
+        <div class="message-item" onclick="viewMessage(3)">
+          <i class="message-icon text-danger bi bi-x-circle-fill"></i>
+          <div>
+            <h5 class="message-title">Error Message</h5>
+            <p>Error details go here...</p>
+          </div>
+        </div>
+
+        <!-- Add more messages as needed -->
+      </div>
+    </div>
+
+    <!-- Message View Section -->
+    <div class="col-md-8">
+      <div class="message-view">
+        <div class="message-view-header">
+          <i class="message-type-icon" id="message-type-icon"></i>
+          <span id="message-title">Select a Message</span>
+        </div>
+        <div class="message-content" id="message-content">
+          <p class="message-empty">
+            Please select a message to view its details.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function viewMessage(messageId) {
+    const messageTitle = document.getElementById("message-title");
+    const messageContent = document.getElementById("message-content");
+    const messageIcon = document.getElementById("message-type-icon");
+
+    // Add dynamic messages
+    const messages = {
+      1: {
+        title: "Warning Message",
+        content: "<p>This is the full content of the warning message.</p>",
+        icon: "bi bi-exclamation-triangle-fill text-warning",
+      },
+      2: {
+        title: "Info Message",
+        content: "<p>This is the full content of the info message.</p>",
+        icon: "bi bi-info-circle-fill text-info",
+      },
+      3: {
+        title: "Error Message",
+        content: "<p>This is the full content of the error message.</p>",
+        icon: "bi bi-x-circle-fill text-danger",
+      },
+    };
+
+    const message = messages[messageId];
+
+    if (message) {
+      messageTitle.innerText = message.title;
+      messageContent.innerHTML = message.content;
+      messageIcon.className = `message-type-icon ${message.icon}`;
+    }
+  }
+</script>
+{% endblock content %}

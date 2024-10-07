@@ -1,0 +1,118 @@
+<!-- Search and Table Section -->
+{% extends 'partials/main-base.html' %} {% load static %} {% block styles %}
+<style>
+  /* Simplified search form */
+  /* .search-icon {
+    background-color: #e9ecef;
+  } */
+
+  /* Modern Table Design */
+  table {
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    padding: 1rem;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  table th {
+    background-color: #343a40;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  table td {
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  table tbody tr:hover {
+    background-color: #e9f7ef;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-outline-search {
+    border: 1px solid #27cc2f !important;
+  }
+</style>
+{% endblock styles %} {% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between mb-3">
+    <form class="d-flex w-50">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search Members"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-search" type="submit">Search</button>
+    </form>
+
+    <div>
+      <button
+        class="btn dropdown-toggle text-white"
+        style="background-color: #27cc2f"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sort by Cluster
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li>
+          <a class="dropdown-item" href="#">ICT and Creative Industry</a>
+        </li>
+        <li><a class="dropdown-item" href="#">Agribusiness</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Modern Table -->
+  <table class="table table-hover shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Business Name</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Email</th>
+        <th scope="col">Cluster</th>
+        <th scope="col">More Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>VALUEMAX CODERS' HUB</td>
+        <td>07032060088</td>
+        <td>info@valuemaxonline.com</td>
+        <td>ICT and Creative Industry</td>
+        <td>
+          <a href="{% url  'business-details' %}" class="text-decoration-none"
+            >See More</a
+          >
+        </td>
+      </tr>
+      <tr>
+        <td>TOBI WEBTONIC</td>
+        <td>12345678912</td>
+        <td>tobbs@tobbs.com</td>
+        <td>Agribusiness</td>
+        <td>
+          <a href="{% url 'business-details' %}" class="text-decoration-none"
+            >See More</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
