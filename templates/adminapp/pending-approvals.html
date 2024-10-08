@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 
 <style>
-
   .table-actions {
     display: flex;
     justify-content: space-between;
@@ -54,71 +53,33 @@
               {% for user in users %}
               <tr>
                 <td class="text-center">
-                  {% if not user.is_staff %}
-                      {% if user.business %}
-                          {{user.business.name}}
-                      {% else %}
-                          {{user.username}}
-                      {% endif %}
-                  {% else %}
-                      {{user.username}}
-                  {% endif %}</td>
-                <td class="text-center">{% if user.is_staff == False %}Member{% else %}Admin{% endif %}</td>
+                  {% if not user.is_staff %} {% if user.business %}
+                  {{user.business.name}} {% else %} {{user.username}} {% endif%}
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  {% if user.is_staff == False %}Member{% else %}Admin {%endif%}
+                </td>
                 <td class="action-icons">
-                  <div class="action-icons-container d-flex justify-content-center align-items-center">
-                    <a href="#" class="text-info"
-                      ><i class="bi bi-pencil-square"></i
+                  <div
+                    class="action-icons-container d-flex justify-content-center align-items-center"
+                  >
+                    <a
+                      href="#"
+                      class="text-success"
+                      title="Approve user profile"
+                      ><i class="bi bi-check-circle-fill"></i
                     ></a>
-                    <a href="#" class="text-secondary"
-                      ><i class="bi bi-chat-left-text-fill"></i
-                    ></a>
-                    <a href="#" class="text-warning"
-                      ><i class="bi bi-eye-fill"></i
-                    ></a>
-                    <a href="#" class="text-dark"
-                      ><i class="bi bi-person-fill-lock"></i
-                    ></a>
-                    <a href="#" class="text-danger"
-                      ><i class="bi bi-trash-fill"></i
+                    <a
+                      href="#"
+                      class="text-danger"
+                      title="Disapprove user profile"
+                      ><i class="bi bi-x-circle-fill"></i
                     ></a>
                   </div>
                 </td>
               </tr>
               {% endfor %}
-              <!-- <tr>
-                                             <td>None</td>
-                                             <td>09023983884</td>
-                                             <td>None</td>
-                                             <td>None</td>
-                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
-                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
-                                             <td class="action-icons">
-                                                  <div class="action-icons-container">
-                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
-                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
-                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
-                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
-                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
-                                                  </div>
-                                             </td>
-                                        </tr>
-                                        <tr>
-                                             <td>TOBI WEBTONIC</td>
-                                             <td>12345678912</td>
-                                             <td>tobbswiththestuffl@tobbs.com</td>
-                                             <td>ICT, Creative Industry, Printing Press</td>
-                                             <td>2023 Dues<br><a href="#" class="text-success">See More</a></td>
-                                             <td>Membership Fees<br><a href="#" class="text-success">See More</a></td>
-                                             <td class="action-icons">
-                                                  <div class="action-icons-container">
-                                                       <a href="#" class="text-info"><i class="bi bi-pencil-square"></i></a>
-                                                       <a href="#" class="text-secondary"><i class="bi bi-chat-dots"></i></a>
-                                                       <a href="#" class="text-warning"><i class="bi bi-eye"></i></a>
-                                                       <a href="#" class="text-dark"><i class="bi bi-lock-fill"></i></a>
-                                                       <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
-                                                  </div>
-                                             </td>
-                                        </tr> -->
             </tbody>
           </table>
         </div>
