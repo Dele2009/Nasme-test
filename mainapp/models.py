@@ -30,7 +30,7 @@ class Message(models.Model):
 #     profile_owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
 class Unit(models.Model):
-    unit_name = models.CharField(max_length=100)
+    unit_name = models.CharField(max_length=100, unique=True)
     date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):

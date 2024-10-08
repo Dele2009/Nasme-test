@@ -471,6 +471,55 @@
     }
   }
 
+  
+
+  // <input type="file" accept="image/*" class="form-control d-none" id="image-upload-${imageCount}" name="images[]" onchange="${(e)=> previewImage(e, imageCount)}">
+  const businessImgData =
+    "{% for image in business_images %}{{image.image.url}},{% endfor %}";
+  console.log("businessImages =>", typeof businessImgData);
+  const businessImages = businessImgData.split(",");
+  console.log("businessImages =>", businessImgData, businessImages);
+  // const businessImages = JSON.parse(businessImgData);
+  if (businessImages.length > 0) {
+    for (let i = 0; i < businessImages.length; i++) {
+      if (businessImages[i]) {
+        const newBusinessImageSection = document.createElement("div");
+        newBusinessImageSection.className =
+          "col-6 col-md-4 col-lg-3 mb-3  d-flex flex-column gap-3 justify-content-center align-items-center upload-container";
+        newBusinessImageSection.id = `business-image-${i + 1}`;
+        newBusinessImageSection.innerHTML = `
+                    <div class="upload-image position-relative bg-white d-flex flex-column justify-content-center align-items-center p-0">
+                      <button class="cancel-image" id="remove-business-image-${
+                        i + 1
+                      }" type="button">
+                          <i class="bi bi-x-circle-fill cancel"></i>
+                      </button>
+                      
+                      <img id="business-image-preview-${
+                        i + 1
+                      }" class="w-100 h-100 m-0 rounded-3 uploaded-img" src="${
+          businessImages[i]
+        }" alt="Upload-Preview-${i + 1}">
+                     
+                    </div>
+                    
+                    
+               `;
+        const addMoreImagesButton =
+          document.getElementById("add-image-btn").parentElement;
+        document
+          .getElementById("image-upload-sections")
+          .insertBefore(newBusinessImageSection, addMoreImagesButton);
+        document
+          .getElementById(`remove-business-image-${i + 1}`)
+          .addEventListener("click", (e) => removeElement(e, "businesImage"));
+      }
+    }
+  } else {
+    createImageUploader();
+  }
+
+
   function createImageUploader() {
     if (imageCount >= 1) {
       const previousInput = imageCount > 1 ? imageCount - 1 : imageCount;
@@ -523,52 +572,6 @@
     document
       .getElementById(`remove-upload-${imageCount}`)
       .addEventListener("click", (e) => removeElement(e, "uploadImage"));
-  }
-
-  // <input type="file" accept="image/*" class="form-control d-none" id="image-upload-${imageCount}" name="images[]" onchange="${(e)=> previewImage(e, imageCount)}">
-  const businessImgData =
-    "{% for image in business_images %}{{image.image.url}},{% endfor %}";
-  console.log("businessImages =>", typeof businessImgData);
-  const businessImages = businessImgData.split(",");
-  console.log("businessImages =>", businessImgData, businessImages);
-  // const businessImages = JSON.parse(businessImgData);
-  if (businessImages.length > 0) {
-    for (let i = 0; i < businessImages.length; i++) {
-      if (businessImages[i]) {
-        const newBusinessImageSection = document.createElement("div");
-        newBusinessImageSection.className =
-          "col-6 col-md-4 col-lg-3 mb-3  d-flex flex-column gap-3 justify-content-center align-items-center upload-container";
-        newBusinessImageSection.id = `business-image-${i + 1}`;
-        newBusinessImageSection.innerHTML = `
-                    <div class="upload-image position-relative bg-white d-flex flex-column justify-content-center align-items-center p-0">
-                      <button class="cancel-image" id="remove-business-image-${
-                        i + 1
-                      }" type="button">
-                          <i class="bi bi-x-circle-fill cancel"></i>
-                      </button>
-                      
-                      <img id="business-image-preview-${
-                        i + 1
-                      }" class="w-100 h-100 m-0 rounded-3 uploaded-img" src="${
-          businessImages[i]
-        }" alt="Upload-Preview-${i + 1}">
-                     
-                    </div>
-                    
-                    
-               `;
-        const addMoreImagesButton =
-          document.getElementById("add-image-btn").parentElement;
-        document
-          .getElementById("image-upload-sections")
-          .insertBefore(newBusinessImageSection, addMoreImagesButton);
-        document
-          .getElementById(`remove-business-image-${i + 1}`)
-          .addEventListener("click", (e) => removeElement(e, "businesImage"));
-      }
-    }
-  } else {
-    createImageUploader();
   }
 
   function generateInput(position) {

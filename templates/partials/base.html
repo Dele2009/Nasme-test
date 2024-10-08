@@ -67,7 +67,7 @@
               class="dropdown-menu mt-3 border-0 rounded-bottom-2 me-2 bg-light"
             >
               <li>
-                <a class="dropdown-item" href="/edit-business-profile"
+                <a class="dropdown-item" href="{% url 'admin-profile' %}"
                   >Edit Profile</a
                 >
               </li>
@@ -76,7 +76,7 @@
                   class="dropdown-item"
                   data-bs-toggle="modal"
                   data-bs-target="#logoutModal"
-                  href="#"
+                  href="{% url 'admin-logout' %}"
                   >Logout</a
                 >
               </li>
