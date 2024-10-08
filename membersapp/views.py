@@ -11,11 +11,9 @@ from django.core.files.base import ContentFile
 # Create your views here.
 
 def member_login(request):
-    match request.user:
-        case _ if request.user.is_authenticated == True:
-            return redirect('member-dashboard')
-        case _ if request.user.is_staff == True:
-            return redirect('member-dashboard')
+    if request.user.is_authenticated == True and not request.user.is_staff:
+        return redirect('member-dashboard')
+    
     #Login form
     if request.method == 'POST':
         phone_num = request.POST.get('phone_num')
@@ -32,13 +30,8 @@ def member_login(request):
             return redirect('member-login')
     return render(request, "membersapp/member_login.html")
 
-# @login_required
+@login_required
 def member_dashboard(request):
-    match request.user:
-        case _ if request.user.is_authenticated == False:
-            return redirect('member-login')
-        case _ if request.user.is_staff == True:
-            return redirect('member-login')
     current_member = User.objects.get(username = request.user)
 
     context = {
@@ -46,27 +39,17 @@ def member_dashboard(request):
     }
     return render(request, "membersapp/dashboard.html", context)
 
-# @login_required
+@login_required
 def member_account(request):
-    match request.user:
-        case _ if request.user.is_authenticated == False:
-            return redirect('member-login')
-        case _ if request.user.is_staff == True:
-            return redirect('member-login')
          
     context = {
 
     }
     return render(request, "")
 
-# @login_required
+@login_required
 def business_profile_edit(request,id):
-    match request.user:
-        case _ if request.user.is_authenticated == False:
-            return redirect('member-login')
-        case _ if request.user.is_staff == True:
-            return redirect('member-login')
-         
+
     current_member = User.objects.get(random_id = id)
     if current_member.business:
             business = Business.objects.get(owner = current_member)
@@ -124,6 +107,9 @@ def business_profile_edit(request,id):
         business.address = business_address
         business.about = business_about
         business.services = business_services
+
+        #business images
+        
         business.phone_num = business_phone_num
         business.email = business_email
         socials.website = business_website
@@ -147,45 +133,33 @@ def business_profile_edit(request,id):
     return render(request, "membersapp/edit-profile.html", context)
 
 
-#@login_required
+@login_required
 def get_messages_or_alerts(request):
-    match request.user:
-        case _ if request.user.is_authenticated == False:
-            return redirect('member-login')
-        case _ if request.user.is_staff == True:
-            return redirect('member-login')
-        
+    
     messages = Message.objects.filter(owner = request.user)
-
+    current_member = User.objects.get(username = request.user)
     context = {
-        'messages' : messages.reverse(),
+        'messages' : messages[::-1],
+        'member' : current_member,
     }
 
     return render(request, 'membersapp/messages.html', context)
 
 
-# @login_required
+@login_required
 def transaction_history(request):
-    match request.user:
-        case _ if request.user.is_authenticated == False:
-            return redirect('member-login')
-        case _ if request.user.is_staff == True:
-            return redirect('member-login')
+    
     context = {
 
     }
     return render(request, "membersapp/under-construction.html", context)
 
-# @login_required
+@login_required
 def my_dues(request):
-    match request.user:
-        case _ if request.user.is_authenticated == False:
-            return redirect('member-login')
-        case _ if request.user.is_staff == True:
-            return redirect('member-login')
+    
     return render(request, "membersapp/under-construction.html")
 
-# @login_required
+@login_required
 def member_logout(request):
     logout(request)
     messages.success(request, 'Logged out successfully')

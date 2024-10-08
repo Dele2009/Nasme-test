@@ -108,7 +108,7 @@
         <!-- Left Side (Business Logo and Other Info) -->
         <div class="col-md-6 text-center">
           <img
-            src="https://via.placeholder.com/150"
+            src="{{user.profile_pic.url}}"
             class="rounded-5 shadow-sm w-50"
             alt="Business Logo"
           />
@@ -119,28 +119,22 @@
           <div class="mb-3">
             <i class="bi bi-shop primary-green-text me-2"></i>
             <label class="primary-green-text">Business Name</label>
-            <p class="form-control-static">Placeholder Business Name</p>
+            <p class="form-control-static">{{business.name}}</p>
           </div>
           <div class="mb-3">
             <i class="bi bi-geo-alt-fill primary-green-text me-2"></i>
             <label class="primary-green-text">Business Location</label>
-            <p class="form-control-static">123 Placeholder Street, City</p>
+            <p class="form-control-static">{{business.address}}</p>
           </div>
           <div class="mb-3">
             <i class="bi bi-info-circle primary-green-text me-2"></i>
             <label class="primary-green-text">About Your Business</label>
-            <p class="form-control-static">
-              We provide the best placeholder services for all your placeholder
-              needs.
-            </p>
+            <p class="form-control-static">{{business.about}}</p>
           </div>
           <div class="mb-3">
             <i class="bi bi-briefcase primary-green-text me-2"></i>
             <label class="primary-green-text">Services Rendered</label>
-            <p class="form-control-static">
-              Placeholder Consulting, Placeholder Marketing, Placeholder
-              Development
-            </p>
+            <p class="form-control-static">{{business.services}}</p>
           </div>
         </div>
       </div>
@@ -152,24 +146,18 @@
       <div class="shadow bg-light rounded-3 py-3 px-4">
         <div class="row py-3 align-items-center">
           <!-- Display product images -->
+          {% for image in business_images %}
           <div
-            class="col-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center"
+            class="col-6 col-md-4 col-lg-3 d-flex justify-content-center"
           >
             <img
-              src="https://via.placeholder.com/200"
-              class="img-fluid rounded-3"
+              src="{{image.image.url}}"
+              class="rounded-3"
               alt="Product Image 1"
+              style="width: 200px; height: 200px"
             />
           </div>
-          <div
-            class="col-6 col-md-4 col-lg-3 mb-5 d-flex justify-content-center"
-          >
-            <img
-              src="https://via.placeholder.com/200"
-              class="img-fluid rounded-3"
-              alt="Product Image 2"
-            />
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -183,37 +171,37 @@
         <div class="col-md-4">
           <i class="bi bi-telephone-fill primary-green-text me-2"></i>
           <label class="primary-green-text">Business Phone Number</label>
-          <p class="form-control-static">+123 456 7890</p>
+          <p class="form-control-static">{{business.phone_num}}</p>
         </div>
         <div class="col-md-4">
           <i class="bi bi-envelope-fill primary-green-text me-2"></i>
           <label class="primary-green-text">Business Email</label>
-          <p class="form-control-static">email@placeholder.com</p>
+          <p class="form-control-static">business.email</p>
         </div>
         <div class="col-md-4">
           <i class="bi bi-browser-edge primary-green-text me-2"></i>
           <label class="primary-green-text">Business Website</label>
-          <p class="form-control-static">www.placeholderbusiness.com</p>
+          <p class="form-control-static">{{socials.website}}</p>
         </div>
         <div class="col-md-4">
           <i class="bi bi-facebook primary-green-text me-2"></i>
           <label class="primary-green-text">Facebook</label>
-          <p class="form-control-static">facebook.com/placeholder</p>
+          <p class="form-control-static">{{socials.facebook}}</p>
         </div>
         <div class="col-md-4">
           <i class="bi bi-linkedin primary-green-text me-2"></i>
           <label class="primary-green-text">LinkedIn</label>
-          <p class="form-control-static">linkedin.com/in/placeholder</p>
+          <p class="form-control-static">{{socials.linkedln}}</p>
         </div>
         <div class="col-md-4">
           <i class="bi bi-twitter primary-green-text me-2"></i>
           <label class="primary-green-text">Twitter / X</label>
-          <p class="form-control-static">@PlaceholderBiz</p>
+          <p class="form-control-static">{{socials.twitter}}</p>
         </div>
         <div class="col-md-4">
           <i class="bi bi-whatsapp primary-green-text me-2"></i>
           <label class="primary-green-text">WhatsApp</label>
-          <p class="form-control-static">+123 456 7890</p>
+          <p class="form-control-static">{{socials.whatsapp}}</p>
         </div>
       </div>
     </div>

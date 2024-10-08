@@ -51,8 +51,9 @@
       <input
         class="form-control me-2"
         type="search"
-        placeholder="Search Members"
+        placeholder="Search Members by name, number or email."
         aria-label="Search"
+        name="member_search"
       />
       <button class="btn btn-outline-search" type="submit">Search</button>
     </form>
@@ -89,28 +90,19 @@
       </tr>
     </thead>
     <tbody>
+      {% for business in businesses %}
       <tr>
-        <td>VALUEMAX CODERS' HUB</td>
-        <td>07032060088</td>
-        <td>info@valuemaxonline.com</td>
-        <td>ICT and Creative Industry</td>
+        <td>{{business.name}}</td>
+        <td>{{business.phone_num}}</td>
+        <td>{{business.email}}</td>
+        <td>{{business.unit}}</td>
         <td>
-          <a href="{% url  'business-details' %}" class="text-decoration-none"
+          <a href="business-details/{{business.owner.random_id}}/" class="text-decoration-none"
             >See More</a
           >
         </td>
       </tr>
-      <tr>
-        <td>TOBI WEBTONIC</td>
-        <td>12345678912</td>
-        <td>tobbs@tobbs.com</td>
-        <td>Agribusiness</td>
-        <td>
-          <a href="{% url 'business-details' %}" class="text-decoration-none"
-            >See More</a
-          >
-        </td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
