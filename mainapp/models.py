@@ -22,6 +22,7 @@ class Message(models.Model):
     title = models.CharField(max_length=200, null=True)
     message = models.CharField(max_length=500)
     message_type = models.CharField(max_length=10, choices=MESSAGE_CHOICE, null=True)
+    date_uploaded = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self) -> str:
         return f'Message for: {self.owner.username}'

@@ -7,7 +7,7 @@ def home_portal(request):
     businesses = Business.objects.all()
     businesses = businesses.filter(owner__is_active =True)
     search_query = request.GET.get('member_search')
-
+    print(request.user)
     if search_query:
         try:
             search_query = int(search_query)

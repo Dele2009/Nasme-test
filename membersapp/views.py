@@ -11,6 +11,9 @@ from django.core.files.base import ContentFile
 # Create your views here.
 
 def member_login(request):
+    if request.user.is_authenticated == True and not request.user.is_staff:
+        return redirect('member-dashboard')
+    
     #Login form
     if request.method == 'POST':
         phone_num = request.POST.get('phone_num')
@@ -136,7 +139,7 @@ def get_messages_or_alerts(request):
     messages = Message.objects.filter(owner = request.user)
     current_member = User.objects.get(username = request.user)
     context = {
-        'messages' : messages.reverse(),
+        'messages' : messages[::-1],
         'member' : current_member,
     }
 
