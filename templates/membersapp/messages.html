@@ -1,120 +1,153 @@
-{% extends 'partials/user-base.html' %} {% load static %} {% block extraheadjs%}
-<script
-  src="https://cdn.tiny.cloud/1/s2wmyj0a6srmak9w1bbon5fxe4jkht4w3m939ojiva9ciw54/tinymce/7/tinymce.min.js"
-  referrerpolicy="origin"
-></script>
-<script>
-  tinymce.init({
-    selector: "textarea",
-    plugins:
-      "lists link image preview code fullscreen anchor autolink emoticons searchreplace table visualblocks wordcount",
-    toolbar:
-      "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview fullscreen",
-    height: 250,
-    menubar: false,
-    branding: false,
-    setup: function (editor) {
-      editor.on("change", function () {
-        tinymce.triggerSave(); // Ensure that the TinyMCE content gets submitted on form submission
-      });
-    },
-  });
-</script>
-{% endblock extraheadjs %} {% block styles %}
+{% extends 'partials/user-base.html' %} {% load static %} {% block styles %}
 <style>
-  .container {
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f5f7fa;
+  }
+
+  .container,
+  .container-fluid {
     margin-top: 50px;
   }
 
   .message-list,
   .message-view {
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 500px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    height: 600px;
+    max-height: 600px;
     overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 15px;
   }
 
   .message-item {
-    padding: 20px;
+    padding: 15px;
     border-bottom: 1px solid #eaeaea;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, box-shadow 0.3s;
     display: flex;
     align-items: center;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    margin-bottom: 10px;
   }
 
   .message-item:hover {
-    background-color: #e0f3df;
+    background-color: #a5ffa5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .message-icon {
-    margin-right: 10px;
-    font-size: 24px;
+    margin-right: 15px;
+    font-size: 26px;
   }
 
   .message-title {
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2e7d32;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+
+  #message-preview {
+    font-size: 14px;
+    color: #888;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 250px;
   }
 
   .message-view-header {
     background-color: #2e7d32;
     color: white;
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px 10px 0 0;
-    font-weight: bold;
+    font-weight: 600;
     display: flex;
     align-items: center;
   }
 
+  .message-type-icon {
+    font-size: 32px;
+    margin-right: 10px;
+  }
+
   .message-content {
     padding: 20px;
-    height: 430px;
+    font-size: 16px;
+    color: #333;
+    background-color: #ffffff;
+    border-radius: 10px;
+    height: 100%;
     overflow-y: auto;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   }
 
   .message-empty {
-    color: #888;
+    color: #aaa;
     text-align: center;
-    margin-top: 200px;
+    margin-top: 180px;
   }
 
-  .message-icon {
-    margin-right: 10px;
+  .btn-reply {
+    background-color: #2e7d32;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
   }
 
-  .message-type-icon {
-    font-size: 30px;
-    margin-right: 10px;
+  .btn-reply:hover {
+    background-color: #27692a;
+  }
+
+  /* For smaller screens */
+  @media (max-width: 768px) {
+    .message-view-header,
+    .message-content {
+      font-size: 14px;
+    }
+
+    .message-item {
+      padding: 12px;
+    }
   }
 </style>
 {% endblock styles %} {% block content %}
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <!-- Messages List Section -->
     <div class="col-md-4">
       <div class="message-list">
-        <!-- Example Message Item with Warning Icon -->
         {% for message in messages %}
-        <div data-bs-message='{
-          "messageTitle" : "{{message.title}}",
-          "messageContent" : "{{message.message}}",
-          "messageType" : "{{message.message_type}}"
-        }' class="message-item" onclick="viewMessage(1)">
+        <div
+          data-bs-message='{
+    "messageTitle": "{{ message.title|escapejs }}",
+    "messageContent": "{{ message.message|escapejs }}",
+    "messageType": "{{ message.message_type }}"
+  }'
+          class="message-item"
+          id="message-item"
+        >
           <i
-            class="message-icon  bi {% if message.message_type == 'i' %}text-info bi-info-circle-fill{% elif message.message_type == 'w' %}text-warning bi-exclamation-triangle-fill{% elif message.message_type == 'e' %}text-danger bi-x-circle-fill{% endif %}"
+            class="message-icon bi {% if message.message_type == 'i' %}text-info bi-info-circle-fill{% elif message.message_type == 'w' %}text-warning bi-exclamation-triangle-fill{% elif message.message_type == 'e' %}text-danger bi-x-circle-fill{% endif %}"
           ></i>
           <div>
             <h5 class="message-title">{{message.title}}</h5>
-            <p>Warning details go here...</p>
+            <p id="message-preview"></p>
           </div>
         </div>
         {% endfor %}
-        
-
-       
-
-        <!-- Add more messages as needed -->
       </div>
     </div>
 
@@ -136,37 +169,39 @@
 </div>
 
 <script>
-  function viewMessage(messageId) {
-    const messageTitle = document.getElementById("message-title");
-    const messageContent = document.getElementById("message-content");
-    const messageIcon = document.getElementById("message-type-icon");
+  const messageElements = document.querySelectorAll("#message-item");
+  for (const messageElement of messageElements) {
+    const messageJsonData = messageElement.getAttribute("data-bs-message");
+    const messageData = JSON.parse(messageJsonData);
 
-    // Add dynamic messages
-    const messages = {
-      1: {
-        title: "Warning Message",
-        content: "<p>This is the full content of the warning message.</p>",
-        icon: "bi bi-exclamation-triangle-fill text-warning",
-      },
-      2: {
-        title: "Info Message",
-        content: "<p>This is the full content of the info message.</p>",
-        icon: "bi bi-info-circle-fill text-info",
-      },
-      3: {
-        title: "Error Message",
-        content: "<p>This is the full content of the error message.</p>",
-        icon: "bi bi-x-circle-fill text-danger",
-      },
+    const DATA = {
+      messageTitle: messageData.messageTitle,
+      messageContent: messageData.messageContent,
+      messageType: messageData.messageType,
     };
 
-    const message = messages[messageId];
+    const strippedString = DATA.messageContent.replace(/<\/?[^>]+(>|$)/g, "");
 
-    if (message) {
-      messageTitle.innerText = message.title;
-      messageContent.innerHTML = message.content;
-      messageIcon.className = `message-type-icon ${message.icon}`;
-    }
+    messageElement.querySelector("#message-preview").innerHTML = strippedString;
+    messageElement.addEventListener("click", () => showMessageDetails(DATA));
+  }
+
+  function showMessageDetails({ messageTitle, messageContent, messageType }) {
+    const Title = document.getElementById("message-title");
+    const Content = document.getElementById("message-content");
+    const Icon = document.getElementById("message-type-icon");
+
+    const icons = {
+      i: "bi bi-info-circle-fill text-info",
+      w: "bi bi-exclamation-triangle-fill text-warning",
+      e: "bi bi-x-circle-fill text-danger",
+    };
+
+    const iconClass = icons[messageType];
+
+    Title.innerText = messageTitle;
+    Content.innerHTML = messageContent;
+    Icon.className = `message-type-icon ${iconClass}`;
   }
 </script>
 {% endblock content %}
