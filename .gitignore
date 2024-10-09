@@ -3,5 +3,6 @@ NasmeDjango/__pycache__/
 mainapp/__pycache__
 adminapp/__pycache__
 membersapp/__pycache__
-all_staticfiles/
+# all_staticfiles/
+.env
 db.sqlite3
