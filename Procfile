@@ -1,0 +1,1 @@
+ web: gunicorn NasmeDjango.wsgi --log-file -
